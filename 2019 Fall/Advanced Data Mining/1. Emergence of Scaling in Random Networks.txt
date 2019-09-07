@@ -10,22 +10,32 @@ Real-world networks exhibit continuous growth and expansion and preferential att
 
 3. What is the result?
 
-Barabási and Albert found that complex real world networks are scale-free and follow a power law distribution with $P(k) \sim k^{-y}$ where $P(k)$ describes the probability that that a vertex interacts with $k$ other vertices. To achieve this scale-free property they propose to include growth and preferential attachment in the network model. Growth is modeled through new vertices added at every time step. These vertices are then connected to existing vertices. The probability $\Pi$ that a new vertex is connected to existing vertex $i$ is $\Pi(k_i) = \frac{k_i}{\Sigma_j k_j}$ where $k_i$ is its connectivity.
+Barabási and Albert found that complex real world networks are scale-free and follow a power law distribution with $P(k) \sim k^{-y}$ where $P(k)$ describes the probability that that a vertex interacts with $k$ other vertices. To achieve this scale-free property they propose to include growth and preferential attachment in the network model. Growth is modeled through new vertices added at every time step. These vertices are then connected to existing vertices. The probability $\Pi$ that a new vertex is connected to existing vertex $i$ is $\Pi(k_i) = \frac{k_i}{\Sigma_j k_j}$ where $k_i$ is its connectivity. 
 
 Strengths:
 
 1. What is the main novelty that enabled the solution? (If you were to write such a paper, how should you have thought? What should you have known?)
 
-The main observation of the authors is that real-world networks are not accurately described by previous network models as the resulting network topologies differ from real-world large network topologies. They correctly deduce from this observation that the properties these network models fail to describe are network growth and preferential attachment and that these enable generation of scale-free networks. 
+The authors analyzed a number of real-world network topologies. The main observation is that real-world networks are not accurately described by previous network models as the resulting network topologies differ from real-world large network topologies. They correctly deduce from this observation that the properties these network models fail to describe are network growth and preferential attachment and that these enable generation of scale-free networks. The authors computed $\gamma$ analytically for their model and explored how to modify their model to fit other exponents different from $\gamma = 3$ that their model used initially as real-world scale-free networks typically follow different distributions. 
+
 
 2. What are the good aspects of the paper? Did you learn something from the paper? (E.g. presentation, storytelling, ways of proving theorems, etc.)
 
+The paper is very brief but "to-the-point" and succinct. The problem was stated very clearly and the approach chosen to solve the problem was explained very well.
+
 3. What is the impact of the paper?
+
+As the authors predicted in their conclusion, the paper had a big impact on a variety of fields in which it is necessary to model complex networks that occur in the real-world. The proposed method allows for better modeling of large networks and this better description has enabled researchers to better understand systems in domains where less data is available.
 
 Future Improvements:
 
 1. Are there weaknesses/missing parts in the paper? How can you improve it?
 
+The paper could benefit from an application example of their model to a real-world network and an analysis of this application.  
 2. How can you extend the paper?
 
+For many real-world networks the probability $\Pi(k_i)$ of interaction with a vertex $i$ does not only depend on the connectivity or degree of a vertex but also the distance in the network to these nodes. Additionally new edges are added not only for new vertices but one might add new edges to existing vertices too (i.e. new links on a website in the WWW) or vertices and edges can disappear or be removed in real-world networks. These points are not addressed in the paper but it provides a very valuable method to model real-world networks that has seen great success nonetheless.
+
 3. How can you apply the technique to other data/problems?
+
+With data more widely available today than it was at the time of publication one can study other real-world networks and their topologies to observe if these follow power laws and can be described by the proposed model.
