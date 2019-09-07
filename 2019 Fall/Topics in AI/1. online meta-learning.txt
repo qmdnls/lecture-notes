@@ -1,0 +1,16 @@
+meta learning: learning to learn, given multiple tasks the goal is to learn a generalization that can be used to quickly find a good model for a new task
+online learning: one model is used for different tasks sequentially 
+paper proposes new meta learning setting
+
+algorithm should understand the underlying structure of the tasks and data to be able to adapt faster to new tasks that are similar to previous tasks
+typical meta learning approaches assume enough data on different tasks is available from the start but in the real world new tasks are encountered sequentially
+
+a new problem setting called "online meta-learning" is proposed. in this setting an agent is faced with a sequence of tasks and attempts to learn a generalized model which adapts well to each task at hand. futhermore, the learner is also permitted to make a task-specific update to its parameters. the idea behind this approach is that this gives the best meta-learner an edge, which may give the learner a benefit as it is compared to the best meta-learner in hindsight for every round.
+
+new algorithm: follow the meta leader (FTML), extensions of the MAML (model-agnostic meta-learning) algorithm, inspired by follow the leader from the online learning setting
+unlike MAML, which approaches the problem as few-shot generalization and which only learns offline, FTML  
+
+
+results: outperforms traditional online learning approaches
+
+

@@ -1,0 +1,31 @@
+Main Points:
+
+1. What is the problem that the paper wants to solve? Why is it difficult (related works)?
+
+Complex networks describe systems in many different fields of science. However, at the time of writing the paper science was not able to accurately describe the topology of these complex networks. Although these networks have traditionally been described by the random graph theory by Erdős and Renyi (ER) it has now, with increasing amounts of data available, become apparent that ER theory does not suffice. Both ER theory and the more recent small-world model by Watts and Strogatz (WS) fail to address highly-connected vertices that occur in real-world large networks.
+
+2. What is the solution? What is the main idea?
+
+Real-world networks exhibit continuous growth and expansion and preferential attachment as well as a large amount of self-organization, neither of which have been addressed by existing network models. Barabási and Albert show that large networks follow a power law and become scale-free and propose a new network model which incorporates these properties of real-world networks while displaying a high degree of self-organization.
+
+3. What is the result?
+
+Barabási and Albert found that complex real world networks are scale-free and follow a power law distribution with $P(k) \sim k^{-y}$ where $P(k)$ describes the probability that that a vertex interacts with $k$ other vertices. To achieve this scale-free property they propose to include growth and preferential attachment in the network model. Growth is modeled through new vertices added at every time step. These vertices are then connected to existing vertices. The probability $\Pi$ that a new vertex is connected to existing vertex $i$ is $\Pi(k_i) = \frac{k_i}{\Sigma_j k_j}$ where $k_i$ is its connectivity.
+
+Strengths:
+
+1. What is the main novelty that enabled the solution? (If you were to write such a paper, how should you have thought? What should you have known?)
+
+The main observation of the authors is that real-world networks are not accurately described by previous network models as the resulting network topologies differ from real-world large network topologies. They correctly deduce from this observation that the properties these network models fail to describe are network growth and preferential attachment and that these enable generation of scale-free networks. 
+
+2. What are the good aspects of the paper? Did you learn something from the paper? (E.g. presentation, storytelling, ways of proving theorems, etc.)
+
+3. What is the impact of the paper?
+
+Future Improvements:
+
+1. Are there weaknesses/missing parts in the paper? How can you improve it?
+
+2. How can you extend the paper?
+
+3. How can you apply the technique to other data/problems?

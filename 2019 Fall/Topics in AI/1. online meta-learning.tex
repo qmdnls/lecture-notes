@@ -1,0 +1,58 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+\usepackage{newtxtext,newtxmath}
+ 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Online Meta-Learning}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{September 5, 2019}
+\maketitle
+
+Finn et al.~\cite{finn} propose the new meta-learning setting \emph{online meta-learning} as well as an extension of the \emph{model-agnostic meta-learning} (MAML) algorithm for this setting called \emph{follow the meta leader} (FTML) as it is heavily inspired by the \emph{follow the leader} algorithm from the \emph{online learning} setting. In meta-learning a learner \emph{learns to learn}, that is, given multiple tasks as a batch the goal is to learn a generalization that can be used to quickly learn a good model for a new task. In online learning however, these tasks are not available at once but rather become available to the learner sequentially. The newly proposed problem setting combines these ideas from both \emph{meta-learning} and \emph{online learning}.
+
+In the online meta-learning setting an agent is faced with a sequence of tasks and attempts to learn a generalization which can be adapted well to each task at hand. In each round $t \in T$ the learner is sequentially faced with a different task. Like in online learning, the learner's objective is to minimize a notion of regret which is the cumulative loss compared to the best possible model in hindsight. In this case, sub-linear growth of the regret in $T$ signifies that the agent is learning a generalization of the tasks at hand. Furthermore, the learner is permitted to make a task-specific update to its parameters before evaluation. The idea behind this approach is that this gives the comparator, the best meta-learner, an edge which may allow the learner to benefit as it is evaluated compared to this best meta-learner after every round.
+ 
+For this new setting Finn et al. propose the FTML algorithm which is an extension of the MAML algorithm and strongly inspired by the \emph{follow the leader} algorithm from the online learning setting. Unlike MAML, which approaches the meta-learning as a few-shot generalization and which can only learn offline, FTML learns sequentially for continual lifelong learning. FTML outperforms previous algorithms on different vision-based tasks (MNIST, CIFAR-100, and PASCAL 3D+).
+
+
+
+\begin{thebibliography}{9}
+\bibitem{finn} 
+Finn, C., Rajeswaran, A., Kakade, S. and Levine, S. "Online Meta-Learning.", arXiv preprint \textit{arXiv:1902.08438} (2019).
+
+\end{thebibliography}
+ 
+\end{document}
+
