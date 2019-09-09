@@ -1,0 +1,75 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=black,%
+filecolor=black,%
+linkcolor=black,%
+urlcolor=black
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.25}
+ 
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Distribution Matching in Variational Inference}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{September 10, 2019}
+\maketitle
+
+Rosca, Lakshminarayanan and Mohamed~\cite{rosca} analyze Variational Autoencoders (VAEs) and in particular VAE-GANs, a hybrid of VAEs and Generative Adverserial Networks (GANs). During their analysis of both latent and visible spaces the authors show shortcomings of VAEs as these fail to learn marginal distributions. Specifically, for an unknown distribution $p^*(x)$ VAEs fail to find a matching distribution $p_{\theta}(x)$. The authors attribute this failure to the effect of conditional distribution matching and explicit model and posterior distributions.
+
+Rosca et al. explore a variety of possible VAE-GAN hybrids which use the \emph{density ratio trick} and implicit latent variable models to match the data distribution with the marginal distribution, and adverserial training in visible space to match $q_n(z)$ with $p(z)$. They analyze and compare marginal distribution matching between VAEs, GANs, and a number of VAE-GAN hybrids (AAE, VEEGAN, VGH, VGH++) to see whether these hybrids can overcome the limitations of VAEs. While they find that marginal distribution matching helps the VAE-GANs achieve better generation quality than VAEs they do not perform better than GANs while being more difficult to optimize (higher sensitivity to hyperparameters) and showing problems with scaling.
+
+The authors conclude that VAE-GANs are not able to address the previously shown limitations of variational inference and that they do not provide a clear benefit at the current time.
+
+\begin{thebibliography}{9}
+\bibitem{rosca} 
+Rosca, M., Lakshminarayanan, B., and Mohamed, S. "Distribution matching in variational inference." arXiv preprint arXiv:1802.06847 (2018).
+
+\end{thebibliography}
+ 
+\end{document}
