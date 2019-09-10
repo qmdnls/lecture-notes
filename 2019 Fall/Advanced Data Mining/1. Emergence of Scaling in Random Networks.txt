@@ -31,7 +31,8 @@ Future Improvements:
 
 1. Are there weaknesses/missing parts in the paper? How can you improve it?
 
-The paper could benefit from an application example of their model to a real-world network and an analysis of this application.  
+The paper could benefit from an application example of their model to a real-world network and an analysis of this application.
+  
 2. How can you extend the paper?
 
 For many real-world networks the probability $\Pi(k_i)$ of interaction with a vertex $i$ does not only depend on the connectivity or degree of a vertex but also the distance in the network to these nodes. Additionally new edges are added not only for new vertices but one might add new edges to existing vertices too (i.e. new links on a website in the WWW) or vertices and edges can disappear or be removed in real-world networks. These points are not addressed in the paper but it provides a very valuable method to model real-world networks that has seen great success nonetheless.

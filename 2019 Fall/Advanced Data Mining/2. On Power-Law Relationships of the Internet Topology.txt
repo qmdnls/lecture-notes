@@ -1,0 +1,45 @@
+Main Points:
+
+1. What is the problem that the paper wants to solve? Why is it difficult (related works)?
+
+Faluotsos, Faluotsos and Faluotsos explore (at the time) recent datasets of the internet to determine its topological properties and how they develop over time. These topological properties are helpful to understand the growth and development of the internet in the future and may aid in building more accurate models of the internet. Furthermore understanding future developments of the internet may be beneficial for protocol development as well. 
+
+2. What is the solution? What is the main idea?
+
+The authors analyze datasets from the end of 1997 to the end of 1998 for possible regularities and patterns. They observe that the topology the internet and its growth can be described by three power-laws.
+
+3. What is the result?
+
+The outdegree $d_v$ of a node $v$ is proportional to its rank $r_v$ to the power of a constant $\mathcal{R}$: $d_v \propto r_v^\mathcal{R}$. The rank of a node here is given by the index of the node in a list of all nodes sorted by their outdegree in decreasing order. This power-law can be used to predict the growth of the network (Lemma 2) given the \emph{rank exponent} $\mathcal{R}$ which can be obtained from previous measurements and linear interpolation.
+As average outdegrees are not sufficient to analyze skewed data distributions, Faluotsos et al. define a measurement $f_d$ which is the frequency of an outdegree $d$ (measured by number of occurrence). They find that $f_d \propto d^\mathcal{O}$ where $\mathcal{O}$ is the \emph{outdegree exponent}.
+Lastly, the authors find that the eigenvalues $\lambda_i$ of a graph, which are given by the eigenvalues of the graph's adjacency matrix, are proportional to their order $i$ to the power of the eigen exponent $\mathcal{E}$: $\lambda_i \propto i^\mathcal{E}$.
+
+These properties can be utilized for performance analysis of internet protocols, predictions of the future internet topology and to generate models of the internet i.e. for computations or simulations.
+
+Strengths:
+
+1. What is the main novelty that enabled the solution? (If you were to write such a paper, how should you have thought? What should you have known?)
+
+The main novelty that enabled Faloutsos et al. to discover were the three datasets of the internet that have been collected over the course of a year which allowed them to perform an in-depth analysis of the data to determine the power-laws which describe the topology. Prior to this only small datasets had existed and models of the internet were complicated and depended on many parameters. 
+
+2. What are the good aspects of the paper? Did you learn something from the paper? (E.g. presentation, storytelling, ways of proving theorems, etc.)
+
+The authors do an excellent job analyzing the data and define their own useful metrics which turn out to be very valuable in describing the skewed distributions at hand. 
+
+3. What is the impact of the paper?
+
+The paper enabled a better understanding of the internet's topology (specifically in regards of growth) as well as development of better models of the internet (i.e. Barabási–Albert model). 
+
+Future Improvements:
+
+1. Are there weaknesses/missing parts in the paper? How can you improve it?
+
+The paper does not address that hierarchies within the internet are flattening as the internet grows and becomes more inter-connected. One could explore how these flattening hierarchies are affecting the outdegree of nodes (nowadays).
+
+2. How can you extend the paper?
+
+As a long time has passed since the publication of the paper, it could be extended by an analysis of whether these predictions have been upheld since.
+
+3. How can you apply the technique to other data/problems?
+
+Many real-world phenomena can be described by power-laws. The analysis of datasets over time allows us to discover these power-laws which we can then use to make predictions for future growth.
