@@ -1,1 +1,5 @@
-Propose theory of mind neural network (ToM-net)
+\emph{Theory of Mind} (in humans) refers to the ability to reproduce the mental state of others and understand their intentions, goals, beliefs and desires which allows us to predict their future actions. This process works without any knowledge of the underlying structure: rather than knowing another's brain's physical activity, we understand their more abstract mental state. Rabinowitz et al. propose a \emph{Machine Theory of Mind} which attempts to model the behaviour of an agent from observations in order to make predictions about its future actions.
+
+The authors consider building a Theory of Mind as a meta-learning problem in their work. In this setting, an observer gets access to behavioural traces which it then uses to learn to make predictions of the agent's future behaviour. In the training phase the observer should get better at making these predictions and learn a strong prior which it can then employ to make faster and better predictions. This is different from previous work in the field which mostly focused on hand-crafted models of agents rather than a meta-learning approach to the problem space.
+
+As a means to achieve this goal the authors propose a Theory of Mind neural network (ToM-net). 
