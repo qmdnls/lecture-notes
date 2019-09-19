@@ -1,0 +1,35 @@
+Main Points:
+
+1. What is the problem that the paper wants to solve? Why is it difficult (related works)?
+
+
+2. What is the solution? What is the main idea?
+
+
+3. What is the result?
+
+
+Strengths:
+
+1. What is the main novelty that enabled the solution? (If you were to write such a paper, how should you have thought? What should you have known?)
+
+
+
+2. What are the good aspects of the paper? Did you learn something from the paper? (E.g. presentation, storytelling, ways of proving theorems, etc.)
+
+
+3. What is the impact of the paper?
+
+
+Future Improvements:
+
+1. Are there weaknesses/missing parts in the paper? How can you improve it?
+
+
+ 
+2. How can you extend the paper?
+
+
+3. How can you apply the technique to other data/problems?
+
+
