@@ -41,7 +41,7 @@ Strengths:
 3. What is the impact of the paper?
 
 \begin{itemize}
-    \item
+    \item Notion of conferred authority by the paper is very similar to idea behind Google's pagerank algorithm which has worked very well in practice
 \end{itemize}
 
 Future Improvements:
@@ -50,17 +50,18 @@ Future Improvements:
 
 \begin{itemize}
     \item Paper focuses only on the notion of conferred (link-based) authority to rank search results but excludes other relevant characteristics
-    \item
+    \item Subgraph construction relies entirely on other text-based search engines, results may be improved by computing the subgraph differently
 \end{itemize}
  
 2. How can you extend the paper?
 
 \begin{itemize}
-    \item
+    \item Find a way to find relevant search results that works well with the author's notion of authority (difficult)
+    \item Employ graph structures beyond hubs and authorities to improve ranking algorithm
 \end{itemize}
 
 3. How can you apply the technique to other data/problems?
 
 \begin{itemize}
-    \item
+    \item 
 \end{itemize}
