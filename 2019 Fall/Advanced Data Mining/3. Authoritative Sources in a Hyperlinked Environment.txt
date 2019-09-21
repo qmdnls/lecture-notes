@@ -6,20 +6,20 @@ Main Points:
     \item Searching the web is difficult: enormous complexity, millions of websites, have to find the most relevant to query
     \item Different problems for different queries: for specific queries there are very few pages that contain the relevant information which the user is looking for (scarcity problem), for broad queries there are too many pages that are in some way related to the search query (abundance problem)
     \item Even authorative sources (i.e. harvard.edu for information about Harvard University) may not contain the search term on their web page and thus may not appear in search results
-    \item The authors want to solve the problem of (conferred) authority which may improve search result by ranking websites higher if they have high authority on the search query
+    \item The author wants to solve the problem of (conferred) authority which may improve search result by ranking websites higher if they have high authority on the search query
 \end{itemize}
 
 2. What is the solution? What is the main idea?
 
 \begin{itemize}
     \item Main idea is to consider the world wide web as a graph of websites and links and look at edges in the graph, edges (links) confer authority to other pages
-    \item Authors construct a subgraph of the WWW for each query which is then used to find the most authorative sites, an authority is pointed to by many good hubs
+    \item Author constructs a subgraph of the WWW for each query which is then used to find the most authorative sites, an authority is pointed to by many good hubs
 \end{itemize}
 
 3. What is the result?
 
 \begin{itemize}
-    \item Authors rank sites based on their measure of authority
+    \item Author ranks sites based on their measure of authority
     \item Find relevant results globally (rather than locally, on a single site)
     \item Discovered an equilibrium between \emph{hubs} and authorities
 \end{itemize}
@@ -29,13 +29,13 @@ Strengths:
 1. What is the main novelty that enabled the solution? (If you were to write such a paper, how should you have thought? What should you have known?)
 
 \begin{itemize}
-    \item 
+    \item Author builds on the very simple idea that websites with many links from hubs on a topic may be considered an authority on that topic
 \end{itemize}
 
 2. What are the good aspects of the paper? Did you learn something from the paper? (E.g. presentation, storytelling, ways of proving theorems, etc.)
 
 \begin{itemize}
-    \item
+    \item Paper leverages a simple (but good) idea to achieve good results
 \end{itemize}
 
 3. What is the impact of the paper?
@@ -63,5 +63,6 @@ Future Improvements:
 3. How can you apply the technique to other data/problems?
 
 \begin{itemize}
-    \item 
+    \item Authoritative search result ranking may be used for other data that is similar to the web in structure
+    \item Author notes scientific citations follow a different structure because they lack an equivalent to hubs in the web
 \end{itemize}
