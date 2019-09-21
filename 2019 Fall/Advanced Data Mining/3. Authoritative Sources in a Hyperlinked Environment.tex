@@ -1,0 +1,167 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=0.7in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+\usepackage{Baskervaldx}
+\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.0}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm
+}
+
+% name and student ID in header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{}
+\fancyhead[L]{Advanced Data Mining}
+\fancyhead[C]{Björn Bebensee (2019-21343)}
+\fancyhead[R]{September 23, 2019}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyfoot[C]{\textbf{\thepage}} % except the center
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}}
+
+% spacing in itemize environments
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=2pt,parsep=2pt,partopsep=2pt}
+
+% misc hyphenation
+\hyphenation{page-rank}
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+% ugly fake title hack
+{\Large\centering
+    \textbf{Authorative Sources in a Hyperlinked Environment}
+\par}
+
+\bigskip
+
+\noindent
+1. What is the problem that the paper wants to solve? Why is it difficult (related works)?
+
+\begin{itemize}
+    \item Searching the web is difficult: enormous complexity, millions of websites, have to find the most relevant to query
+    \item Different problems for different queries: for specific queries there are very few pages that contain the relevant information which the user is looking for (scarcity problem), for broad queries there are too many pages that are in some way related to the search query (abundance problem)
+    \item Even authorative sources (i.e. harvard.edu for information about Harvard University) may not contain the search term on their web page and thus may not appear in search results
+    \item The author wants to solve the problem of (conferred) authority which may improve search result by ranking websites higher if they have high authority on the search query
+\end{itemize}
+
+\noindent
+2. What is the solution? What is the main idea?
+
+\begin{itemize}
+    \item Main idea is to consider the world wide web as a graph of websites and links and look at edges in the graph, edges (links) confer authority to other pages
+    \item Author constructs a subgraph of the WWW for each query which is then used to find the most authorative sites
+\end{itemize}
+
+\noindent
+3. What is the result?
+
+\begin{itemize}
+    \item Author ranks sites based on their measure of authority
+    \item Find relevant results globally (rather than locally, on a single site)
+    \item Discovered an equilibrium between \emph{hubs} and authorities
+\end{itemize}
+
+\noindent
+4. What is the main novelty that enabled the solution?
+
+\begin{itemize}
+    \item Author builds on the very simple idea that websites with many links from hubs on a topic may be considered an authority on that topic
+\end{itemize}
+
+\noindent
+5. What are the good aspects of the paper? Did you learn something from the paper?
+
+\begin{itemize}
+    \item Paper leverages a simple (but good) idea to achieve good results
+\end{itemize}
+
+\noindent
+6. What is the impact of the paper?
+
+\begin{itemize}
+    \item Notion of conferred authority by the paper is very similar to idea behind Google's page-rank algorithm which has worked very well in practice
+\end{itemize}
+
+\noindent
+7. Are there weaknesses/missing parts in the paper? How can you improve it?
+
+\begin{itemize}
+    \item Paper focuses only on the notion of conferred (link-based) authority to rank search results but excludes other relevant characteristics
+    \item Subgraph construction relies entirely on other text-based search engines, results may be improved by computing the subgraph differently
+\end{itemize}
+
+\noindent
+8. How can you extend the paper?
+
+\begin{itemize}
+    \item Find a way to find relevant search results that works well with the author's notion of authority (difficult)
+    \item Employ graph structures beyond hubs and authorities to improve ranking algorithm
+\end{itemize}
+
+\noindent
+9. How can you apply the technique to other data/problems?
+
+\begin{itemize}
+    \item Authoritative search result ranking may be used for other data that is similar to the web in structure
+    \item Author notes scientific citations follow a different structure because they lack an equivalent to hubs in the web
+\end{itemize}
+
+\end{document}
