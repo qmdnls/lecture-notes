@@ -2,9 +2,21 @@ Main Points:
 
 1. What is the problem that the paper wants to solve? Why is it difficult (related works)?
 
+\begin{itemize}
+    \item Searching the web is difficult: enormous complexity, millions of websites, have to find the most relevant to query
+    \item Different problems for different queries: for specific queries there are very few pages that contain the relevant information which the user is looking for (scarcity problem), for broad queries there are too many pages that are in some way related to the search query (abundance problem)
+    \item Even authorative sources (i.e. harvard.edu for information about Harvard University) may not contain the search term on their web page and thus may not appear in search results
+    \item The authors want to solve the problem of (conferred) authority which may improve search result by ranking websites higher if they have high authority on the search query
+\end{itemize}
 
 2. What is the solution? What is the main idea?
 
+\begin{itemize}
+    \item Main idea is to consider the world wide web as a graph of websites and links and look at edges in the graph
+    \item Websites that link to other pages confer authority to these pages
+    \item Authors construct a subgraph of the WWW for each query which is then used to find the most authorative sites
+    \item 
+\end{itemize}
 
 3. What is the result?
 
