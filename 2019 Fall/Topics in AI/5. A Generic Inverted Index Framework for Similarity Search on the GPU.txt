@@ -1,5 +1,6 @@
 In high throughput applications there is often a need to match similarities of index structures or features. The Zhou et al. propose a framework called GENIE which reduces the programming complexity for this type of parallel similarity search on a GPU.
 
+GENIE can be used for similarity search on all data types that can be expressed in the \emph{match-count model} which is defined as follows: given a query $Q = \{ (d_i, [v_i^L, v_i^U]) | i \in [1,n] \}$ with query length $n$ and an object $O = \{ (d_1,v_1), \cdot, (d_l,v_l) \}$, the match-count model $MC$ returns $MC(Q,O) = \sum_{r_i \in Q} C(r_i, O)$. Here, $C$ simply returns the number of elements $o \in O$ contained by $r_i$. Informally $MC$ returns the number of elements that are contained by at least one query item $r_i \in Q$. While the authors admit that not all data types can be expressed within the MC model (and thus in the framework), they show that many can be.
 
+In order to implement their framework, they propose a novel data structure \emph{Count Priority Queue} (c-PQ) which helps reduce the time cost for similarity search and helps overcome the problem of top-k candidate selection while also reducing memory requirements for multiple queries.  
 
-While the authors admit that this framework does not apply to all kinds of data types, they show that it can be used for many different types and with different similarity measures.
