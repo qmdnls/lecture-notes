@@ -1,0 +1,5 @@
+In high throughput applications there is often a need to match similarities of index structures or features. The Zhou et al. propose a framework called GENIE which reduces the programming complexity for this type of parallel similarity search on a GPU.
+
+
+
+While the authors admit that this framework does not apply to all kinds of data types, they show that it can be used for many different types and with different similarity measures.
