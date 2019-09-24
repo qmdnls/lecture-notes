@@ -1,0 +1,3 @@
+The paper by Coenen et al. deals with the question which linguistic features of text are being extracted by transformers and how the information is stored internally. Previous work has found evidence of geometric representations of syntactic and linguistic features (such as parse trees). In this work the authors aim to extend this investigation into geometric representations in BERT. They find evidence that attention matrices encode grammatical representations, they show that BERT manages fine-grained distinctions of word senses and they find that this information is encoded in a low-dimensional space.
+
+
