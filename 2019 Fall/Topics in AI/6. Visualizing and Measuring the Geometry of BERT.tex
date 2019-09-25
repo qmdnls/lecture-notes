@@ -1,0 +1,88 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Visualizing and Measuring the Geometry of BERT}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{September 26, 2019}
+\maketitle
+
+\noindent
+This paper by Coenen et al.~\cite{bert} deals with the question which linguistic features of text are being extracted by transformers and how the information is stored internally. Previous work by Hewitt and Manning~\cite{hewitt} has found evidence of geometric representations of syntactic and linguistic features (such as parse trees). In this work the authors aim to extend this investigation into geometric representations in BERT. They find evidence that attention matrices encode grammatical representations, they show that BERT manages fine-grained distinctions of word senses and they find that this information is encoded in a low-dimensional space.
+
+Coenen et al. investigate attention matrices to find possible representations of dependency grammar relations. They define an \emph{attention probe} as follows: given a model-wide attention vector, which is simply the concatenation of all $\alpha_{i,j}$ from every attention matrix in every attention head in every layer, an attention probe is the task of finding the encoded relation of a pair of tokens $(\text{\emph{token}}_i, \text{\emph{token}}_j)$ within the model-wide attention vector. They find that using a corpus of parsed sentences and their model-wide attention vectors (for each pair of tokens in a sentence), they can successfully train a linear classifier to recognize whether a dependency relation exists between a pair of tokens and even the type of dependency relation. This suggests that the attention factors do encode this kind of information of dependency relations. They further explain why the parse tree distance corresponds to the square of Euclidean distance (as found in~\cite{hewitt}) using \emph{power-2 embeddings}. They compare the parse tree embeddings found in BERT to these power-2 embeddings (see figures 2 and 3 in the paper).
+
+Lastly, Coenen et al. inquire into whether and how context-dependent embeddings capture different meanings of the same word and explore their geometric investigations. They find that it is possible to build a nearest-neighbor classifier which, given context embeddings, can find the closest sense of a word. This suggests that it is context embeddings may indeed encode word-sense information. They further find that most semantic information is contained in the earlier-layer embeddings which suggests that word-sense information may be encoded in a lower-dimensional space.
+
+\begin{thebibliography}{9}
+\bibitem{bert} 
+Coenen, Andy, et al. "Visualizing and Measuring the Geometry of BERT." \emph{arXiv preprint arXiv:1906.02715} (2019).
+\vspace{-0.25cm}
+\bibitem{hewitt}
+Hewitt, John, and Christopher D. Manning. "A structural probe for finding syntax in word representations." \emph{Proceedings of the 2019 Conference of the North American Chapter of the Association for Computational Linguistics: Human Language Technologies, Volume 1 (Long and Short Papers)}. 2019.
+
+\end{thebibliography}
+ 
+\end{document}
