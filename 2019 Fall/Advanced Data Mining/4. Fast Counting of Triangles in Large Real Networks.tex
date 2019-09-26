@@ -1,0 +1,176 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=0.7in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+\usepackage{Baskervaldx}
+\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.0}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm
+}
+
+% name and student ID in header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{}
+\fancyhead[L]{Advanced Data Mining}
+\fancyhead[C]{Björn Bebensee (2019-21343)}
+\fancyhead[R]{September 30, 2019}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyfoot[C]{\textbf{\thepage}} % except the center
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}}
+
+% spacing in itemize environments
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=2pt,parsep=2pt,partopsep=2pt}
+
+% misc hyphenation
+\hyphenation{page-rank}
+
+% fancyhdr headheight
+\setlength{\headheight}{15pt}
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+% ugly fake title hack
+{\Large\centering
+    \textbf{Fast Counting of Triangles in Large Real Networks}
+\par}
+
+\bigskip
+
+\noindent
+1. What is the problem that the paper wants to solve? Why is it difficult (related works)?
+
+\begin{itemize}
+    \item No. of triangles may help identifying anomalies in a graph, such as spam emails etc.
+    \item Given a graph authors want to find the numbers of triangles in the graph without actually counting them as counting is slow and should be avoided
+\end{itemize}
+
+\noindent
+2. What is the solution? What is the main idea?
+
+\begin{itemize}
+    \item Determine number of triangles only using the graph's eigenvalues
+    \item Number of triangles can be approximated using $\Delta(G) = \frac{1}{6} \Sigma_{i=1}^n \lambda_i^3$
+    \item Number of triangles that a node $i$ participates in is simply approximated by $\Delta_i = \frac{1}{2}\Sigma_j \lambda_j^3 u_{i,j}^2$
+    \item Accurate because real-world graph's eigenvalues follow a power-law, alternating signs, top-$k$ largest eigenvalues can be used for approximation
+\end{itemize}
+
+\noindent
+3. What is the result?
+
+\begin{itemize}
+    \item Eigenvalues can be computed much faster, algo. easily parallelizable (map-reduce) 
+    \item Big speedup in computation of number of triangles
+    \item Only 6.2 largest eigenvalues needed for accuracy $\geq 95\%$ (mean, std. 3.2)
+    \item Authors made four main observations for the number of triangles in large graphs:
+    \begin{itemize}
+        \item[1.] count of triangles a node participates in follows a power-law
+        \item[2.] $\Delta_{\text{avg}}^{d_m}$, average number of triangles of nodes of degree $i$, follows a power-law
+        \item[3.] slope of $\Delta_{\text{avg}}^{d_m}$-power-law is complementary to slope of degree distribution (if it follows a power-law)
+        \item[4.] high degree nodes deviate from $\Delta_{\text{avg}}^{d_m}$-power-law as they have a lot of neighbors of degree 1
+    \end{itemize}
+\end{itemize}
+
+\noindent
+4. What is the main novelty that enabled the solution?
+
+\begin{itemize}
+    \item Main novelty is the theorems for the (global and local) number of triangles
+    \item Allows for the approximation by largest eigenvalues
+\end{itemize}
+
+\noindent
+5. What are the good aspects of the paper? Did you learn something from the paper?
+
+\begin{itemize}
+    \item Idea is conveyed in a very straightforward and clear manner, paper is easy to follow
+    \item Provided an algorithm that is parallelizable and therefore applicable to even very large graphs
+\end{itemize}
+
+\noindent
+6. What is the impact of the paper?
+
+\begin{itemize}
+    \item Authors provided an entirely new and much more efficient way to count triangles by reducing the problem to a linear algebra problem
+\end{itemize}
+
+\noindent
+7. Are there weaknesses/missing parts in the paper? How can you improve it?
+
+\begin{itemize}
+    \item It is not clear what kind of datasets the laws identified by the authors apply to beyond the datasets in the paper (more importantly, in which kind of datasets the laws do not apply)
+\end{itemize}
+
+\noindent
+8. How can you extend the paper?
+
+\begin{itemize}
+    \item Look at graphs of other sizes than the ones tested in the paper to make more general observations on the laws stated by the authors
+\end{itemize}
+
+\noindent
+9. How can you apply the technique to other data/problems?
+
+\begin{itemize}
+    \item The technique is applicable to any data with triangles for an approximation of the number of triangles
+\end{itemize}
+
+\end{document}
