@@ -21,18 +21,18 @@ def dec(list, key):
     return x
 
 def string2num(c):
-    num = []
-    for x in list(c.lower()):
-        num.append(alph[x])
-    return num
+    #num = []
+    #for x in list(c.lower()):
+    #    num.append(alph[x])
+    return [alph[x] for x in c.lower()]
 
 def num2string(y):
     # Use the dictionary to get a string back
-    p = []
-    for i in y:
-        p.append(invalph[i])
-    p = ''.join(p).upper()
-    return p
+    #p = []
+    #for i in y:
+    #    p.append(invalph[i])
+    #p = ''.join(p).upper()
+    return ''.join([invalph[i] for i in y]).upper()
 
 # The ciphertext
 c = "WRTCNRLDSAFARWKXFTXCZRNHNYPDTZUUKMPLUSOXNEUDOKLXRMCBKGRCCURR"
