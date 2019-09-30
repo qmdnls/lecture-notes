@@ -1,0 +1,1 @@
+Cho, Oh, Park, Jung and Lee propose an FPGA-based A3C deep reinforcement learning platform 
