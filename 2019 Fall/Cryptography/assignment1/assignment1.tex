@@ -1,0 +1,271 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=0.7in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+\usepackage{Baskervaldx}
+\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.0}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm
+}
+
+% name and student ID in header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{}
+\fancyhead[L]{Cryptography}
+\fancyhead[C]{Björn Bebensee (2019-21343)}
+\fancyhead[R]{Assignment 1}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyfoot[C]{\textbf{\thepage}} % except the center
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}}
+
+% spacing in itemize environments
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=2pt,parsep=2pt,partopsep=2pt}
+
+% fancyhdr headheight
+\setlength{\headheight}{15pt}
+
+% define code style for lstlisting
+\usepackage{listings}
+\usepackage{xcolor}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2
+}
+\lstset{style=mystyle}
+
+% we're gonne need tikz
+\usepackage{tikz}
+\usetikzlibrary{shapes,decorations,arrows,calc,arrows.meta,fit,positioning}
+\tikzset{
+    -Latex,auto,node distance =1 cm and 1 cm,semithick,
+}
+
+% drawing a tree is easier with forest!
+\usepackage{forest}
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+% ugly fake title hack
+%{\Large\centering \textbf{} \par}
+
+\subsection*{Exercise 1.6}
+
+Given the shift cipher $S$ over $\mathbb{Z}_{26}$, a key is an involutory key if the encryption and decryption function are the same, so if and only if $x = e_k(d_k(x)) = e_k(e_k(x)) = x + 2k \text{ (mod } 26) \ \forall x$ which yields the condition $x = x + 2k \text{ (mod } 26) \ \forall x$. We can find exactly two keys $k$ that solve this equation: $k = 0$ and $k = 13$. Thus, these are the involutory keys of $S$.
+
+\subsection*{Exercise 1.7}
+
+Given an affine cipher over $\mathbb{Z}_m$ for $m \in \{30, 100, 1225\}$ we must only choose keys $(a,b)$ such that $\text{gcd}(a,26) = 1$. We can determine the size of the set $A = \{ a \ | \ \text{gcd}(a,m)=1 \}$ using Euler's totient function as follows
+
+$$
+|A| = \phi(m) = m \ \prod_{p|m} \left(1 - \frac{1}{p}\right) 
+$$
+
+\noindent where $\prod_{p|m}$ is the product over the distinct primes in the unique prime factorization of $m$. We can then determine the size of the key space $K_m$ of the affine cipher for $m$ as $|K_m| = m \times \phi(m)$. For $m \in \{30, 100, 1225\}$ we obtain
+
+\begin{align*}
+& \phi(30) = 30 \times \left(1 - \frac{1}{2}\right) \times \left(1 - \frac{1}{3}\right) \times \left(1 - \frac{1}{5}\right) = 8 \text{ with prime factorization } 30 = 2 \times 3 \times 5,\\
+& \phi(100) = 100 \times \left(1 - \frac{1}{2}\right) \times \left(1 - \frac{1}{5}\right) = 40 \text{ with prime factorization } 100 = 2 \times 5 \times 5,\\
+& \phi(1225) = 30 \times \left(1 - \frac{1}{5}\right) \times \left(1 - \frac{1}{7}\right) = 840 \text{ with prime factorization } 1225 = 5 \times 5 \times 7 \times 7
+\end{align*}
+
+\noindent and thus the key space sizes are
+
+\begin{align*}
+& K_{30} = 30 \times \phi(30) = 30 \times 8 = 240,\\
+& K_{100} = 100 \times \phi(100) = 100 \times 40 = 4000,\\
+& K_{1225} = 1225 \times \phi(1225) = 1225 \times 840 = 1029000.
+\end{align*}
+
+\subsection*{Exercise 1.17}
+
+(a) A key $k$ in the permutation cipher is given by a permutation $k = \pi$. The encryption and decryption functions can then be written as $e_k(x) = \pi(x)$ and $d_k(y) = \pi^{-1}(y)$. A key is called involutory exactly if $e_k(x) = d_k(x) \ \forall x$ so if $e_k(e_k(x)) = \pi(\pi(x)) = x$. We can see that $\pi(\pi(x)) = x$ is true exactly when the permutation is its own inverse $\pi = \pi^{-1}$. Thus, $\pi(i) = j$ implies $\pi(j) = i$ for all $i,j \in \{1,\ldots,m\}$.\\
+
+%\noindent ($\Rightarrow$) Given an involutory key $k = \pi$ we know that $e_k(x) = d_k(x)$ so $\pi(x) = \pi^{-1}(x)$. This means the permutation its own inverse which implies $\pi(i) = j \Rightarrow \pi(j) = i \ \forall \ i,j \in \{1,\ldots,m\}$.
+
+%\noindent ($\Leftarrow$) Given a permutation $\pi$ with $\pi(i) = j \Rightarrow \pi(j) = i \ \forall \ i,j \in \{1,\ldots,m\}$ we get $\pi(x) = \pi^{-1}(x) \ \forall x$. Then, in a permutation cipher with key $k = \pi$ we have $e_k(x) = \pi(x)$ and $d_k(x) = \pi^{-1}(x) = \pi(x)$. Thus $e_k(x) = d_k(x)$ and $e_k(e_k(x)) = x \ \forall x$ and $\pi$ is an involutory key.\\
+
+\noindent (b) For $m = 2$ there are 2 involutory keys (identity and swapping). As we have seen in (a) each involutory key in the permutation cipher is a permutation $\pi$ that satisfies $\pi^2 = \text{id}$ where $\text{id}$ is the identity function. We call these permutations of order 2. Thus, the number of involutory keys for $m$ is the number of permutations $\pi$ of order 2 over $\{1,\ldots,m\}$. We know that for any such permutation $\pi(i) = j$ implies $\pi(j) = i$ for all $i,j \in \{1,\ldots,m\}$, so these permutations can be written as a product of disjointed 2-cycles.
+
+Now suppose $\pi$ is a product of $k$ disjoint 2-cycles. It permutes $2k$ plaintext elements (as each cycle contains two different elements). There are ${m \choose 2k}$ ways to choose exactly $2k$ elements from $m$. Forming 2-cycles over these $2k$ elements is equivalent to forming pairs of numbers and there are exactly $\frac{(2k)!}{k!2^k}$ ways to form $k$ pairs with $2k$ elements. Plugging this together, we obtain
+$$
+{m \choose 2k} \frac{(2k)!}{k!2^k}
+$$
+for the number of permutations with $k$ disjoint 2-cycles. We can now sum over the number of possible 2-cycles in a permutation over $m$ elements: there are at most $\left \lfloor \frac{m}{2} \right \rfloor$ 2-cycles over $m$. Thus, the total number of permutations of order 2 is given by
+$$
+\sum_{k=0}^{\left \lfloor \frac{m}{2} \right \rfloor} {m \choose 2k} \frac{(2k)!}{k!2^k}
+$$
+which is also the number of involutory keys of the permutation cipher for $m$. We can then determine the number of involutory keys for any given $m$:\\
+
+\begin{tabular}{l l}
+    For $m = 2$: & 2 involutory keys\\
+    For $m = 3$: & 4 involutory keys\\
+    For $m = 4$: & 10 involutory keys\\
+    For $m = 5$: & 26 involutory keys\\
+    For $m = 6$: & 76 involutory keys
+\end{tabular}
+
+
+\subsection*{Exercise 1.30}
+
+We can use exhaustive key search for the described stream cipher to obtain the correct key. Using a short Python script (see figure \ref{fig:code}) we obtain all possible pairs of keys and plaintexts (see figure \ref{fig:output}). Given this list we can easily identify $K = 11$ as the correct key as this is the only key giving a decoding that is an English language sentence. The plaintext for the given ciphertext is thus \lstinline{ THEFIRSTDEPOSITCONSISTEDOFONETHOUSANDANDFOURTEENPOUNDSOFGOLD} which (with some added spaces) gives us the plaintext sentence "The first deposit consisted of one thousand and fourteen pounds of gold".
+
+\begin{figure}
+    \centering
+    \lstinputlisting[language=Python]{130.py}
+    \caption{Python script for exhaustive key search on the given stream cipher for the given ciphertext. The script outputs all possible keys and their respective plaintexts. Due to the small number of keys it is easy to then identify the correct key-plaintext pair.}
+    \label{fig:code}
+\end{figure}
+
+\begin{figure}
+    \centering
+    \lstinputlisting[language=Python]{output.txt}
+    \caption{A list of all possible keys and their respective plaintexts. Output of the Python script from figure \ref{fig:code}.}
+    \label{fig:output}
+\end{figure}
+
+
+
+\subsection*{Exercise 2.9}
+
+\begin{figure}
+    \centering
+    \begin{forest}
+    for tree={l sep=4em, s sep=6em, anchor=center}
+    [1,
+        [0.57,edge label={node[midway,left] {0}}  
+            [a: 0.32,edge label={node[midway,left] {0}}] 
+            [0.25,edge label={node[midway,right] {1}}
+                [e: 0.1,edge label={node[midway,left] {0}}]
+                [d: 0.15,edge label={node[midway,right] {1}}]
+            ]
+        ]
+        [0.43,edge label={node[midway,right] {1}}
+            [b: 0.23,edge label={node[midway,left] {0}}] 
+            [c: 0.2,edge label={node[midway,right] {1}}]
+        ] 
+    ]
+    \end{forest} 
+    \caption{Tree resulting from the Huffman algorithm}
+    \label{fig:huffman}
+\end{figure}
+
+We perform Huffman's algorithm and write the result as a tree where each vertex $v$ is the sum of probabilities in the subtree with root $v$. Each leaf node $l$ represents a plaintext $p \in X$. Each edge denotes the encoding for the given subtree so that an encoding of a leaf node can be read as the labels along the path starting at the root node. The algorithm yields the tree seen in figure \ref{fig:huffman}. From the tree we obtain the following Huffman Encoding: a = 00, b = 10, c = 11, d = 011, e = 010. We can compute $H(X)$ by
+
+\begin{align*}
+H(X) &= - \ (0.32 \times \text{log}_2(0.32) + 0.23 \times \text{log}_2(0.23) + 0.2 \times \text{log}_2(0.2)\\
+&\phantom{{}= - \ }+ 0.15 \times \text{log}_2(0.15) + 0.1 \times \text{log}_2(0.1))\notag\\
+& \approx 2.22082
+\end{align*}
+
+\noindent Our encoding takes 2.4 bits on average, which is slightly higher, but very close to $H(X)$.
+
+\subsection*{Exercise 2.13}
+
+Entropy $H$ of a random variable $X$ is defined as
+$$
+H(X) = - \sum_{v \in V} \text{Pr}(X=v)\text{log}_2\text{Pr}(X=v).
+$$
+We can then compute the entropy for the plaintext $H(P)$, for the ciphertext $H(C)$, for the key space $H(K)$, the key equivocation $H(K|C)$ and $H(P|C)$ like:
+
+\begin{align*}
+H(P) &= - \left(\frac{1}{2} \ \text{log}_2\left(\frac{1}{2}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{6} \ \text{log}_2\left(\frac{1}{6}\right) \right)\\
+&= \left(\frac{1}{2} \ \text{log}_2\left(2\right) + \frac{1}{3} \ \text{log}_2\left(3\right) + \frac{1}{6} \ \text{log}_2\left(6\right) \right)\\
+&\approx 1.45915
+\end{align*}
+
+Compute ciphertext probabilities by weighted sum of number of occurences:
+
+\begin{align*}
+& \text{Pr}(1) = \text{Pr}(a) \times \frac{1}{3} + \text{Pr}(b) \times \frac{0}{3} + \text{Pr}(c) \times \frac{1}{3} = \frac{2}{9}\\
+&\text{Pr}(2) = \text{Pr}(a) \times \frac{1}{3} + \text{Pr}(b) \times \frac{1}{3} + \text{Pr}(c) \times \frac{0}{3} = \frac{5}{18}\\
+&\text{Pr}(3) = \text{Pr}(a) \times \frac{1}{3} + \text{Pr}(b) \times \frac{1}{3} + \text{Pr}(c) \times \frac{1}{3} = \frac{1}{3}\\
+&\text{Pr}(4) = \text{Pr}(a) \times \frac{1}{3} + \text{Pr}(b) \times \frac{1}{3} + \text{Pr}(c) \times \frac{0}{3} = \frac{1}{6}\\
+\\
+& H(C) = - \left(\frac{2}{9} \ \text{log}_2\left(\frac{2}{9}\right) + \frac{5}{18} \ \text{log}_2\left(\frac{5}{18}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{6} \ \text{log}_2\left(\frac{1}{6}\right) \right) \approx 1.95469\\
+& H(K) = -\left( \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) \right) = \text{log}_2 3 \approx 1.58496\\
+& H(K|C) = H(K) + H(P) - H(C) \approx 1.58496 + 1.45915 - 1.95469 = 1.08942\\
+& H(P|C) = H(K|C) \approx 1.08942
+\end{align*}
+
+\subsection*{Exercise 2.19}
+
+The cryptosystem given by $S_1 \times S_2$ has an encryption function $e_k(x) = x + (s_1 + s_2) \text{ (mod } 26)$ and decryption function $d_k(x) = x - (s_1 + s_2) \text{ (mod } 26)$ for a key $k = (s_1,s_2)$. We can now define $s = s_1 + s_2$ and write the encryption function as $e_k(x) = x + s \text{ (mod } 26)$ and conversely the decryption function as $d_k(x) = x - s \text{ (mod } 26)$. It is easy to see that this is the definition of the shift cipher. Let $\text{Pr}_1$, $\text{Pr}_2$ be the probability distributions over the keys of $S_1, S_2$. We have $\text{Pr}(s_1,s_2) = \text{Pr}_1(s_1) \text{Pr}_2(s_2)$, so the keys are chosen independently and for $s = s_1 + s_2$ we see that $\text{Pr}(s)$ is equiprobable for all $s$ because $\text{Pr}_1$ is equiprobable. Then $S_1 \times S_2$ is exactly the shift cipher and it follows that $S_1 \times S_2 = S_1$.
+
+\end{document}
