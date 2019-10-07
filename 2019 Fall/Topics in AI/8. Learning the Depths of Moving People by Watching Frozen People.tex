@@ -1,0 +1,88 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Learning the Depths of Moving People by Watching Frozen People}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{October 8, 2019}
+\maketitle
+
+\noindent
+While humans are capable of maintaining a logical interpretation of depth in an environment even when both objects observed and the observer are moving, it has been difficult to recover depth-information even from a stationary, handheld camera observing a dynamic scene. Li et al.~\cite{li} propose a method to predict dense-depth in environments where the camera is naturally moving (as it is handheld) and observing a dynamic environment of people moving freely. In order to learn priors for human depth from data, they present a new dataset which they refer to as the \emph{MannequinChallenge} (MC) dataset. The data was collected from videos uploaded to YouTube as part of the so-called \emph{Mannequin Challenge} where all people in a location would freeze and try to stand as still as possible. This means the entire scene is stationary so camera poses and depth can be estimated and used as training data.
+
+Based on this training data Li et al. train a neural network which, given an image, a binary mask of human regions, a depth map of the environment (non-human regions), a confidence map and an optional human keypoint map, outputs a dense depth map over the entire image. The depth map of the environment is computed using two frames of the video by first estimating the optical flow field using FlowNet 2.0 and then using the relative camera poses and Plane-Plus-Parallax representation. As optical flow can often be noisy, especially in internet video clips with often challenging lighting and recording conditions, the authors provide a confidence map which estimates which regions of the depth map are of high-confidence and which regions are low-confidence.
+
+The authors evaluate their model quantitatively and qualitatively on the MC dataset, on a subset of the TUM RGBD as well as internet videos of dynamic scenes. They find that their model performs well even in dynamic scenes despite having been trained on people "frozen" in scene, outperforming previous models. However, as Li et al. point out the approach still has its limitations, as it requires known camera poses, which may not always be available, and may not be accurate for scenes with non-human moving objects (i.e. cars).
+
+
+
+
+\begin{thebibliography}{9}
+\bibitem{li} 
+Li, Zhengqi, et al. "Learning the Depths of Moving People by Watching Frozen People." \emph{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}. 2019.
+
+\end{thebibliography}
+ 
+\end{document}
