@@ -1,0 +1,88 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Laconic deep learning inference acceleration}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{October 10, 2019}
+\maketitle
+
+\noindent
+As hardware is energy-constraint, an important research direction in hardware acceleration is increasing energy efficiency. Sharify et al.~\cite{sharify} show that there is a large amount of ineffectual computations during in inference in deep learning models. They propose a new hardware accelerator which they call \emph{Laconic} which exploits this fact to achieve high-energy efficiency.
+
+The authors demonstrate that inference computations in (deep) neural networks exhibit high bit sparsity in their activations and weights. They observe bit sparsity in different neural network architectures such as GoogleNet, Resnet50 and MobileNet and show high potential speed-ups by skipping both zero activation and weight terms during inference. While most previous work focused on removing ineffectual activation and weight multiplication terms by exploiting a combination of activation or weight sparsity with activation bit sparsity, this work exploits both activation bit sparsity and weight bit sparsity allowing for a potential speedup of a magnitude higher than exploiting activation bit sparsity only. \emph{Laconic} implements this policy of removing zero terms in booth-encoded activation and weight terms and thus aims to only process the necessary bits.
+
+Sharify et al. newly propose a \emph{Laconic} Processing Element (LPE) and describe its architecture in detail. Instead of processing the product $A \times W$ of a weight $W$ and an activation $A$ in a single cycle, it processes a single term of $A$ and a single term of $W$ individually. Here, a term refers to a signed power of two from the booth-encoding of $A,W$. In order to implement this PE architecture efficiently, \emph{Laconic} utilizes a histogram-based front-end with a modified adder tree back-end. They further explain how these LPEs can be organized into tiles to allow reuse of activations and weights to achieve greater efficiency. The authors hint at the future possibility of further optimizing \emph{Laconic} by exploiting intra-value bit-level parallelism (as opposed to the inter-value bit-value parallelism that they already exploit) in a way that is not possible in bit-parallel hardware.
+
+Their proposed implementation is evaluated in terms of performance, energy and area against a number of other state-of-the-art hardware accelerators: DaDianNao++, SCNN, Eyeriss, Pragmatic and BitFusion. They find that \emph{Laconic} provides a speedup against other hardware accelerators while achieving higher energy efficiency.
+
+
+\begin{thebibliography}{9}
+\bibitem{sharify} 
+Sharify, Sayeh, et al. "Laconic deep learning inference acceleration." \emph{Proceedings of the 46th International Symposium on Computer Architecture}. ACM, 2019.
+
+\end{thebibliography}
+ 
+\end{document}
