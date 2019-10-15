@@ -1,0 +1,95 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Learning Implicit Fields for Generative Shape Modeling}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{October 15, 2019}
+\maketitle
+
+\noindent
+Chen and Zhang~\cite{chen} propose a new method for learning generative models of shapes and shape generation based on implicit fields which can be learned by a neural network classifier. Essentially, an implicit field is a continuous function over 2D or 3D space and can be used to describe a closed shape implicitly by defining an inside/outside field $\mathcal{F}$ which describes whether a given point is inside or outside the shape:
+
+\begin{align*}
+    \mathcal{F}(p) =
+        \begin{cases}
+            0 & \text{if point $p$ is outside the shape}\\
+            1 & \text{otherwise}
+        \end{cases}
+\end{align*}
+
+A mapping from a point $p$ to its value $\mathcal{F}(p)$ can then be learned as a binary classification problem. For this task the authors introduce an implicit decoder called \emph{IM-NET} which learns these shape boundaries and given a feature vector (extracted by a shape encoder) and a point coordinate returns $\mathcal{F}$(p). This implicit decoder can be used in a variety of applications. In their paper Chen and Zhang describe three such applications: shape autoencoding, shape generation and single-view 3D reconstruction. In each of the tasks they replace the decoder with their implicit decoder IM-NET and achieve better results than the state-of-the-art.
+
+In the autoencoding task they use a 3D CNN encoder with IM-NET as the decoder. The samples are much better reconstructions of the ground truth and offer more detail than a simple 3D CNN autoencoder. For shape generation Chen and Zhang train a GAN on their autoencoder IM-AE and compare the results to the state-of-the-art models 3DGAN and PCGAN. In this task IM-GAN achieves much smoother surfaces than the other models (for 3D shapes). Finally they use IM-NET for single-view 3D reconstruction, achieving cleaner surface boundaries.
+
+The authors also find that the less commonly used visual similarity metric \emph{light field descriptor} (LFD) is a better metric than the common evaluation metrics as they achieve results that are much better visually but score lower on most of the common metrics. LFD however appears to capture these visual improvements much better.
+
+\begin{thebibliography}{9}
+\bibitem{chen} 
+Chen, Zhiqin, and Hao Zhang. "Learning implicit fields for generative shape modeling." \emph{Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition}. 2019.
+
+\end{thebibliography}
+ 
+\end{document}
