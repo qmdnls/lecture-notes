@@ -127,7 +127,7 @@ urlcolor=blue
 
 \subsection*{Exercise 1.6}
 
-Given the shift cipher $S$ over $\mathbb{Z}_{26}$, a key is an involutory key if the encryption and decryption function are the same, so if and only if $x = e_k(d_k(x)) = e_k(e_k(x)) = x + 2k \text{ (mod } 26) \ \forall x$ which yields the condition $x = x + 2k \text{ (mod } 26) \ \forall x$. We can find exactly two keys $k$ that solve this equation: $k = 0$ and $k = 13$. Thus, these are the involutory keys of $S$.
+Given the shift cipher $S$ over $\mathbb{Z}_{26}$, a key is an involutory key if the encryption and decryption function are the same, so if and only if $x = d_k(e_k(x)) = e_k(e_k(x)) = x + 2k \text{ (mod } 26) \ \forall x$ which yields the condition $x = x + 2k \text{ (mod } 26) \ \forall x$. We can find exactly two keys $k$ that solve this equation: $k = 0$ and $k = 13$. Thus, these are the involutory keys of $S$.
 
 \subsection*{Exercise 1.7}
 
@@ -250,7 +250,7 @@ H(P) &= - \left(\frac{1}{2} \ \text{log}_2\left(\frac{1}{2}\right) + \frac{1}{3}
 &\approx 1.45915
 \end{align*}
 
-Compute ciphertext probabilities by weighted sum of number of occurences:
+\noindent Compute ciphertext probabilities by weighted sum of number of occurences:
 
 \begin{align*}
 & \text{Pr}(1) = \text{Pr}(a) \times \frac{1}{3} + \text{Pr}(b) \times \frac{0}{3} + \text{Pr}(c) \times \frac{1}{3} = \frac{2}{9}\\
@@ -258,10 +258,28 @@ Compute ciphertext probabilities by weighted sum of number of occurences:
 &\text{Pr}(3) = \text{Pr}(a) \times \frac{1}{3} + \text{Pr}(b) \times \frac{1}{3} + \text{Pr}(c) \times \frac{1}{3} = \frac{1}{3}\\
 &\text{Pr}(4) = \text{Pr}(a) \times \frac{1}{3} + \text{Pr}(b) \times \frac{1}{3} + \text{Pr}(c) \times \frac{0}{3} = \frac{1}{6}\\
 \\
-& H(C) = - \left(\frac{2}{9} \ \text{log}_2\left(\frac{2}{9}\right) + \frac{5}{18} \ \text{log}_2\left(\frac{5}{18}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{6} \ \text{log}_2\left(\frac{1}{6}\right) \right) \approx 1.95469\\
-& H(K) = -\left( \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) \right) = \text{log}_2 3 \approx 1.58496\\
-& H(K|C) = H(K) + H(P) - H(C) \approx 1.58496 + 1.45915 - 1.95469 = 1.08942\\
-& H(P|C) = H(K|C) \approx 1.08942
+& H(C) = - \left(\frac{2}{9} \ \text{log}_2\left(\frac{2}{9}\right) + \frac{5}{18} \ \text{log}_2\left(\frac{5}{18}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{6} \ \text{log}_2\left(\frac{1}{6}\right) \right) \approx 1.95469
+\end{align*}
+\smallskip
+
+\noindent As the three keys are equiprobable we get
+
+\begin{align*}
+H(K) = -\left( \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) + \frac{1}{3} \ \text{log}_2\left(\frac{1}{3}\right) \right) = \text{log}_2 3 \approx 1.58496
+\end{align*}
+\smallskip
+
+\noindent and given the theorem we can compute $H(K|C)$ as follows:
+
+\begin{align*}
+H(K|C) = H(K) + H(P) - H(C) \approx 1.58496 + 1.45915 - 1.95469 = 1.08942
+\end{align*}
+\smallskip
+
+\noindent Finally, as each plaintext is uniquely defined by its key given a ciphertext:
+
+\begin{align*}
+H(P|C) = H(K|C) \approx 1.08942
 \end{align*}
 
 \subsection*{Exercise 2.19}
