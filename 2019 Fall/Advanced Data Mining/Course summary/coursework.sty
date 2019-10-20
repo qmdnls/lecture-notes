@@ -1,0 +1,673 @@
+%% coursework.tex
+%%
+%% Provides common functionality for the various coursework document classes.
+
+\RequirePackage{expl3, xparse, l3keys2e, pdftexcmds, silence, iftex}
+
+\ExplSyntaxOn
+
+%% Define Package Metadata
+\tl_const:Nn \c__coursework_packagename_tl {coursework}
+\tl_const:Nn \c__coursework_packagedate_tl {2019/07/21}
+\tl_const:Nn \c__coursework_packageversion_tl {2019.3}
+\tl_const:Nn \c__coursework_packagedescription_tl {A~ LaTeX3~ package~ to~ provide~ common~ functionality~ for~ the~ various~ coursework~ document~ classes.}
+
+\ProvidesExplPackage{\c__coursework_packagename_tl}         % Name
+                    {\c__coursework_packagedate_tl}         % Date
+                    {\c__coursework_packageversion_tl}      % Version
+                    {\c__coursework_packagedescription_tl}  % Description
+
+%% Define Package Options
+\bool_new:N \l__coursework_loadcode_bool
+\bool_new:N \l__coursework_loaddiag_bool
+\bool_new:N \l__coursework_numbertheorems_bool
+\bool_gset_false:N \l__coursework_loadcode_bool
+\bool_gset_false:N \l__coursework_loaddiag_bool
+\bool_gset_true:N \l__coursework_numbertheorems_bool
+
+\DeclareOption{code}{ \bool_gset_true:N \l__coursework_loadcode_bool }
+\DeclareOption{diagram}{ \bool_gset_true:N \l__coursework_loaddiag_bool }
+\DeclareOption{nothmnum}{ \bool_gset_false:N \l__coursework_numbertheorems_bool }
+
+\ProcessOptions\relax
+
+% Suppress warnings
+\WarningFilter{remreset}{The remreset package}
+
+%% Load Required Packages
+% Page Layout
+\RequirePackage{hyperref}
+\RequirePackage{xcolor}
+\RequirePackage{graphicx}
+\RequirePackage{changepage} % adjustwidth env., for definitions et al.
+\RequirePackage[breakable,skins,xparse]{tcolorbox}
+\RequirePackage[noadjust]{marginnote}
+\RequirePackage[all]{nowidow} % Prevent widow/orphan lines
+\RequirePackage{calc}
+\RequirePackage{setspace}
+
+% Text Formatting (excluding fonts)
+\RequirePackage{enumitem} % customize lists
+\RequirePackage{booktabs} % style tables
+\RequirePackage{tabularx} % full-width tables
+\RequirePackage[labelfont=bf]{caption}
+
+% Mathematics
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}
+\RequirePackage{amssymb}
+\RequirePackage{thmtools}
+\RequirePackage{mathtools}
+\RequirePackage{stmaryrd}
+
+
+% Physics
+\RequirePackage{physics}
+\RequirePackage{siunitx}
+\RequirePackage{tensor}
+
+% Code
+\bool_if:NT \l__coursework_loadcode_bool {
+	\makeatletter
+		\ifnum\pdf@shellescape = 0
+			\typeout{}
+			\typeout{******************}
+			\typeout{* You have passed the `code` option.}
+			\typeout{* You must compile your document with the `-shell-escape` flag.}
+			\typeout{* See the `minted` package for more information.}
+			\typeout{******************}
+			\typeout{}
+			\PackageError{\c__coursework_packagename_tl}{Needs `-shell-escape`}{}
+		\fi
+	\makeatother
+	\RequirePackage{minted}
+	\RequirePackage{algorithm}
+	\RequirePackage{algpseudocode}
+
+	\AtBeginDocument{\usemintedstyle{tango}}
+	\ifXeTeX
+		\typeout{}
+		\typeout{******************}
+		\typeout{* Be sure to use the `-8bit` flag when compiling!}
+		\typeout{* Otherwise your tab literals will be messed up!}
+		\typeout{******************}
+		\typeout{}
+	\fi
+}
+
+\bool_if:NT \l__coursework_loaddiag_bool {
+	\RequirePackage{tikz}
+	\RequirePackage{pgfplots}
+	\RequirePackage[american, siunitx]{circuitikz}
+	\RequirePackage{chemfig}
+
+	\ctikzset{bipoles/thickness=1}
+	\pgfplotsset{compat=1.16}
+}
+
+% Fonts
+\ifPDFTeX
+	\RequirePackage[utf8]{inputenc} % Unicode input
+	\RequirePackage[T1]{fontenc} % Unicode output
+	\RequirePackage[letterspace = 20]{microtype}
+	\RequirePackage{lmodern}
+	\NewDocumentCommand\ipafont{ } { \relax }
+	\NewDocumentCommand\setipafont{ m } { \relax }
+\else
+	\RequirePackage[no-math]{fontspec}
+	\let\mathbbrm\mathbb
+	\let\oldvarnothing\varnothing
+	\RequirePackage{unicode-math}
+	\AtBeginDocument{\let\varnothing\oldvarnothing}
+	\let\mathbbsf\mathbb % Recover roman bb, sans serif bb fonts
+	\let\mathbb\mathbbrm % Make roman bb default again
+	\ifXeTeX
+		\RequirePackage{microtype}
+	\else
+		\RequirePackage[letterspace = 100]{microtype}
+	\fi
+
+	\let\ipafont\relax
+
+	\NewDocumentCommand\setipafont{ m } { 
+		\renewfontfamily\ipafont{#1}
+	}
+\fi
+
+% Line Spacing
+\NewDocumentCommand\tightspacing{ }  {\renewcommand{\baselinestretch}{0.8}}
+
+\AtBeginDocument{
+	\WarningFilter[ams]{amsmath}{Foreign command}
+	\ActivateWarningFilters[ams] % Allow \over, etc.
+}
+
+% Colors
+\definecolor{linkblue}{HTML}{2364AA}
+\definecolor{linkgold}{HTML}{C1900B}
+\definecolor{linkred}{HTML}{B52639}
+
+\definecolor{covergrey}{HTML}{2e303c}
+
+\hypersetup{
+	colorlinks = true,
+	linkcolor = linkred,
+	citecolor = linkred,
+	urlcolor = linkblue
+}
+
+%% Define Custom Macros
+% Linguistics
+\let\orthfont\relax
+\makeatletter
+\def\ipa{\@ifstar\@ipa\@@ipa}
+\def\@ipa#1{\text{*{\ipafont #1}}}
+\def\@@ipa#1{\text{\ipafont #1}}
+\def\phon{\@ifstar\@phon\@@phon}
+\def\@phon/#1/{\ensuremath{\left/\text{\ipa*{#1}}\right/}}
+\def\@@phon/#1/{\ensuremath{\left/\text{\ipa{#1}}\right/}}
+\def\allo{\@ifstar\@allo\@@allo}
+\def\@allo[#1]{\ensuremath{\left[\text{\ipa*{#1}}\right]}}
+\def\@@allo[#1]{\ensuremath{\left[\text{\ipa{#1}}\right]}}
+\def\orth{\@ifstar\@orth\@@orth}
+\def\@orth#1{\ensuremath{\left\langle\text{*{\orthfont #1}}\right\rangle}}
+\def\@@orth#1{\ensuremath{\left\langle\text{{\orthfont #1}}\right\rangle}}
+\makeatother
+
+\let\denfont\relax
+\NewDocumentCommand{\den}{ O{}m }{\ensuremath{\left\llbracket\text{\denfont #2}\right\rrbracket^{#1}}}
+
+
+%%% Mathematics
+%% Single Character Commands
+\let\oldO\O
+\DeclareDocumentCommand\O{ } {
+	\ifmmode \mathcal{O} \else \oldO \fi }  % Asymptotic upper bound in math mode, Ø otherwise
+
+% 'Blackboard bold characters'
+\NewDocumentCommand{\field}{ m }{\mathbf{#1}} % Styling for fields, etc
+\DeclareDocumentCommand{\C}{ }{\field{C}} % Complex numbers; In XeLaTeX this is already defined
+\NewDocumentCommand{\E}{ }{\field{E}}  % Expected value
+\NewDocumentCommand{\F}{ }{\field{F}}  % Finite field
+\NewDocumentCommand{\N}{ }{\field{N}}  % Natural numbers
+\NewDocumentCommand{\Q}{ }{\field{Q}}  % Rational numbers
+\NewDocumentCommand{\R}{ }{\field{R}}  % Real Numbers
+\NewDocumentCommand{\Z}{ }{\field{Z}}  % Integers
+
+% Operators and named objects
+\NewDocumentCommand{\collection}{ m }{\mathrm{#1}} % Styling for collections
+\DeclareMathOperator{\Hom}{\collection{Hom}} % Homomorphism group
+\DeclareMathOperator{\Aut}{\collection{Aut}} % Automorphism group
+\DeclareMathOperator{\Inn}{\collection{Inn}} % Inner Automorphism group
+\DeclareMathOperator{\Syl}{\collection{Syl}} % Syllow group
+\DeclareMathOperator{\Gal}{\collection{Gal}} % Galois group
+\DeclareMathOperator{\Mat}{\collection{Mat}} % Matrix group
+\DeclareMathOperator{\GL}{\collection{GL}}   % General Linear group
+\DeclareMathOperator{\SL}{\collection{SL}}   % Special Linear group
+
+% Morphisms, functions, etc
+\NewDocumentCommand{\map}{ m }{\mathrm{#1}} % Styling for mappings
+\DeclareMathOperator{\lcm}{\map{lcm}}   % Least Common Multiple
+\DeclareMathOperator{\cis}{\map{cis}}   % cos + i sin
+\DeclareMathOperator{\id}{\map{id}}     % Identity morphism
+\DeclareMathOperator{\Char}{\map{char}} % Characteristic of a field, or set of characteristic subgroups
+
+% Categories
+\NewDocumentCommand{\category}{ m }{\mathsf{#1}} % Styling for categories
+\DeclareMathOperator{\Set}{\category{Set}} % Category of sets
+\DeclareMathOperator{\Group}{\category{Group}} % Category of groups
+\DeclareMathOperator{\Grp}{\category{Grp}} % Category of grps
+\DeclareMathOperator{\Vect}{\category{Vect}} % Category of vector spaces
+\DeclareMathOperator{\Ab}{\category{Ab}} % Category of abelian groups
+\let\Top\relax
+\DeclareMathOperator{\Top}{\category{Top}} % Category of topological spaces
+
+% Arrows and Mappings
+\NewDocumentCommand{\bijects}{ }{\lhook\joinrel\twoheadrightarrow} % Bijective arrow
+\NewDocumentCommand{\surjects}{ }{\twoheadrightarrow} % Surjective arrow
+\NewDocumentCommand{\injects}{ }{\lhook\joinrel\rightarrow} % Injective arrow
+\NewDocumentCommand{\onto}{ }{\surjects} % Mirrors the 'A \to B' syntax
+\NewDocumentCommand{\into}{ }{\injects}  % Mirrors the 'A \to B' syntax
+\NewDocumentCommand{\isomap}{ }{\stackrel{\sim}{\to}} % Isometric arrow
+\NewDocumentCommand{\parto}{ } {\nrightarrow} % Partial-to, a partial function
+\NewDocumentCommand{\semicolon}{ }
+    {\nobreak\mskip2mu\mathpunct{}\nonscript\mkern-\thinmuskip{;}\mskip6muplus1mu\relax} % Matches the spacing of \colon
+
+% Relations
+\let\isom\simeq  % Create \isom (≃) for reading purposes and to mirror \isomap
+\let\gcong\cong  % Define \gcong (≅) for geometric congruence
+\let\cong\equiv  % Define \cong (≡) so that a ≡ b (m) is typed like it's read
+\let\asymp\simeq % Define \asymp (≃) for asymptotics
+\NewDocumentCommand\normal{ } { \mathbin{\lhd} }   % Normal subgroups
+\NewDocumentCommand\charsg{ } { \mathbin{\lhd !} } % Chaaracteristic subgroups
+
+% Delimited Expressions
+\NewDocumentCommand{\floor}{ m }{\left\lfloor #1 \right\rfloor} % Floor
+
+\RenewDocumentCommand\qedsymbol{ } { 
+	\ifPDFTeX
+		$\blacksquare$
+	\else
+		$∎$ % Use the correct Unicode QED symbol
+	\fi
+}
+
+% Notes and Footnotes
+\NewDocumentCommand\note{ om } {
+	\IfValueTF{#1}{
+		\marginnote{\footnotesize\textit{#2}}[#1]
+	}{
+		\marginnote{\footnotesize\textit{#2}}
+	}
+}
+
+\let\oldfootnote\footnote
+\newcounter{cfootnote}
+\DeclareDocumentCommand\footnote{ om } {
+	\IfValueTF{#1}{
+		\refstepcounter{cfootnote}
+		\textsuperscript{\textup{\hyperlink{fn:\thecfootnote}{\thecfootnote}}}
+		\note{\llap{\textup{\textsuperscript{\hypertarget{fn:\thecfootnote}{\thecfootnote}}}}#2}[#1]
+	}{
+		\refstepcounter{cfootnote}
+		\textsuperscript{\textup{\hyperlink{fn:\thecfootnote}{\thecfootnote}}}
+		\note{\llap{\textup{\textsuperscript{\hypertarget{fn:\thecfootnote}{\thecfootnote}}}}#2}
+	}
+}
+
+% Parts Environment
+\NewDocumentEnvironment{parts}
+  { }
+  {\begin{enumerate}[
+  	label = \textup{(\alph*)},
+  	labelwidth = 4.5em,
+  	labelsep = 0.5em,
+  	itemsep = 0ex,
+  ]}
+  {\end{enumerate}}
+
+\DeclareDocumentCommand\part{ o } {
+	\IfNoValueTF{#1} {
+		\item
+	}{
+		\item\label{#1}
+	}
+}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%                           %%%
+%%% Theorem-like Environments %%%
+%%%                           %%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Theorems et al. are important parts of any
+% mathematical document and must have a 
+% cohesive visual identity. As such, we define
+% several realated "theorem" styles to make this
+% visual identity and distinction clear.
+%
+% (1) Lemma style
+%     This is how theorems are typeset. Theorems are
+%     meant to be very closely related to the expository
+%     text which surrounds them, and so their style is
+%     almost identical, featureing only a bold head.
+%
+%     Includes: theorem, corollary, lemma, proposition
+%
+% (2) Remark style
+%     Unlike theorems, remarks are meant to be clearly
+%     separated from the rest of the text. They are set 
+%     in colored boxes with a thick left edge. The lack
+%     of a top or bottom border indicates that remarks
+%     cannot stand on their own; they must be connected
+%     to an earlier statement.
+%
+%     Includes: remark, warning, claim, question
+%
+% (3) Problem style
+%     Like remarks, problems are meant to stand apart from
+%     the rest of the text. However, they are often stand-
+%     alone items, and so have a border on all edges.
+%
+%     Includes: problem, example, exercise
+%
+% (4) Proof style
+%     Basically the same as the AMS proof style. This is
+%     actual body text, nothing more, but it is clearly
+%     demarcated by italic head.
+%
+%     Includes: proof, solution
+
+% Declaration of theorem styles
+\declaretheoremstyle[
+	spaceabove=0.5\baselineskip, spacebelow=0em,
+	headfont=\normalfont\bfseries,
+	bodyfont=\normalfont\itshape
+]{lemma}
+\declaretheoremstyle[
+	spaceabove=0.5\baselineskip, spacebelow=0em,
+	headfont=\normalfont\small\sffamily,
+	bodyfont=\normalfont\small,
+	headpunct = {\hspace{5pt}---},
+	postheadspace= 5pt
+]{remark}
+\declaretheoremstyle[
+	headfont=\normalfont\bfseries,
+	bodyfont=\normalfont,
+	spaceabove=0em, spacebelow=0em,
+]{definition} 
+
+
+% Declaration of various theorems 
+% Lemma-style
+\declaretheorem[style=lemma, numberwithin=section]{lemma}
+\declaretheorem[style=lemma, numbered=no, name={Lemma}]{lemma*}
+\declaretheorem[style=lemma, sibling=lemma]{theorem}
+\declaretheorem[style=lemma, numbered=no, name={Theorem}]{theorem*}
+\declaretheorem[style=lemma, sibling=lemma]{corollary}
+\declaretheorem[style=lemma, numbered=no, name={Corollary}]{corollary*}
+\declaretheorem[style=lemma, sibling=lemma]{conjecture}
+\declaretheorem[style=lemma, numbered=no, name={Conjecture}]{conjecture*}
+\declaretheorem[style=lemma, sibling=lemma]{proposition}
+\declaretheorem[style=lemma, numbered=no, name={Proposition}]{proposition*}
+
+% Definition-style
+\declaretheorem[style=definition,title={Definition},numbered=no]{cdefinition}
+\declaretheorem[style=definition,title={Notation},numbered=no]{cnotation}
+\declaretheorem[style=definition,title={Abuse~of~Notation},numbered=no]{cabuse}
+\declaretheorem[style=definition,postheadhook=\leavevmode,title={Problem},numberwithin=section]{cproblem}
+\declaretheorem[style=definition,postheadhook=\leavevmode,title={Exercise},numberwithin=section]{cexercise}
+\declaretheorem[style=definition,postheadhook=\leavevmode,title={Example},numberwithin=section]{cexample}
+
+% Remark-style
+\declaretheorem[style=remark,postheadhook=\leavevmode,title={Remark},numbered=no]{cremarkun}
+\declaretheorem[style=remark,postheadhook=\leavevmode,title={Remark},numberwithin=section]{cremark}
+\declaretheorem[style=remark,postheadhook=\leavevmode,title={Warning},numbered=no]{cwarningun}
+\declaretheorem[style=remark,postheadhook=\leavevmode,title={Warning},numberwithin=section]{cwarning}
+\declaretheorem[style=remark,postheadhook=\leavevmode,title={Claim},numbered=no]{cclaimun}
+\declaretheorem[style=remark,postheadhook=\leavevmode,title={Claim},numberwithin=section]{cclaim}
+\declaretheorem[style=remark,postheadhook=\leavevmode,title={Question},numbered=no]{cquestionun}
+\declaretheorem[style=remark,postheadhook=\leavevmode,title={Question},numberwithin=section]{cquestion}
+
+% Boxes
+% Box colors
+\definecolor{backgroundgold} {RGB}{255, 237, 204}
+\definecolor{bordergold}     {RGB}{181, 133, 21 }
+\definecolor{backgroundgrey} {RGB}{242, 242, 242}
+\definecolor{bordergrey}     {RGB}{68 , 68 , 68 }
+\definecolor{backgroundred}  {RGB}{252, 239, 237}
+\definecolor{borderred}      {RGB}{244, 92 , 66 }
+\definecolor{backgroundgreen}{RGB}{244, 255, 234}
+\definecolor{bordergreen}    {RGB}{67,  117, 21 }
+
+\DeclareTColorBox{edgebox}{ m }{ % Problem, exercise, example
+	boxrule = 0.3pt,
+	boxsep = 0.4cm,
+	breakable,
+	sharp~corners,
+	before = { \par \vskip 7pt },
+	colframe = border#1,
+	colback = background#1
+}
+
+\DeclareTColorBox{flagbox}{ m }{ % Remark, claim, warning
+	boxrule = 0pt,
+	leftrule = 4pt,
+	breakable,
+	sharp~corners,
+	before = { \par \vskip 7pt },
+	colframe = border#1,
+	colback = background#1
+}
+
+% Create environment wrappers for each theorem
+\NewDocumentEnvironment{definition}{o}{
+	% Pre Content
+	\begin{adjustwidth}{1cm}{1cm}
+		\vspace*{-\baselineskip} % adjustwidth adds extra space
+		\IfValueTF{#1}{
+			\begin{cdefinition}[#1]
+			\leavevmode\note{#1}\leavevmode\ignorespaces
+		}{
+			\begin{cdefinition}
+		}
+}{
+	% Post Content
+		\end{cdefinition}
+	\end{adjustwidth}
+}
+
+\NewDocumentEnvironment{notation}{o}{
+	% Pre Content
+	\begin{adjustwidth}{1cm}{1cm}
+		\vspace*{-\baselineskip} % adjustwidth adds extra space
+		\IfValueTF{#1}{
+			\begin{cnotation}[#1]
+			\leavevmode\note{#1}\leavevmode\ignorespaces
+		}{
+			\begin{cnotation}
+		}
+		
+}{
+	% Post Content
+		\end{cnotation}
+	\end{adjustwidth}
+}
+
+\NewDocumentEnvironment{abuse}{o}{
+	% Pre Content
+	\begin{adjustwidth}{1cm}{1cm}
+		\vspace*{-\baselineskip} % adjustwidth adds extra space
+		\IfValueTF{#1}{
+			\begin{cabuse}[#1]
+			\leavevmode\note{#1}\leavevmode\ignorespaces
+		}{
+			\begin{cabuse}
+		}
+		
+}{
+	% Post Content
+		\end{cabuse}
+	\end{adjustwidth}
+}
+
+\NewDocumentEnvironment{problem}{ o } {
+	\begin{edgebox}{grey}
+		\ifXeTeX % Correct margin note spacing
+			\edef\marginnotetextwidth{11.8966390917cm}
+		\fi
+		\setlength{\parindent}{0.5cm} % Indent paragraphs
+		\IfValueTF{#1} {
+			\begin{cproblem}[#1]
+		}{
+			\begin{cproblem}
+		}
+}{
+			\end{cproblem}
+	\end{edgebox}
+}
+
+\NewDocumentEnvironment{exercise}{ o } {
+	\begin{edgebox}{grey}
+		\ifXeTeX % Correct margin note spacing
+			\edef\marginnotetextwidth{11.8966390917cm}
+		\fi
+		\setlength{\parindent}{0.5cm} % Indent paragraphs
+		\IfValueTF{#1} {
+			\begin{cexercise}[#1]
+		}{
+			\begin{cexercise}
+		}
+}{
+			\end{cexercise}
+	\end{edgebox}
+}
+
+\NewDocumentEnvironment{example}{ o } {
+	\begin{edgebox}{gold}
+		\ifXeTeX % Correct margin note spacing
+			\edef\marginnotetextwidth{11.8966390917cm}
+		\fi
+		\setlength{\parindent}{0.5cm} % Indent paragraphs
+		\IfValueTF{#1} {
+			\begin{cexample}[#1]
+		}{
+			\begin{cexample}
+		}
+}{
+			\end{cexample}
+	\end{edgebox}
+}
+
+\NewDocumentEnvironment{remark}{ } {
+	\begin{flagbox}{grey}
+		\begin{cremark}
+}{
+		\end{cremark}
+	\end{flagbox}
+}
+
+\NewDocumentEnvironment{remark*}{ } {
+	\begin{flagbox}{grey}
+		\begin{cremarkun}
+}{
+		\end{cremarkun}
+	\end{flagbox}
+}
+
+\NewDocumentEnvironment{warning}{ } {
+	\begin{flagbox}{red}
+		\begin{cwarning}
+}{
+		\end{cwarning}
+	\end{flagbox}
+}
+
+\NewDocumentEnvironment{warning*}{ } {
+	\begin{flagbox}{red}
+		\begin{cwarningun}
+}{
+		\end{cwarningun}
+	\end{flagbox}
+}
+
+\NewDocumentEnvironment{claim}{ }{
+	\begin{flagbox}{green}
+		\begin{cclaim}
+}{
+		\end{cclaim}
+	\end{flagbox}
+}
+
+\NewDocumentEnvironment{claim*}{ }{
+	\begin{flagbox}{green}
+		\begin{cclaimun}
+}{
+		\end{cclaimun}
+	\end{flagbox}
+}
+
+\NewDocumentEnvironment{question}{ }{
+	\begin{flagbox}{grey}
+		\begin{cquestion}
+}{
+		\end{cquestion}
+	\end{flagbox}
+}
+
+\NewDocumentEnvironment{question*}{ }{
+	\begin{flagbox}{grey}
+		\begin{cquestionun}
+}{
+		\end{cquestionun}
+	\end{flagbox}
+}
+
+% Redefine proof environment to remove extra vertical space
+\makeatletter
+\renewenvironment{proof}[1][\proofname]{\par
+	\vspace{-0.25\baselineskip}
+  \pushQED{\qed}%
+  \normalfont
+  \topsep0.5\baselineskip \partopsep0pt
+  \trivlist
+  \item[\hskip\labelsep
+        \itshape
+    #1\@addpunct{.}]\ignorespaces
+}{%
+  \popQED\endtrivlist\@endpefalse
+}
+\makeatother
+
+% Subproof
+\newlength{\spleftmar}
+\NewDocumentEnvironment{subproof} { o } {
+	\begingroup\par
+	\RenewDocumentCommand\qedsymbol{ }{$\square$}
+	\setlength{\spleftmar}{\widthof{\textit{Proof.~}}}
+	\parshape=1~\spleftmar~\dimexpr\linewidth-2\spleftmar\relax
+	\IfNoValueTF{#1}{
+		\begin{proof}
+	}{
+		\begin{proof}[#1]
+	}
+}{
+	\end{proof}
+	\par
+	\endgroup
+}
+
+% Solution
+\NewDocumentEnvironment{solution} { o }
+                       {\IfNoValueTF{#1}{\begin{proof}[Solution]}{\begin{proof}[#1]}}
+                       {\end{proof}}
+
+%% Problems Environment
+% Intended mostly for handouts, this is simply a fancy
+% enumerate wrapper that provides a compact way to write
+% out lots of different problems. As a bonus, it maintains
+% source compatability with the traditional block-style probelms;
+% Simply remove a problem from the \begin{problems} ... \end{problems}
+% environment.
+
+% Store optional argument for use in items
+\tl_new:N \l_coursework_prlabel_tl
+
+\NewDocumentEnvironment{problems}{ o } {
+	% Store old \problem
+	\let\oldproblem\problem
+	\let\oldendproblem\endproblem
+	\let\problem\relax
+	\let\endproblem\par\relax
+
+	\IfValueTF{#1}{
+		\tl_gset:Nn \l_coursework_prlabel_tl {#1}
+	}{
+		\tl_gset:Nn \l_coursework_prlabel_tl {Problem}
+	}
+
+	% Redefine problem environment temporarily
+	\NewDocumentCommand\problem{ o } {
+		\IfValueTF{##1} {
+			\item[\refstepcounter{enumi}
+			      \textbf{\l_coursework_prlabel_tl{}~\number\value{enumi}~\textmd{(##1)}.}]
+		}{
+			\item
+		}
+	}
+
+	% Init enumerate
+	\begin{enumerate}[label=\textbf{\l_coursework_prlabel_tl{}~\arabic*.},
+	                                wide,
+	                                labelwidth=!,
+	                                labelindent=0pt]
+}{
+	\end{enumerate}
+
+	% Restore \problem
+	\let\problem\oldproblem
+	\let\endproblem\oldendproblem
+	\let\oldproblem\relax
+}
+
+\ExplSyntaxOff

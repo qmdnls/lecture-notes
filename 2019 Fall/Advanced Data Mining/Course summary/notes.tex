@@ -1,0 +1,63 @@
+\documentclass{lnotes}
+
+% Bibliography
+\usepackage[
+	style = alphabetic ,
+]{biblatex}
+\addbibresource{references.bib} 
+
+% Packages
+\usepackage{epigraph}
+\usepackage{wasysym}
+\usepackage[osf]{libertineRoman}
+\usepackage{tikz-cd}
+
+% Document Information
+\title{Advanced Data Mining}
+\course{\textsc{M}2177.003000}
+\place{Seoul National University}
+\term{Fall}
+\year{2019}
+
+\blurb{
+	These are lecture notes for ``Advanced Data Mining'' taught by U Kang at Seoul National University during the fall of 2019.
+	These notes are not official and for personal use, and thus have not been proofread by the instructor for the course and may be of limited use to you.
+	These notes live in my lecture notes respository at 
+	\[\text{\url{https://github.com/qmdnls/lecture-notes}.}\] 
+	If you find any errors, please open a bug report describing the error, and label it with the course identifier, or open a pull request so I can correct it.
+}
+
+% spacing in itemize environments
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=2pt,parsep=2pt,partopsep=2pt}
+
+\begin{document}
+
+\section*{Syllabus}
+
+\begin{center}
+\begin{tabular}{@{}rp{10cm}@{}}
+\toprule 
+\textbf{Instructor} & Kang U, \url{https://datalab.snu.ac.kr/~ukang/} \\
+\textbf{Lecture} & MW 3:30--4:45 \textsc{pm}, 301-101 \\
+\textbf{Textbook} & None \\
+\textbf{Midterm} & Wednesday, October 23, 2019 \\
+\textbf{Final} & TBA \\
+\bottomrule 
+\end{tabular} \\[3ex]
+\end{center}
+
+Data mining attracted much interests as an essential tool for big data analysis. Especially, designing and implementing advanced data mining algorithms and analysis platforms play crucial roles in extracting executable knowledges from big data. This course covers advanced data mining techniques, algorithms, and core platforms for big data analysis. This course also covers the techniques to effectively analyze very large data and high-speed data.
+A very important aspect of this course is the course project. Students will pick an interesting data mining project, and do data mining researches on the topic. At the end of the course, students will learn how to do interesting researches in data mining, and how to write good papers.
+
+Your final grade for the course will be determined by
+$$
+10\% \text{ attendance} + 20\% \text{ homework} + 20\% \text{ midterm} + 20\% \text{ final} + 30\% \text{ project}.
+$$
+
+%\printbibliography
+ 
+\include{Lectures/Graphs}
+\include{Lectures/Spectral_analysis}
+
+\end{document}
