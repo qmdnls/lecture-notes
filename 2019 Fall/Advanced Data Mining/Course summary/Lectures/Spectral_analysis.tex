@@ -1,1 +1,312 @@
 \section{Spectral analysis}
+\bigskip
+
+We will see that random walks on graphs and their probabilities are related to electric networks. We will first recap basic restistance theory.
+
+\subsection{Resistance theory}
+\bigskip
+
+For voltage $V$, current $I$, resistance $R$ and conductance $C$ we know that
+\begin{align*}
+    C = \frac{1}{R} && I = CV = \frac{V}{R}
+\end{align*}
+and in other words $V = RI$. In series we have the total resistance and total conductance
+\begin{align*}
+    R = R_1 + \ldots + R_m && C = \frac{1}{\frac{1}{C_1} + \ldots + \frac{1}{C_m}}.
+\end{align*}
+Analogous to that, we write the total conductance and total resistance in parallel as
+\begin{align*}
+    R = \frac{1}{\frac{1}{R_1} + \ldots + \frac{1}{R_m}} && C = C_1 + \ldots + C_m
+\end{align*}
+
+The \emph{effective resistance} between points $a,b$ is defined as $R_{ab} = \frac{V_{ab}}{I_{ab}}$. According to \emph{Kirchhoff's law} the effective resistance can be computed by flow in = flow out. More specifically, given three points $V_1, V, V_2$ in series with conductors $C_1, C_2$ between them (see slide for visualization), we have flow from $V_1$ into $V$ is $I_1$  and the flow from $V$ into $V_2$ is $I_2$ and
+\begin{align*}
+    I_1 = C_1(V_1-V) && I_2 = C_2(V-V_2)
+\end{align*}
+With Kirchhoff's law $I_1 = I_2$ and thus it follows that
+\begin{align*}
+    V = \frac{C_1}{C} V_1 + \frac{C_2}{C} V_2.
+\end{align*}
+Now consider a weighted graph $G = (V,E,C)$ with weights $C$ where $C_{ij}$ is the conductance for the resistor between $i,j$ and $C_i = \sum_{(i,j) \in E} C_{ij}$. The adjacency matrix $A$ is $A_{ij} = C_{ij}$ if $(i,j) \in E$ and 0 otherwise. The \emph{Laplacian matrix} $L$ is $L = D - A$ where $D$ is the diagonal matrix with entries $D_{ii} = C_i$. Then,
+\begin{align*}
+    L_{ij} =
+        \begin{cases}
+            C_i & \text{ if } i=j\\
+            -C_{ij} & \text{ if} (i,j) \in E\\
+            0 & \text{otherwise}
+        \end{cases}
+\end{align*}
+\begin{lemma}
+Let $V$ be a vector containing the voltages for all nodes. Then $(LV)_i$ is the residual current at node $i$.
+\end{lemma}
+\noindent Assuming $I=1$ computing effective resistance becomes as easy as solving
+\begin{align*}
+    LV =
+        \begin{bmatrix}
+            1 \\
+            0 \\
+            \cdots \\
+            0 \\
+            -1
+        \end{bmatrix}
+\end{align*}
+as $R_{1n} = \frac{V}{I} = V = V_1 - V_n$.
+
+\subsection{Random walks and electric networks}
+\bigskip
+
+Given a graph $G$ with edge weights $C_1, C_2, C_3, \ldots$ we can also consider this graph as an electric network with capacities $C_1, C_2, C_3, \ldots$ and show that random walk probabilities on $G$ correspond to voltages in the electric network.
+
+Consider a random walk starting from $x$ and ending at $b$, then let $h_x$ be the probability of visiting a point $a$ before visiting $b$ from a random walk starting at $x$. We can easily see that $h_a = 1$ and $h_b = 0$. For all other points we define recursively 
+$$
+h_x = \sum_y h_y P_{xy}.
+$$
+where the probability $P_{xy}$ of choosing to go along edge $(x,y)$ is the weight of the edge as a fraction over the sum of the weights of all of $x$'s edges. Assume we set $V_a = 1$ and $V_b = 0$, then
+$$
+V_x = \sum_y V_y \frac{C_{xy}}{C_x} = \sum_y V_y P_{xy}
+$$
+and thus $h = V$ as $h$ and $V$ are harmonic with the same boundary values (see lecture slides for proof). Therefore, if $V_a = 1$ and $V_b = 0$ then $V_x$ is the probability of visiting $a$ before visiting $b$ in a random walk starting at $x$ and can be measured in an electric network (\emph{interpretation of voltage}).
+
+Now consider a random walk starting at at $a$ and ending at $b$. Let $u_x$ be the expected number of visits to a point $x$ before reaching $b$. Then $u_b = 0$ and again recursively
+$$
+u_x = \sum_y u_y P_{yx} = \sum_y u_y \frac{C_y}{C_y} P_{yx} = \sum_y u_y \frac{C_x}{C_y} P_{xy} 
+$$
+and it follows that
+$$
+\frac{u_x}{C_x} = \sum_y \frac{u_y}{C_y} P_{xy}.
+$$
+Now let $V_a = \frac{u_a}{C_a}$ and $V_b = 0$, then $V_x = \sum_y V_y P_{xy}$ and $V_x = \frac{u_x}{C_x}$. The current $i_{xy}$ is given by
+$$
+i_{xy} = (V_x - V_y) C_{xy} = u_x P_{xy} - u_y P_{yx}
+$$
+and we know that $u_x P_{xy}$ is the expected number of crossings from $x \rightarrow y$ and $u_y P_{yx}$ is the expected number of crossings from $y \rightarrow x$. Thus $i_{xy}$ is the expected \emph{net} number of crossings from $x \rightarrow y$ in a random walk from $a$ and ending at $b$. It can be measured as the current from $x$ to $y$ in an electric network by setting $V_a = \frac{u_a}{C_a}$ at a and $V_b = 0$ at b.
+
+\subsection{Random walks on graphs}
+\bigskip
+
+Consider a weighted graph $G = (V, E, W)$ with $W_{ij}$ the weight of an edge $(i,j)$. Then the random walk probabilities are defined by the edge weights as follows:
+\begin{align*}
+    W_i = \sum_{(i,j) \in E} W_{ij} && P_{ij} = \frac{W_{ij}}{W_i}
+\end{align*}
+where $P_{ij}$ is the probability of moving along edge $(i,j)$ if we're at node $i$ at time $t$. The \emph{hitting time} $H(i,j)$ is defined as the expected number of steps before node $j$ is visited starting from $i$. However, the hitting time is not symmetric, i.e. $H(i,j)$ is not equal $H(j,i)$ for all nodes $i,j$. To get a symmetric measure we define the \emph{commute time} $k(i,j) = H(i,j) + H(j,i)$. The hitting time can be used for suggestion of queries for example (see slides).
+
+To compute the hitting time we first define $H(x) = H(x,b)$ for a fixed $b$ as the expected number of steps to reach $b$ from a given $x$. With $H(b) = 0$ we can compute $H(x)$ as
+$$
+H(x) = 1 + \sum_y H_y P_{xy} = 1 + \sum_y H(y) \frac{W_{xy}}{W_x}
+$$
+by solving the linear system. To compute the commute time we would thus have to solve two such linear of equations to compute $k(i,j) = H(i,j) + H(j,i)$. Alternatively we can use electric network and instead compute
+\begin{align*}
+    C = \sum_i C_i, && k(i,j) = C \times (\text{Effective resistance})_i
+\end{align*}
+
+\subsection{HITS algorithm}
+\bigskip
+
+In this section we will introduce Kleinberg's algorithm also known as the Hyperlink-Induced Topic Search algorithm or HITS for short. We will first quickly review eigenvectors.
+
+\bigskip
+
+\begin{definition}[Eigenvector]
+Given a $n \times n$ matrix $A$, we call $v$ an eigenvector and $\lambda$ an eigenvalue of $A$ if $Av = \lambda v$.
+\end{definition}
+
+\bigskip
+
+\noindent A matrix multiplication can be interpreted as a vector transformation. An eigenvector is thus a ``fixed point'' with regards to this transformation -- they remain parallel to themselves by definition. We can find an eigenvector-eigenvalue pair by iteration, convergence speed depends on the ratio $\lambda_1:\lambda_2$.
+
+\bigskip
+
+\begin{lemma}
+A real, symmetric $n \times n$ matrix $A$ has exactly $n$ real eigenvalues. If $A$ is not symmetric, some of its eigenvalues may be complex.
+\end{lemma}
+
+\bigskip
+
+\noindent Kleinberg's algorithm (HITS) finds the most ``authoritative" web page for a given query. Given a \emph{root set}, we expand this set to obtain a \emph{base set} by one move forward and backward, i.e. we obtain all pages that point to a page in this set or that are pointed to by a page in this set. On this resulting graph $G$ we give a high score to all nodes that many important nodes point to (``authorities"). Similarly, we give high importance to all nodes that point to good authorities (``hubs").
+
+We can see that this definition is recursive. Each node $i$ has an authority score $a_i$ and a hub score $h_i$. Let $E$ be the edges and $A$ be the adjacency matrix of $G$. Let $h, a$ be $n \times 1$ vectors with the hub and authority scores of each nodes in $G$. Then for the authority scores
+$$
+a_i = \sum_{j: (j,i) \in E} h_j
+$$
+where $h_j$ is the hub score of node $j$ or more simply
+$$
+a = A^T h.
+$$
+Similarly, we can compute for the hub scores
+$$
+h_i = \sum_{j: (i,j) \in E} a_j
+$$
+where $a_j$ is the authority score of node $a$ and more simply
+$$
+h = A a
+$$
+and thus we are looking for solutions $h,a$ to conditions
+\begin{align*}
+    a = A^T h && h = A a.
+\end{align*}
+We can formulate
+\begin{align*}
+    a = A^T h = A^T A a
+\end{align*}
+and compute $a$ numerically by starting from a random $a'$ and iterating until we converge. More precisely, the solutions to this problem are the left- and right-singular vectors of the adjacency matrix $A$ with the strongest singular values. Singular vectors of $A$ can be computed with singular value decomposition (SVD): $A = U \Sigma V^*$ where the columns of $U$ are left-singular vectors and columns of $V^*$ are right-singular vectors. The singular values are the diagonal entries of $\Sigma$.
+
+\subsection{PageRank}
+\bigskip
+
+PageRank is a node ranking algorithm proposed by the Google founders Larry Page and Sergey Brin in 1998. Given a graph $G$, we want to identify its most important and central nodes. A node is important if it is connected with many other important nodes. The proposed solution to this problem is to consider random walks and spotting the most ``popular" node with a high steady state probability (SSP). A node has a high SSP if it connected with many high SSP nodes (again, recursive).
+
+Let $A$ be the adjacency matrix of $G$ and $B$ the column-normalized transition matrix, i.e. $\sum_i b_{ij} = 1 \; \forall \ j$. Note that $B$ is a (column) stochastic matrix. Also note that $B$ is transposed so that the columns represent ``from" and the rows represent ``to".
+
+\bigskip
+
+\begin{theorem}[Perron-Frobenius Theorem]
+Let $M$ be a positive $n \times n$ matrix. Then there exists a positive Perron-Frobenius eigenvalue $r$ such that for any other eigenvalue $\lambda$ we have $\lambda < r$. There also exists an eigenvector $v$ of $M$ with eigenvalue $r$ such that all components of $v$ are positive and all other eigenvectors have at least one negative component.
+\end{theorem}
+
+\bigskip
+
+\noindent With the Perron-Frobenius Theorem, there exists a $p$ for $B$ such that $Bp = \lambda p$ where $\lambda$ is the highest eigenvalue and $\lambda = 1$ since the matrix is column-normalized. We can obtain $p$ through \emph{power iteration}: starting with a vector $p_t$ we can obtain $p_{t+1} = B p_t$ and it will eventually converge to the eigenvector with the largest eigenvalue which is exactly $p$.
+
+However, $B$ is not irreducible as not all nodes can be reached by a random walk starting from an arbitrary node. In order to make $B$ irreducible, go to a random node with probability $1-c$. We can realize this by adding edges to the graph to all other nodes with transition probability $1-c$. Thus
+\begin{align*}
+    p &= cBp + \frac{(1-c)}{n} \ 1\\
+    &= \frac{(1-c)}{n} \left( I - cB \right)^{-1} 1
+\end{align*}
+where $I$ is the unit matrix. Alternatively we can write the modified transition matrix as
+\begin{align*}
+    M = cB + \frac{1-c}{n} \ 1 \ 1^T
+\end{align*}
+and compute $p$ through power iteration:
+\begin{align*}
+    p = Mp
+\end{align*}
+where $p$ denote the SSP and PageRank scores of $M$.
+
+\subsection{Random walk with restart}
+\bigskip
+
+Random walk with restart is a sort of ``personalized PageRank" algorithm. The goal is to compute proximities of other nodes to a given query node. One application for this could be automatic image captioning where we would like to find the caption for a given image. This works much like PageRank except instead of a random node we jump back to the starting node with probability $1-c$. Thus, we have
+$$
+p_k = c B p_k + (1-c) e_k.
+$$
+
+\subsection{Link prediction}
+\bigskip
+
+In the link prediction problem, the goal is to infer new interactions or \emph{links} in a given graphs that are likely to occur in the future. This given graph could for instance be a social network graph and these interactions could be friend relations. We would thus be predicting likely friend connections (i.e. recommended friends). To evaluate our measure we choose four timestamps $t_0 < t_0' < t_1 < t_1'$ such that the graph at $t_0, t_0'$ can be used as training data to predict future links and $t_1, t_1'$ can be used as test data to evaluate these predictions.
+
+There are a number of different approaches to link prediction. Typically we rank nodes according to the similarity to a given node $x$ by computing some similarity score $sim(x,y)$. These measures can be based on the graph distance, node neighborhoods or the ensemble of all paths. Higher-level approaches combine different aspects of the above approaches.
+
+\paragraph{Graph distance.} The score $sim(x,y)$ is the negated length of the shortest path between $x$ and $y$. This is a very simple measure.
+
+\paragraph{Common neighbors.} The score is computed as the number of common neigbors of $x$ and $y$ so $sim(x,y) = |\Gamma(x) \cap \Gamma(y)|$. Note that a high degree automatically results in a high score with this measure which typically is not what we want.
+
+\paragraph{Jaccard's coefficient.} Here the number of common neighbors is normalized for the total number of neighbors. We compute $sim(x,y) = \frac{|\Gamma(x) \cap \Gamma(y)|}{|\Gamma(x) \cup \Gamma(y)|}$.
+
+\paragraph{Adamic/Adar.} In Adamic/Adar we weigh nodes according to their neighborhood size so nodes with a small degree get a higher score. The similarity measure is computed as
+$$
+sim(x,y) = \sum_{z \in \Gamma(x) \cap \Gamma(y)} \frac{1}{\text{log} | \Gamma(z) |}
+$$
+We use log to improve the contribution of low-degree nodes: if $x$ is small then $\frac{1}{\text{log}x} \gg \frac{1}{x}$ and if $x$ is large then $\frac{1}{\text{log}x} \approx \frac{1}{x}$.
+
+\paragraph{Preferential attachment.} Preferentially predict links between high degree nodes. We compute $sim(x,y) = |\Gamma(x)| \cdot |\Gamma(y)|$.
+
+\paragraph{Katz proximity.} This method is based on the ensemble of all paths. We count the number of all paths from $x$ to $y$ and weigh them according to their length for a constant $\beta$ as follows:
+$$
+sim(x,y) = \sum_{l=1}^{\infty} \beta^l \cdot |\text{paths}_{x,y}^{<l>}|
+$$
+where $\text{paths}_{x,y}^{<l>}$ is the set of paths from $x,y$ of length $l$. To compute the Katz proximity we can use the fact that $(M^k)_{ij}$ gives us the number of paths of length $k$ between $i,j$. Weigh the paths using $\beta$ like
+$$
+\beta M + \beta M^2 + \beta M^3 + \ldots + \beta M^{\infty}
+$$
+and then simply compute
+\begin{align*} 
+    & I + [ \beta M + \beta M^2 + \ldots + \beta M^{\infty}]\\
+    &= (I - \beta M)^{-1} - I
+\end{align*}
+where $I$ is the unit matrix.
+
+\paragraph{Hitting time/commute time.} Use the negative hitting time or commute time as a similarity measure between two points $x,y$. More precisely, we can compute $sim(x,y)$ as follows:
+\begin{center}
+\begin{tabular}{ l l }
+    hitting time & $-H_{x,y}$ \\
+    hitting time (stationary-normed) & $-H_{x,y} \cdot \pi_y$ \\
+    commute time & $-(H_{x,y} + H_{y,x})$ \\
+    commute time (stationary-normed) & $-(H_{x,y} + H_{y,x}) \cdot \pi_y$ 
+\end{tabular}
+\end{center}
+where $H_{x,y}$ is the hitting time, i.e. the expected time of a random walk from $x$ to $y$ and $pi_y$ is the stationary distribution weight of $y$, i.e. the proportion of the time the random walk is at node $y$.
+
+\paragraph{Rooted PageRank.} We adapt PageRank to measure similarity of nodes and define the $sim(x,y)$ to be the stationary probability of $y$ in a random walk that returns to $x$ with probability $\alpha$ at each step, moving to a random neighbor with probability $1 - \alpha$.
+
+\paragraph{SimRank.} The SimRank score is the fixed point of the following recursion: two nodes are similar to the extent that they are joined by similar neighbors. Thus we compute
+\begin{align*}
+    sim(x,y) =
+                \begin{cases}
+                    1 & \text{if } x=y\\
+                    \gamma \cdot \frac{\sum_{a \in \Gamma(x)} \sum_{b \in \Gamma(y)} sim(a,b)}{|\Gamma(x)| \cdot |\Gamma(y)|} & \text{otherwise}
+                \end{cases}
+\end{align*}
+We can also interpret this as follows: for a random walk on the graph SimRank is the expected value of $\gamma^l$ where $l$ is a random variable giving the time at which random walks starting from $x$ and $y$ first meet.
+
+\paragraph{Low rank approximation.} We can combine previous approaches into a higher level approaches. One such way is to compute a low-rank approximation $M_k$ of the adjacency matrix $M$ as a \emph{noise reduction technique}. Then we can use e.g. Katz measure, common neighbors on $M_k$.
+
+\paragraph{Unseen bigram.} The unseen bigram measure augments the estimated score $sim(x,y)$ using values $sim(z,y)$ for nodes $z \in S_x^{<\delta>}$ similar to $x$:
+\begin{align*}
+    sim_\text{weighted}(x,y) &:= |\{ z : z \in \Gamma(y) \cap S_x^{<\delta>} \}| \\
+    sim_\text{unweighted}(x,y) &:= \sum_{z \in \Gamma(y) \cap S_x^{<\delta>}} sim(x,z)
+\end{align*}
+
+\paragraph{Clustering.} Cluster the graph and delete weak edges, then recompute the similarity score $sim(x,y)$ and only new links in the same cluster will be predicted.
+
+\bigskip
+
+When evaluating the above link prediction measures we find that we can group the predictors in two groups which perform similar. Specifically we find that Adamic/Adar, Katz, and low rank inner product (low rank approximation) perform similarly and Jaccard, rooted PageRank and SimRank perform similarly as well. As a result of the small world phenomenon, we find that the graph distance measure does not work very well. Furthermore, as the breadth of data increases (i.e. wider topical focus of dataset) the random predictor worsenes as one would expect.
+
+\subsection{Triangle Counting}
+\bigskip
+
+Given a graph $G = (V,E)$ with $n \times n$ adjacency matrix $A$ we want to count the number of triangles in it. This can be used to e.g. find anomalies in a graph (higher or lower number of triangles than normal behavior). Basic algorithms to accomplish this task do not perform very well. Matrix multiplication needs to compute $A^3$ which gives a $O(n^3)$ runtime. Fast matrix multiplication is a bit better with $O(n^{2.376})$. Slightly better algorithms are based on listing nodes or edges. The node iterator iterates over all nodes and tests for each pair of if they are connected by an edge. This give a time complexity of
+$$
+\sum_{v \in V} \begin{pmatrix} d(v) \\ 2 \end{pmatrix} = O(nd_{\text{max}}^2).
+$$
+The edge iterator algorithm similarly iterates over all edges and tests the two adjacent nodes for an edge. This has a time complexity of
+$$
+\sum_{(u,w) \in E} d(u) + d(w) = \sum_{v \in V} d(v)^2
+$$
+A slightly faster variant of the node iterator is the (compact) forward algorithm which utilizes a specific ordering of nodes to get a better time complexity of $\theta(n^{1.5})$ and a space complexity in $\theta(n)$. This time complexity is optimal. However, this algorithm is still slow on large graphs and we would like to find an approximation that allows for faster computation of the number of triangles in $G$.
+
+\bigskip
+
+\begin{theorem}[EigenTriangle]
+The number of triangles in a graph $G=(V,E)$ with adjacency matrix $A$ is given by its eigenvalues
+$$
+\Delta(G) = \frac{1}{6} \sum_i \lambda_i^3
+$$
+\end{theorem}
+
+\medskip
+
+\begin{proof}
+The diagonal element $\alpha_{ii}$ of the square matrix $A^3$ contains the number of paths of lengths 3 that begin and end at the same node $i$. The only way this can happen is to have a triangle in which node $i$ participates. Therefore the trace of $A^3$ is three times the total number of triangles (since we are triple counting them because each triangle has 3 participating nodes). Furthermore, since the graph is undirected we are counting each triangle as two (triangle $ikj$ is counted as $i \rightarrow k \rightarrow j$ and $i \rightarrow j \rightarrow k$). Therefore the following equality holds: $\Delta(G) = \frac{1}{6} \text{trace}(A^3)$. Furthermore, if $\lambda$ is an eigenvalue of $A$ then $\lambda^k$ is an eigenvalue of $A^k$ $(k \geq 1)$. Finally, we know that $\sum_{i=1}^n \lambda_i = \text{trace}(A)$. Combining the above equations, we get that $\Delta(G) = \frac{1}{6} \sum_{i=1}^n \lambda_i^3$.
+\end{proof}
+
+\bigskip
+
+\begin{theorem}[EigenTriangleLocal]
+The number of triangles in $G=(V,E)$ that node $i \in V$ participates in is given by
+$$
+\Delta_i(G) = \frac{\sum_j \lambda_j^3 u_{i,j}^2}{2}
+$$
+where $u_{i,j}$ is the $i$-th entry of the $j$-th eigenvector.
+\end{theorem}
+
+\medskip
+
+\begin{proof}
+Easy extension of 3.1. It follows from the facts that since $A_{nxn}$ is symmetric, $A = U_n \Sigma U_n^{'}$, where $\Sigma$ is a diagonal matrix with $\text{diag}(\Sigma) = \vec{\Lambda}_n$ (all eigenvalues are real and $U_n$ is an orthogonal matrix and therefore $A^3 = U_n \Sigma^3 U_n^{'}$) and that each triangle is counted twice.
+\end{proof}
+
+Using these theorems we can design an algorithm to approximate the number of triangles in a graph $G$ using the top-$k$ largest eigenvalues of $A$. We can compute these eigenvalues using Lanczos method. This works because the first few eigenvalues are much stronger than the smaller ones and this effect is further amplified through cubing the eigenvalues. This algorithm is $\geq 1000\times$ faster with $\geq$90\% accuracy compared to the node iterator algorithm. The mean required approximation rank (number of eigenvalues) required to achieve $\geq$95\% accuracy is 6.2. The speedup over the node iterator algorithm increases as the size of the graph grows.
+
+Another (sampling-based) approach to counting triangles in graphs is \emph{Doulion's algorithm} which constructs a smaller graph $G'$ from $G$ as follows: keep an edge with probability $p$ and discard it with probability $1-p$. Then count the triangles in $G'$ and multiply the count by $\frac{1}{p^3}$ to get an estimate of the count of triangles in $G$ (since probability of a triangle remaining in $G'$ is $p^3$ because all three edges have to survive).
