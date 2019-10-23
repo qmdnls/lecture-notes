@@ -1,0 +1,37 @@
+\section*{Graphs}
+
+\subsection*{Densification power law}
+Number of edges $E(t)$ and the number of nodes $N(t)$: $E(t) \propto N(t)^a$ with $a \in [1,2]$. $a = 1$ $\Rightarrow$ constant out-degree (linear growth), $a = 2$ $\Rightarrow$ quadratic growth. Typically $a>1$, densification, shrinking diameter.
+
+\subsection*{Erd\"os-Rényi random graph model}
+Node number $n \in \mathbb{N}$, $p \in [0,1]$. Create $n$ nodes, include edge between any two nodes w/ prob. $p$. Degree dist. = Poisson, can be described by $P(k) \sim \frac{e^{-\lambda} \lambda^k}{k!}$ where $k$ is the degree. However: real graph's degree dist. follows power law: $P(k) \sim k^{-r}$.
+
+\subsection*{Preferential attachment}
+New nodes attach preferentially to well-connected nodes. Link to existing node $i$ by $P_i = \frac{d(i)}{\sum_j d(j)}$. Robust against random failure, vulnerable to attacks.
+
+\subsection*{Community connection model}
+Generates many CCs. Joining node connects to any host with $p_\text{host}$, begins random walk with $p_\text{step}$ until there are no more steps. Repeat for all hosts. Describes  rebel probability well. $P_\text{Rebel} \propto s^{\alpha d}$ with $d$ deg newcomer, $s$ rel. size of DC
+
+\subsection*{Power laws in the internet}
+PL1 (\textbf{rank exponent}): The out-degree $d_v$ of a node $v$ is proportional to the rank of a node $r_v$ to the power of a constant $\mathcal{R}$: $d_v \propto r_v^\mathcal{R}$
+
+PL2 (\textbf{out-degree exponent}): The frequency $f_d$ of an out-degree $d$ is proportional to the out-degree to the power of a constant $\mathcal{O}$: $f_d \propto d^\mathcal{O}$
+
+PL3 (\textbf{eigen exponent}): The eigenvalues $\lambda_i$ of a graph are proportional to the order $i$ to the power of a constant $\mathcal{E}$: $\lambda_i \propto i^\mathcal{E}$
+
+\subsection*{Generation of power law distributions}
+\textbf{PL distribution:} $p(x) = Cx^{-a} \; \forall \ x \geq x_{\text{min}}$\\
+for constant $C$. Estimate exponent $a$:
+\begin{align*}
+    a = 1 + n \left( \sum_{i=1}^n ln \left( \frac{x_i}{x_\text{min}} \right) \right)^{-1}
+\end{align*}
+
+\textbf{Chinese restaurant process (Yule distribution):} Newcomer sits down at existing table, prefers large groups. New table with probability $\frac{1}{m}$. This is also referred to as a \emph{Yule process}.
+
+\textbf{Combination of exponentials:} Radioactive decay: half-life $-a$ and $p(y) = e^{ay}$. Russian roulette: capital $x$ increases every time they survive with $x \sim e^{by}$. Final cap. PL dist. Monkey typing on a typewriter: frequency of the $x$-th most frequent word is $x^{-a}$, i.e. power law.
+
+\textbf{Random walks:} steps required to arrive at the same position (\emph{inter-arrival time}) follows power law.
+
+\textbf{Random multiplication:} Starting $C$ dollars, interest rate $s(t)$ for each year $t$, we get $C(t) = C(t-1) (1+s(t))$. We have $\text{log} C(t) = \text{log} C + \text{log} .. + \text{log} ..$ which is a Gaussian distribution and thus $C(t) = \text{exp}(\text{Gaussian})$ which is a lognormal distribution. The lognormal distribution looks like a power law in its tail distribution (but strictly is not a power law).
+
+\textbf{Fragmentation:} Stick of length 1, recursively break at random point $0 \leq x \leq 1$. Resulting length distribution is lognormal (analogous to random multiplication).

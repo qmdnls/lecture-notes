@@ -1,0 +1,38 @@
+\documentclass[10pt,landscape,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{tikz}
+\usetikzlibrary{shapes,positioning,arrows,fit,calc,graphs,graphs.standard}
+\usepackage[nosf]{kpfonts}
+\usepackage[t1]{sourcesanspro}
+\usepackage{multicol}
+\usepackage{wrapfig}
+\usepackage[top=0mm,bottom=1mm,left=12mm,right=1mm]{geometry}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{microtype}
+\usepackage{pdfpages}
+
+\let\bar\overline
+
+\usepackage{cheatsheet}
+
+\begin{document}
+
+% set font size to small
+%\small
+\footnotesize
+
+% five columns
+\begin{multicols*}{5}
+
+%include contents from chapters
+\input{chapters/graphs}
+\input{chapters/spectral_analysis}
+\input{chapters/mapreduce}
+%\input{chapters/graphen}
+%\input{chapters/relationen}
+
+
+\end{multicols*}
+\end{document}

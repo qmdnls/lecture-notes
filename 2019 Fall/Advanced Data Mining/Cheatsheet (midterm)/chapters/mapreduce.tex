@@ -1,0 +1,7 @@
+\section*{MapReduce}
+\textbf{kNN}: Map: $k$-nearest neighbors to $p$ in input, Reduce: $k$-nearest neighbors global\\
+\textbf{kMeans:} Map: assign closest centroid, Reduce: update centroids\\
+\textbf{Join:} Compute $R(A,B) \bowtie S(B,C)$, map: $R(a,b) \rightarrow (b,(a,R)), S(b,c) \rightarrow (b,(c,S))$, reduce: match same keys $b$ output $(a,b,c)$\\
+\textbf{Communication cost:} total I/O of all processes\\
+\textbf{Elapsed communication cost:} max I/O along any path\\
+\textbf{Elapsed computation cost:} max running time, i.e. total running time\\
