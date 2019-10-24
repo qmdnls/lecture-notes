@@ -1,0 +1,87 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Connecting the Dots: Document-level Neural Relation Extraction
+with Edge-oriented Graphs}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{October 24, 2019}
+\maketitle
+
+\noindent
+In document-level relation extraction the objective is to extract all the concept-level pairs in a given annotated document. The document is annotated with \emph{entities} (correspond to concept-level annotations) and \emph{mentions} (mention-level annotations). Previous research has focused on neural graph models that are node-based and predict entity pairs solely based on the node representations.
+
+Christopoulou, Miwa, Ananiadou~\cite{dots} propose a novel graph neural model that is edge-oriented instead. Whereas other approaches only utilize homogeneous types of nodes which typically correspond to words and represent connections between them are as edges, the authors introduce a model based on heterogeneous types of nodes. Each node can represent either entities, mentions or entire sentences. They create these nodes from word embeddings given by the encoder (a bidirectional LSTM). Given these nodes, they use a set of basic heuristics to construct a basic set of edges between mention-mention, mention-sentence, mention-entity, sentence-sentence, entity-sentence pairs. The explicitly do not create edges for entity-entity pairs yet. Next, they add an inference layer which iteratively generates edges based on paths between two nodes (now including entity-entity pairs) and aggregates their edge representations for $N$ steps. Finally, they obtain the concept-level entity pairs using a softmax classification layer.
+
+Christopoulou et al. evaluate their model on the Chemical-Disease Reactions dataset as well as the Gene-Disease Associations dataset. Their proposed \emph{EoG} model outperforms the state-of-the-art on both the CDR and GDA datasets. However, they observe that performance for inter-sentence pairs differs on the GDA dataset specifically and attribute this to the fact that there are fewer inter-sentence pairs ($\sim$56\% less) in the dataset and thus inaccurate patterns may be learned. Overall they find that their model works well and can encode dependencies between document-level elements in this edge-based neural graph model. Furthermore, they find that document-level information can also contribute to better identification of intra-sentence pairs.
+
+
+\begin{thebibliography}{9}
+\bibitem{dots} 
+Christopoulou, Fenia, Makoto Miwa, and Sophia Ananiadou. "Connecting the Dots: Document-level Neural Relation Extraction with Edge-oriented Graphs." \emph{arXiv preprint arXiv:1909.00228} (2019).
+
+\end{thebibliography}
+ 
+\end{document}
