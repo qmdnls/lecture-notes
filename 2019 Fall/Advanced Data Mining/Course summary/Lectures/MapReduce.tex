@@ -1,0 +1,37 @@
+\section{MapReduce}
+\bigskip
+
+Many systems need to process large amounts of data and being able to run an algorithm in a distributed fashion can massively speed it up. However, parallel programming is very complex as you need to deal with parallelization, data distribution and handle failures manually. \emph{MapReduce} is an abstraction that allows even people inexperienced with parallel programming to fully utilize the large resources of distributed systems. This abstractions hides the details of the parallelization and takes care of data distribution, load balancing and fault tolerance for the user. MapReduce operates on key-value pairs. The user specifies two functions: a \emph{map} function, which takes an input key-value pair and produces intermediate key-value pairs resulting from some kind of operation on the data, and a \emph{reduce} function which given the intermediate key-value pairs outputs another set of ``reduced" key-value pairs (similar to SQL \emph{count(*)}).
+
+\subsection{Examples}
+\bigskip
+
+Let's take a look at some examples of MapReduce applications. Each of these applications can be defined through a map and a reduce function and thus easily utilize a cluster of distributed machines.
+
+\paragraph{Count.}
+We want to count the appearance of different entities, for instance we want to compute a histogram of fruit names. The map function will output (name of fruit, 1) on each machine for its part of the data and the reduce function will \emph{reduce} pairs with the same keys by adding up the values. The result will then be a histogram across the entire dataset.
+
+\paragraph{Distributed grep.}
+Broadcast the supplied pattern to all machines. Map emits a line if it matches the supplied pattern. Reduce is the identity function.
+
+\paragraph{Count of URL access frequency.}
+Analogous to count: Map function outputs (URL, 1) and the reduce function merges same keys to obtain the total count.
+
+\paragraph{Reverse web-link graph.}
+Map outputs a list of (target, source) pairs and reduce function reduces to the same target like (target, list(source)).
+
+\paragraph{Term vector per host.}
+A term vector summarizes the most important words that occur in a document (or in this case in a host). The map function outputs key-value pairs (hostname, term vector) for a given document. Then reduce outputs (hostname, term vector) pairs for each hostname and obtains a list of frequent terms per host.
+
+\paragraph{Inverted index.}
+For each word map outputs a document ID it appears in, so a list of key value pairs (word, document ID). Reduce then reduces the same keys to obtain (word, list(document ID)).
+
+\paragraph{Distributed sort.}
+Map outputs a (key, record) pair and reduce is simply the identity function and outputs the same input.
+
+\subsection{Implementation}
+\bigskip
+
+Worker machines are managed by a master machine which assigns map and reduce tasks to these workers. The master keeps the state (idle, in-progress or completed) and the identity of each worker machine (for non-idle tasks). The master pings every worker periodically and is able to restart tasks (or start backup tasks) in case a worker does not respond or failed. When a MapReduce operation is close to completion the master schedules speculative backup exections of the remaining in-progress tasks. This has been shown to speed up the execution by up to 44\%.
+
+The partitioning function decides which output of mappers are assigned to which reducer. The default function for this is $h(k) \text{ mod } R$ for some hash function $h$, key $k$ and the number of reducers $R$. Other options are the range partition (i.e. all keys $k < 1000$ to the first reducer etc.) which can be used for sorting, and the identity partition. Within a given partition, the intermediate key/value pairs are processed in increasing key order. Combiner functions allow to combine intermediate key/value pairs before sending them to the reducer to reduce network I/O, i.e. combine all counts of a word to (word, 1000) instead of sending (word, 1) one thousand times.
