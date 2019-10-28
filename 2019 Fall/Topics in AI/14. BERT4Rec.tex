@@ -1,0 +1,88 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{October 29, 2019}
+\maketitle
+
+\noindent
+In the sequential recommendation setting we want to give a recommendation based on a sequence of previous user behaviours. Previous approaches typically encoded the user's historical actions or interactions as a series of hidden states from which the model would make the recommendation. Sun et al.~\cite{sun} argue that this is not optimal as such a left-to-right unidirectional model fails to capture sequences which are not strictly ordered and that the hidden representations fail to adequately capture the historical information. They conclude that models in this setting could benefit from a bidirectional approach. To achieve such bidirectionality the authors propose \emph{BERT4Rec} which is inspired by and borrows from BERT and uses bidirectional self-attention.
+
+In order to train such a model the authors use a Cloze task which masks a target item in a sequence and they train the model to predict the masked item given the surrounding context (the entire sequence). However, as this approach is not strictly consistent with the sequential recommendation setting, they append the $[\text{mask}]$ token to the end of the sequence so the model knows what to predict. As usual, the transformer layer consists of a multi-head self-attention sub-layer and a feed-forward sub-layer. To capture item-item interactions, $L$ transformer layers are stacked where each layer of $t$ transformers takes the output of all transformers of the previous layer for a sequence of items $v_1, \ldots, v_t$ with $v_t = [\text{mask}]$. The inputs for the first transformer layer are the positional embeddings of the $t$ input items.  In the final layer they predict an item for the masked item $v_t$ based on the hidden representation $h_t^L$ of the $t$-th transformer in the $L$-th layer using a two-layer feed-forward neural network with GELU activations and a softmax layer.
+
+Sun et al. evaluate their model on four real-world datasets from various domains (Amazon Beauty, Steam, MovieLens-1M and MovieLens-20M). They find that BERT4Rec consistently outperforms the state-of-the-art on all four datasets in terms of all evaluation metrics. Thus, they have demonstrated that models in the sequential recommendation setting can greatly benefit from bidirectional hidden representations. 
+
+
+
+
+\begin{thebibliography}{9}
+\bibitem{sun} 
+Sun, Fei, et al. "BERT4Rec: Sequential Recommendation with Bidirectional Encoder Representations from Transformer." \emph{arXiv preprint arXiv:1904.06690} (2019).
+
+\end{thebibliography}
+
+\end{document}
