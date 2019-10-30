@@ -1,0 +1,168 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=0.7in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+\usepackage{Baskervaldx}
+\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.0}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm
+}
+
+% name and student ID in header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{}
+\fancyhead[L]{Advanced Data Mining}
+\fancyhead[C]{Björn Bebensee (2019-21343)}
+\fancyhead[R]{October 30, 2019}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyfoot[C]{\textbf{\thepage}} % except the center
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}}
+
+% spacing in itemize environments
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=2pt,parsep=2pt,partopsep=2pt}
+
+% misc hyphenation
+\hyphenation{page-rank}
+
+% fancyhdr headheight
+\setlength{\headheight}{15pt}
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+% ugly fake title hack
+{\Large\centering
+    \textbf{Ratio Rules:\\A New Paradigm for Fast, Quantifiable Data Mining}
+\par}
+
+\bigskip
+
+\noindent
+1. What is the problem that the paper wants to solve? Why is it difficult (related works)?
+
+\begin{itemize}
+    \item Problem definition: Given a data matrix, find association rules which define sets of predictive entries or more precisely which given some attributes can be used to derive another set of attributes
+    \item Related to prediction problems in statistics and machine learning but on bigger datasets, thus needs to be fast enough to minimize the time required to find these association rules
+    \item Traditional approaches require multiple passes over the data or large amounts of memory
+\end{itemize}
+
+\noindent
+2. What is the solution? What is the main idea?
+
+\begin{itemize}
+    \item Instead of association rules derive ratio rules in the form $a:b:c$ for columns $a,b,c$, i.e. customers spend $1:2:5$ dollars on $\text{bread}:\text{milk}:\text{butter}$ by eigensystem analysis
+    \item By computation of the top-$k$ eigenvectors and eigenvalues of the covariance matrix identify the direction of maximum variance and then incrementally orthogonal directions of maximum variance. These eigenvalues then give the ratio rules.
+    \item Authors introduce root-mean-square error as a measure of ``goodness" to assess the derived association rules
+\end{itemize}
+
+\noindent
+3. What is the result?
+
+\begin{itemize}
+    \item Ratio rules allow for extrapolation and prediction, give compact representations of linear correlations, and are easily implemented
+    \item Scale well for large datasets as they are fast to compute, growing linearly on the largest dimension of the matrix (typically rows)
+    \item Authors provide a new metric in order to evaluate their approach
+\end{itemize}
+
+\noindent
+4. What is the main novelty that enabled the solution?
+
+\begin{itemize}
+    \item The main novelty is using eigensystem analysis to derive the top-$k$ ratio rules allowing us to determine them in a single pass over the dataset
+\end{itemize}
+
+\noindent
+5. What are the good aspects of the paper? Did you learn something from the paper?
+
+\begin{itemize}
+    \item Computes ratio rules in a single pass over the data, small memory requirements (as opposed to traditional association rule mining methods)
+    \item Authors use concrete example (customer $\times$ product matrix) to better visualize the idea
+\end{itemize}
+
+\noindent
+6. What is the impact of the paper?
+
+\begin{itemize}
+    \item Provided a completely new type of rules that capture linear correlations in data as well as a new measure to evaluate the ``guessing error" of ratio rules and similar predictive rules
+\end{itemize}
+
+\noindent
+7. Are there weaknesses/missing parts in the paper? How can you improve it?
+
+\begin{itemize}
+    \item Only better suited for the problem than quantitative association rules if data is linearly correlated. For clustered data association rules will provide better accuracy. 
+\end{itemize}
+
+\noindent
+8. How can you extend the paper?
+
+\begin{itemize}
+    \item Explore how ratio rules perform on non-linearly correlated datasets. Similar to ratio rules, how can we find rules for non-linear data?
+\end{itemize}
+
+\noindent
+9. How can you apply the technique to other data/problems?
+
+\begin{itemize}
+    \item Sometimes approximation is sufficient: use top-$k$ values for an estimate of sufficient accuracy but much better runtime speed (in this case eigenvalues but applies to other algorithms as well)
+\end{itemize}
+
+\end{document}
