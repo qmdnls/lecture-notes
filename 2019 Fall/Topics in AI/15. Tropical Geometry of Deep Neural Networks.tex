@@ -1,0 +1,85 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Tropical Geometry of Deep Neural Networks}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{November 5, 2019}
+\maketitle
+
+\noindent
+Tropical algebra is the study of algebraic objects (such as matrices and polynomials) over the \emph{tropical semiring} $\mathbb{T} := (\mathbb{R} \cup \{-\infty\}, \oplus, \odot)$ where $\oplus$ defines \emph{tropical addition} ($x \oplus y = \text{max}\{x,y \}$) and $\odot$ defines \emph{tropical multiplication} ($x \odot y = x + y$) and where $-\infty$ is the tropical additive identity ($-\infty \oplus x = x$). Zhang et al. \cite{zhang} explore the connection between tropical algebra and deep neural networks to help further our understanding of the latter.
+
+The authors consider a neural network as a map $\nu: \mathbb{R}^d \rightarrow \mathbb{R}^p$ which is a composition of functions (one for each layer) and find that $\nu$ can be expressed as the difference of two tropical polynomials. For the general case, they find that this family of feedforward neural networks (with a ReLU activation) is equivalent to the family of tropical rational maps and thus may be reasoned about as such, providing new insights. They also find that deep neural networks are exponentially more expressive than shallow networks and require fewer parameters. Furthermore, they cast the decision boundaries in neural network classification problems as tropical hypersurfaces.
+
+Overall, the authors show how neural networks can be generally related to tropical rational maps. They mention that it is often enough to understand the tropical geometry to understand the underlying neural network concept and stress that this line of work is not limited to decision boundaries, linear regions etc. but may be applicable to other open questions in neural networks as well.
+
+\begin{thebibliography}{9}
+\bibitem{zhang} 
+Zhang, Liwen, Gregory Naitzat, and Lek-Heng Lim. "Tropical geometry of deep neural networks." \emph{arXiv preprint arXiv:1805.07091} (2018).
+
+\end{thebibliography}
+
+\end{document}
