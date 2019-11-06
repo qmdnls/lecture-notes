@@ -1,0 +1,92 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{GAMENet: Graph Augmented MEmory Networks for Recommending Medication Combination}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{November 7, 2019}
+\maketitle
+
+\noindent
+Medication recommendation algorithms assist doctors in making effective and safe medication prescription. In recent work different deep learning methods to tackle this task have been derived. However, these approaches either do not take into account a patient's health history or they do not utilize existing knowledge on drug-drug interactions which may impact the patient's health adversely. To address these problems, Shang et al.~\cite{shang} propose a new end-to-end deep learning model which they call \emph{Graph Augmented Memory Networks} or \emph{GAMENet} for short.
+
+GAMENet consists of several components. First, the medical embedding module is used to compute an embedding of medical diagnoses, procedure codes and medication codes (concatenated) for each visit. The patient representation module is a Dual-RNN network and learns patient representations from multimodal electronic health records. They use two RNNs to seperately model diagnosis and procedure modalities (a visit may include a diagnosis but no procedure). Given the patient visit medical embeddings the patient representation module then produces hidden states which can be used by the graph augmented memory module. The graph augmented memory module is the main contribution in this paper. It consists of four memory components and aims to fully capture information from different data sources. It embeds and stores the health record graph, the drug-drug interaction graph in Memory Bank (MB) and additionally uses the patient history in Dynamic Memory (DM). They train the model using a combined loss function
+$$
+\mathcal{L} =
+    \begin{cases}
+        \mathcal{L}_p &         \text{if } s' \leq s\\
+        \mathcal{L}_{DDI} &     \text{if } s' > s \text{, with prob. } p = \text{exp}\left( -\frac{s'-s}{\text{Temp}} \right)\\
+         \mathcal{L}_p &        \text{if } s' > s \text{, with prob. } p = 1-\text{exp}\left( -\frac{s'-s}{\text{Temp}} \right)
+    \end{cases}
+$$
+where $\mathcal{L}_p$ is the multi-label prediction loss and $\mathcal{L}_{DDI}$ is a loss function to control the drug-drug interactions in the recommendation and is computed pair-wise over the predicted result. They outperform the baseline models in all effective measures and achieve a drug-drug interaction rate reduction of 3.6\% from existing health record data.
+
+\begin{thebibliography}{9}
+\bibitem{shang} 
+Shang, Junyuan, et al. ``Gamenet: Graph augmented memory networks for recommending medication combination." \emph{Proceedings of the AAAI Conference on Artificial Intelligence}. Vol. 33. 2019.
+
+\end{thebibliography}
+
+\end{document}
