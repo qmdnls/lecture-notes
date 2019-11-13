@@ -101,6 +101,7 @@
 \usepackage{tikz}
 
 % korean characters
+\usepackage{CJKutf8}
 
 % set math font to serif
 \usefonttheme[onlymath]{serif}
@@ -124,7 +125,7 @@
     {\tt bebensee@bi.snu.ac.kr} 
 }
 \institute[Biointelligence Laboratory]{
-    $\vcenter{\hbox{\includegraphics[width=0.1\textwidth]{bi.png}}}$
+    %$\vcenter{\hbox{\includegraphics[width=0.1\textwidth]{bi.png}}}$
     \normalsize Biointelligence Laboratory
 }
 \date{November 14, 2019}
@@ -150,13 +151,6 @@
 \section{Introduction}
 
 \subsection{Background}
-
-%------------------------------------------------
-
-\begin{frame}
-    \frametitle{A brief introduction to NMT}
-
-\end{frame}
 
 %------------------------------------------------
 
@@ -344,9 +338,10 @@
 
 \begin{frame}
     \frametitle{Oracle word selection}
-    Two strategies to select the oracle words:
+    Two strategies to select the oracle words:\\
+    \bigskip
     \begin{itemize}
-        \item[1.] word-level oracle (greedy search),
+        \item[1.] word-level oracle (greedy search)
         \item[2.] sentence-level oracle (select an oracle sequence)
     \end{itemize}
 \end{frame}
@@ -379,7 +374,9 @@
 
 \begin{frame}
     \frametitle{Word-level Oracle}
-    Use the \emph{Gumbel-Max} technique: simple, efficient way to sample from categorical distribution\\
+    \begin{exampleblock}{\emph{Gumbel-Max} technique:}
+        Simple, efficient way to sample from categorical distribution
+    \end{exampleblock}
     \bigskip
     Given Gumbel noise $\eta$ and a temperature $\tau$, obtain
     \begin{align}
@@ -394,33 +391,116 @@
 %------------------------------------------------
 
 \begin{frame}
-   \frametitle{Sentence-level Oracle}
-   Enlarge the search space: perform beam search, apply Gumbel noise at every word generation and get $k$-best candidate translations\\
-   \bigskip
-   Rank candidates according to some sentence-level metric (here: BLEU)
+    \frametitle{Sentence-level Oracle}
+    Enlarge the search space: perform beam search, apply Gumbel noise at every word generation and get $k$-best candidate translations\\
+    \bigskip
+    Rank candidates according to some sentence-level metric (here: BLEU), best sentence is used as \emph{oracle sentence}
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-   \frametitle{Force Decoding}
-   d
+    \frametitle{Force Decoding}
+    \begin{alertblock}{Problem}
+        What if oracle sentence and ground truth do not have the same length?
+    \end{alertblock}
+    \bigskip
+    Use \textbf{force decoding} to force oracle sentence length to be $|y^*|$ (length of ground truth). Modify beam search as follows:\\
+    \bigskip
+    If $j \leq |y^*|$ and top first word is \texttt{<EOS>}: select second word in $\tilde{P}_j$ for this candidate sentence\\
+    \bigskip
+    If \texttt{<EOS>} not top first word in $\tilde{P}_{|y^*|+1}$: select \texttt{<EOS>} as $\{|y^*|+1 \}$-th word for this candidate sentence
 \end{frame}
 
 %------------------------------------------------
 
 \begin{frame}
-   \frametitle{Sampling with decay}
-   c
+    \frametitle{Sampling with decay}
+    Convergence of the model depends on the choice of sampling probability $p$.\\
+    \bigskip
+    $p$ too low: Sample from the ground-truth too often\\
+    \smallskip
+    $p$ too high: Slow or no convergence
+\end{frame}
+
+%------------------------------------------------
+
+\begin{frame}
+    \frametitle{Sampling with decay}
+    Let $p$ decay as training progresses so we progressively sample more often from the model distribution and select oracle words.\\
+    \bigskip
+    Start with $p=1$. Define it dependent on training epoch $e$:\\
+    \begin{gather}
+        p = \frac{\mu}{\mu + \mathrm{exp}(e/\mu)}
+    \end{gather}
+    with hyperparameter $\mu$.
 \end{frame}
 
 %------------------------------------------------
 
 \section{Evaluation}
 
+\subsection{Comparison}
+
 \begin{frame}
     \frametitle{Evaluation}
-    a
+    \begin{figure}
+        \centering
+        \includegraphics[width=\textwidth]{fig/bleu_table}
+        \caption{
+            Case-insensitive BLEU scores (\%) on Zh$\rightarrow$En translation task. %``$\ddag$", ``$\dag$", ``$\star$" and ``$\ast$" indicate statistically significant difference (p\textless0.01) from RNNsearch, SS-NMT, MIXER and Transformer, respectively.
+        }
+    \end{figure}
+\end{frame}
+
+%------------------------------------------------
+
+\subsection{Factor analysis}
+
+\begin{frame}
+    \frametitle{Factor analysis}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.5\textwidth]{fig/factor_analysis_table.pdf}
+        \caption{Factor analysis on Zh$\rightarrow$En translation, the results are average BLEU scores on MT03$\sim$06 datasets.}
+    \end{figure} 
+\end{frame}
+
+%------------------------------------------------
+
+\subsection{Convergence}
+
+\begin{frame}
+    \frametitle{Convergence}
+    \begin{columns}[T]
+        \begin{column}{0.48\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{fig/training_curve_loss.png}
+            \end{figure}
+        \end{column}
+        \begin{column}{0.48\textwidth}
+            \begin{figure}
+                \centering
+                \includegraphics[width=\textwidth]{fig/dev_curve_bleu.png}
+            \end{figure}
+        \end{column}
+    \end{columns}
+    Slower convergence but loss does not keep decreasing (intuition: WO and SO models help avoid overfitting)
+\end{frame}
+
+%-----------------------------------------------
+
+\subsection{Sentence length}
+
+\begin{frame}
+    \frametitle{Sentence length analysis}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.7\textwidth]{fig/length.png}
+        %\caption{MT03 test set, Zh$\rightarrow$ En}
+    \end{figure}
+    Cross-entropy loss requires predicted sequence to be same as ground truth, difficult for long sentences! Oracle helps recover from overcorrection
 \end{frame}
 
 %-----------------------------------------------
@@ -429,13 +509,17 @@
 
 \begin{frame}
     \frametitle{Conclusion}
-    b
+    To conclude: Zhang et al. proposed a new training technique that helps to recover from overcorrection.\\
+    \bigskip
+    Outperforms previous methods as well as the transformer baseline.\\
+    \bigskip
+    Technique can be used with a variety of models.
 \end{frame}
 
 %-----------------------------------------------
 
 \begin{frame}
-\Large{\centerline{Thank you for your attention.}}
+    \Large{\centerline{Thank you for your attention.}}
 \end{frame}
 
 %----------------------------------------------------------------------------------------
