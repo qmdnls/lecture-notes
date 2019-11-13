@@ -73,7 +73,7 @@
 
 \begin{frame}{Motivation}
     Imagine we have a database of users. We want to publish some anonymous statistics about the users.\\
-    \only<2->{
+    \onslide<2->{
     \bigskip
     \textbf{This is a hard problem!}\\
     \bigskip
@@ -145,7 +145,7 @@
     Example: What are the number of users with a bad credit rating?\\
     \bigskip
     Ground truth $N=21$, $X$ random variable with Laplace distribution. Return $N+X$.\\
-    \only<2->{
+    \onslide<2->{
         \bigskip
         \begin{alertblock}{Problem}
             Privacy losses accumulate. An adversary can estimate the ground truth given enough queries. More queries correspond to laxer privacy guarantees.
