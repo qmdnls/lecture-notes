@@ -1,0 +1,87 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.04}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{SinGAN: Learning a Generative Model from a Single Natural Image}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{November 19, 2019}
+\maketitle
+
+\noindent
+Shaham et al.~\cite{shaham} propose~\emph{SinGAN}, a generative model which can generate high-quality samples learned from a single training image. In the single training image setting the goal is to learn the distribution of image \emph{patches} in a single image rather than whole images. By sampling this learned distribution later, we can generate images similar to the training example.
+
+SinGAN is a model architecture consisting of a hierarchy of patch-GANs that learn the patch distribution within the image at a fixed scale (coarse-to-fine). At each scale $n$ the patch-GAN $G_n$ learns to generate image samples in which the discriminator $D_n$ can not distinguish the patches between the generated image and the training image downscaled to scale $n$. The input to the generator $G_n$ at each scale is an upscaled version of the generated image from the previous generator $G_{n+1}$ and Gaussian noise which is added to the image. Each generator $G_n$ adds new details to the image at a higher scale, allowing for generation of high-quality samples.
+
+The authors show that their model can be used for a variety of image manipulation tasks without any modifications. Super-resolution can be achieved by training the model on the image and feeding an upsampled version of the original image into the last generator repeatedly to progressively obtain a higher resolution output with more details added by the generator. In paint-to-image the authors train the model on a single training image and then feed a down-scaled version of the painted image into the coarsest generator. The generators will then add detail found in the image patches at each scale. Likewise for harmonization and editing a naively modified image is pasted into the coarsest generator and the model will be able to add realistic detail at each layer and output a high-resolution image. Lastly, by sampling the patch distribution using a random walk instead of random noise an animation effect on the image can be achieved.
+
+Shaham et al. evaluate SinGAN in a ``real/fake'' user study and a single-image version of the Fréchet Inception Distance and find it achieves good results (high confusion rate in unpaired setting). SinGAN performs similarly to the best external method in the super-resolution task (which has been exposed to many training images). Overall it can be said that their results are very good in terms of visual quality and better than competing methods in tasks like harmonization and editing.
+
+\begin{thebibliography}{9}
+\bibitem{shaham} 
+Shaham, Tamar Rott, Tali Dekel, and Tomer Michaeli. ``SinGAN: Learning a Generative Model from a Single Natural Image''. \emph{Proceedings of the IEEE International Conference on Computer Vision}. 2019.
+
+\end{thebibliography}
+
+\end{document}
