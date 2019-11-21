@@ -1,0 +1,86 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Grandmaster level in StarCraft II using multi-agent reinforcement learning}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{November 21, 2019}
+\maketitle
+
+\noindent
+As a real-time strategy that rewards long-time planning and which requires players to balance economic decisions with individual control of hundreds of units, \emph{StarCraft} offers an important challenge in artificial intelligence research. The task is particular challenging because of the large action space of approximately $10^{26}$ possible actions at every time step. Vinyals et al.~\cite{vinyals} propose a novel multi-agent reinforcement learning architecture called \emph{AlphaStar} that can learn to play StarCraft II and manages to compete at the highest-level of play.
+
+AlphaStar uses a policy function $\pi_\theta(\alpha_t|s_t,z)$ which is conditioned on the set of previous observations and actions $s_t = o_{1:t}, a_{1:t-1}$ and a statistic $z$ which is sampled from human data. The model is trained using a novel league training algorithm, where an agent competes against other agents and parameters are updated according to the result of these games. The authors use three types of agents: main agents, exploiter agents which aim to exploit weaknesses in the main agents and league exploiters which aim to find systemic weaknesses that exist in the entire league. Each agent is initially trained with a supervised learning strategy using StarCraft II replays from the top 22\% of players. Vinyals et al. subsequently apply their multi-agent league training algorithm, counting each match outcome as a terminal reward. Due to the large action space exploration is difficult so a randomly sampled strategy statistic $z$ from human data is employed to guide the model. They find that \emph{prioritized fictitious self-play}, an extension of FSP, works well for model training and that their agents continuously learn to adapt strategies to new counter-strategies found by the exploiters. 
+
+Vinyals et al. evaluate the model against human players on Blizzard's official online matchmaking servers for StarCraft II. AlphaStar achieved grandmaster level with all three races and was ranked higher than 99.8\% of human players.
+
+
+\begin{thebibliography}{9}
+\bibitem{vinyals} 
+Vinyals, Oriol, et al. ``Grandmaster level in StarCraft II using multi-agent reinforcement learning.'' \emph{Nature} (2019): 1-5.
+
+\end{thebibliography}
+
+\end{document}
