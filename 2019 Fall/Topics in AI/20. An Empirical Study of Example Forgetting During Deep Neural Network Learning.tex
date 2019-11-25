@@ -1,0 +1,87 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{An Empirical Study of Example Forgetting During Deep Neural Network Learning}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{November 26, 2019}
+\maketitle
+
+\noindent
+Toneva et al. ~\cite{toneva} define ``forgetting events'' as the transition of a training example during a classification task from being classified correctly to incorrectly during the training process. In this paper they investigate and try to characterize such forgetting events which lead to \emph{catastrophic forgetting} (i.e. forgetting what was previously learned when trained across multiple tasks). Conversely the authors define \emph{unforgettable} examples as training examples that are never forgotten across subsequent training tasks.
+
+In order to characterize example forgetting Toneva et al. train a classification model for the MNIST, permuted MNIST and CIFAR-10 datasets. Out of the tested datasets, MNIST has the biggest portion of unforgettable examples (as images are less complex). During training, many forgettable examples need to be presented more often than unforgettable ones until they are first learned (correctly classified). Upon analysis of the unforgettable examples, they find that most forgettable training examples exhibit atypical class characteristics and are thus harder for the model to learn correctly. Based on their findings, Toneva et al. hypothesize that unforgettable examples contribute less and are less informative than forgettable examples. To test this they remove unforgettable examples from the dataset. Surprisingly up to 30\% of the CIFAR-10 dataset can be removed while still maintaining competitive performance.
+
+Finally, the authors confirm that this behaviour persists across different model architectures and that there is a large intersection of unforgettable training examples in different architectures (i.e. these examples are unforgettable in all architectures). 
+
+
+
+\begin{thebibliography}{9}
+\bibitem{toneva} 
+Toneva, Mariya, et al. "An empirical study of example forgetting during deep neural network learning." \emph{arXiv preprint arXiv:1812.05159} (2018).
+
+\end{thebibliography}
+
+\end{document}
