@@ -1,0 +1,85 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=1in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+%\usepackage{Baskervaldx}
+%\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ top=10mm,
+ }
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+ 
+\title{Optimization of molecules via deep reinforcement learning}
+\author{Bj\"orn Bebensee (2019\textendash21343)\\ %replace with your name
+Topics in Artificial Intelligence}
+\date{November 28, 2019}
+\maketitle
+
+\noindent
+Zhou et al.~\cite{zhou} apply deep reinforcement learning techniques to the space of molecule optimization. In molecule design and optimization, the main objective is to discover new compounds with desired properties. This is especially relevant to drug design. As this process is typically very expensive and takes a long time and an automation of it would be desirable, there have been several approaches to e.g. build a generative model which maps molecules to a high-dimensional space in which it performs its optimization or search operations. There has also been prior work using reinforcement learning but these models either struggled with chemical validity or required pre-training on a dataset which may lead to a bias in the resulting model.
+
+The authors introduce a model called Molecule Deep $Q$-Networks (MolDQN). They can ensure that their model has 100\% chemical validity by modeling the modification of a molecule as a Markov decision process (MDP) with MDP($\mathcal{S}, \mathcal{A}, \{P_{sa}\},\mathcal{R}$) where $\mathcal{S}$ is the state space of states $(m,t)$ for a molecule $m$ with $t$ steps taken ($t$ is limited as the search space is vast), $\mathcal{A}$ is the action space (only actions are atom addition, bond addition, bond removal), $\{P_{sa}\}$ describes the transition probabilities where for a given action the result is deterministic (i.e. state is reached with probability 1) and $\mathcal{R}$ gives the reward of a given state. MolDQN is then used to solve this MDP by fitting a function $Q(s,a)$ that learns to predict the future reward by taking action $a$ from state $s$. They implement multi-objective rewards, that is the total reward is the cumulative reward of single-objective rewards. This is useful as a new drug may have more than one desirable property. The authors decide to use a value function learning instead of policy gradient methods as they find it to be more stable and to have a lower variance. They implement the deep $Q$-learning model and approximate the $Q$-function using a neural network.
+
+Zhou et al. evaluate their MolDQN model on logP and QED measures against several established baseline approaches and perform equivalently or better than all of them. However, they note that they believe these metrics to be broken and not representative of actual performance. They stress that there is a strong need for a better metric in this field that is able to compare models on a meaningful task.
+
+\begin{thebibliography}{9}
+\bibitem{zhou} 
+Zhou, Zhenpeng, et al. "Optimization of molecules via deep reinforcement learning." \emph{Scientific reports} 9.1 (2019): 1-10.
+
+\end{thebibliography}
+
+\end{document}
