@@ -9,3 +9,5 @@ A compilation of lecture notes and homework assignments for courses I have taken
 | Topics in Artificial Intelligence | 4190.773 | Gunhee Kim | Fall 2019 |
 | Cryptography | 4190.673 | Srinivasa Rao Satti | Fall 2019 |
 | Convolutional Neural Networks | CS231n | Stanford | Winter 2019 |
+| Machine Learning in Bioinformatics | M1522.003600 | Sun Kim | Spring 2020 |
+| Mobile and Ubiquitous Computing | M1522.003300 | Youngki Lee | Spring 2020 |
