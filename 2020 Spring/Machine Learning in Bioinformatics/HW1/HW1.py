@@ -119,8 +119,6 @@ def forward_backward(init_dist, transition, emission, observations):
     fwd, p_fwd = forward(init_dist, transition, emission, observations)
     bkw, p_bkw = backward(init_dist, transition, emission, observations)
 
-    assert p_fwd == p_bkw
-
     # Retrieve state space, sequence length
     t = len(observations)
     k = transition.shape[0]
@@ -139,7 +137,11 @@ def forward_backward(init_dist, transition, emission, observations):
     return posterior, seq, p_fwd
 
 init = np.array([0.5, 0.5])
-obs = np.array([0,0,0,1,0,0])
+obs = np.array([0,0,0,1,0,0]) # first 6 obs
+seq = "HHHTHHTHHHHTTHHHHHHTHHTHHTHHHTHHTTHHHTHHHHHT"
+dictionary = {"H": 0, "T": 1} # we use this to convert sequence of observations to numerical observations
+reverse_dictionary = {0: "F", 1: "L"} # state 0 corresponds to fair, state 1 corresponds to loaded
+obs = np.array([dictionary[char] for char in seq])
 transition = np.array([[0.8,0.2],[0.3,0.7]])
 emission = np.array([[0.5,0.5], [0.9,0.1]])
 
@@ -148,13 +150,13 @@ print("")
 
 print("---------- Viterbi algorithm -----------")
 v_table, backtrace, seq = viterbi(init, transition, emission, obs)
-print("Most probable state sequence:", seq)
-print("Viterbi table:")
+print("Most probable state sequence:", [reverse_dictionary[c] for c in seq])
+print("Viterbi table (first row fair, second row loaded):")
 print(v_table)
 
 print("---------- Posterior decoding ----------")
 posterior, seq, p_x = forward_backward(init, transition, emission, obs)
-print("Most likely sequence by posterior decoding:", seq)
+print("Most likely sequence by posterior decoding:", [reverse_dictionary[c] for c in seq])
 print("P(X):", p_x)
-print("Posterior table:")
+print("Posterior table (first row fair, second row loaded):")
 print(posterior)
