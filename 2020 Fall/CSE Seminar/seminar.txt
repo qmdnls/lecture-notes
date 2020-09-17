@@ -1,0 +1,58 @@
+Title : 
+
+Speaker : 김건희
+
+Place: AI 콜로퀴움 (AI연구원 livestream https://www.youtube.com/watch?v=zXrUGtw5_1o)
+
+Seminar Date/Time : 2020/09/17, 17:00 ~ 00:00
+
+Submitted Date: 2020/09/17 
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+Abstract:
+
+    # less than 100 words
+
+    Two papers:
+
+    - Improve consistency of dialogue models without annotated training
+        - Consistency problem in dialogue agents: agents will forget important details already talked about as they tend to reply with the most likely answer for a given context so there can be inconsistencies throughout the dialogue
+        - Reviewing previous works tackling consistency in dialogue
+        - Look at consistency from the view point of humans: we control our own consistency, we are aware of ourselves.
+        - Idea: use an imaginary listener
+
+    - Knowledge-grounded dialogue:
+        - Sequential latent model for knowledge selection in dialogue
+        - How do we know which knowledge to select from all the available knowledge?
+        - Difficulty: rather than a single fact, many known facts may be relevant for the answer as well as the dialog history
+        - Sequential Knowledge Transformer: knowledge selectrion treated as a 
+
+
+
+
+Strong Points:
+
+    # less than 100 words
+    Nice slides, clear explanations, review of relevant prior work, interesting topic with interesting contributions
+
+Weak Points:
+
+    # less than 100 words
+    Poor time management, no details on second paper
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(5)
+    Correct language ...................................................(5)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(5)
+    Overview of presentation in the beginning ...................(4)
+    Objectives clearly stated .........................................(4)
+    Logically well-organized .........................................(4)
+    The presenter masters the material thoroughly ..............(5)
+    Well prepared slides ...............................................(5)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(5)
+    Q&A well managed ................................................(4)
+    Overall (will you recommend it to others ?) .................(4)
