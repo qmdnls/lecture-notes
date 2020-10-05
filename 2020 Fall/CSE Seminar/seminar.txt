@@ -1,4 +1,4 @@
-Title : 
+Title : Persona and Knowledge Based Dialogue Systems
 
 Speaker : 김건희
 
@@ -10,8 +10,9 @@ Submitted Date: 2020/09/17
 
 Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
 Abstract:
+# less than 100 words
+In this talk the speaker presents results and backgrounds for two papers that deal with dialogue systems. The first paper presented, after reviewing related work, focuses on improving the consistency in dialogue models: agents often will forget important details talked about as they attend to reply with the most likely answer in a context. By using an imaginary listener that forces the dialogue system to keep its persona this can be overcome. The second paper focuses on integrating knowledge into dialogue. He presents a sequential latent model for knowledge selection in dialogue (sequential knowledge transformer). 
 
-    # less than 100 words
 
     Two papers:
 
@@ -27,15 +28,15 @@ Abstract:
         - Difficulty: rather than a single fact, many known facts may be relevant for the answer as well as the dialog history
         - Sequential Knowledge Transformer: knowledge selectrion treated as a 
 
-
-
-
 Strong Points:
+# less than 100 words
+The talk was well-prepared and had very clear and concise slides. The speaker explained everything very clearly and in detail which understanding the material better. Relevant prior work was reviewed. Overall, the speaker presented interesting contributions to an interesting topic.
 
-    # less than 100 words
-    Nice slides, clear explanations, review of relevant prior work, interesting topic with interesting contributions
+- Nice slides, clear explanations, review of relevant prior work, interesting topic with interesting contributions
+
 
 Weak Points:
+Unfortunately, the time management was not great so most of the talk focused on the first paper and the speaker began to run out of time by the time he started on the second paper. Due to this the presentation for this second paper felt a bit rushed and no details were given or explained beyond the basic idea.
 
     # less than 100 words
     Poor time management, no details on second paper
@@ -53,6 +54,53 @@ Presentation skills:
     The presenter masters the material thoroughly ..............(5)
     Well prepared slides ...............................................(5)
     Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(5)
+    Q&A well managed ................................................(4)
+    Overall (will you recommend it to others ?) .................(4)
+
+----------------------------------------------------------------------
+
+Title : 부채널 정보 기반 암호해독 기법 소개 
+
+Speaker : 한동국
+
+Place: Zoom (https://snu-ac-kr.zoom.us/j/89203591492?pwd=OGNZQndkTlRCZHBJNUVhOGJacVFJQT09)
+
+Seminar Date/Time : 2020/10/05, 16:30 ~ 18:00
+
+Submitted Date: 2020/10/05 
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+Abstract:
+# less than 100 words
+    - in spite of assumptions made during creation of many cryptosystems, secrets are not manipulated in closed, reliable computing environemnts. existing hardware leaks information about operations that may be used to retrieve the circuits under certain circumstances. this is called a side-channel attack.
+    - analysing external factors during cryptographic computations
+    - overview over the history of side-channel attacks and their development over the past two decades
+    - explanation of counter-measures
+
+Strong Points:
+# less than 100 words
+    - overview over the history
+    - many visualizations
+    - easy to follow, intuitive explanations of the intricacies of side-channel attacks, good examples that aid understanding
+
+Weak Points:
+# less than 100 words
+    - slides are looking rather dated, delay in presentation start due to technical problems 
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(X, online, no video)
+    Correct language ...................................................(5)
+    Understandable (rhythm, intonation, accent) ................(4)
+    Spoken loud enough ..............................................(3)
+    Overview of presentation in the beginning ...................(2)
+    Objectives clearly stated .........................................(4)
+    Logically well-organized .........................................(4)
+    The presenter masters the material thoroughly ..............(5)
+    Well prepared slides ...............................................(2)
+    Proper use of color, multimedia, graphics ...................(5)
     Slides easy to understand .......................................(5)
     Q&A well managed ................................................(4)
     Overall (will you recommend it to others ?) .................(4)
