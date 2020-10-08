@@ -68,7 +68,7 @@ Place: Zoom (https://snu-ac-kr.zoom.us/j/89203591492?pwd=OGNZQndkTlRCZHBJNUVhOGJ
 
 Seminar Date/Time : 2020/10/05, 16:30 ~ 18:00
 
-Submitted Date: 2020/10/05 
+Submitted Date: 2020/10/08 
 
 Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
 Abstract:
@@ -104,3 +104,52 @@ Presentation skills:
     Slides easy to understand .......................................(5)
     Q&A well managed ................................................(4)
     Overall (will you recommend it to others ?) .................(4)
+
+
+----------------------------------------------------------------------
+
+Title : [AI 콜로퀴움] Machine Musicianship: When AI meets music
+
+Speaker : Kyogu Lee
+
+Place: Youtube livestream (https://www.youtube.com/watch?v=YGJHpQHD6lw)
+
+Seminar Date/Time : 2020/10/08, 17:00 ~ 18:00
+
+Submitted Date: 2020/10/08 
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+Abstract:
+# less than 100 words
+    - Sound is often visually grounded and we are able to filter out background noise and focus on a single source of sound quite easily
+    - Introduces various tasks such as music identification, musical source separation, machine musicianship, music recommendation etc.
+    - How can we use AI to make music?
+    - Introduces applications such as AI composer, AI performer, AI speech, AI singers
+
+Strong Points:
+# less than 100 words
+    - Many examples for all kinds of generations tasks related to music, sound and speech
+    - Good use of multimedia and graphics
+
+Weak Points:
+# less than 100 words
+    - Example audio clips were very noisy and hard to hear on the livestream unfortunately
+    - Not very in-depth
+    - Provides merely an overview but not many details on how the methods are actually trained etc.
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(4)
+    Correct language ...................................................(5)
+    Understandable (rhythm, intonation, accent) ................(3)
+    Spoken loud enough ..............................................(4)
+    Overview of presentation in the beginning ...................(2)
+    Objectives clearly stated .........................................(3)
+    Logically well-organized .........................................(2)
+    The presenter masters the material thoroughly ..............(4)
+    Well prepared slides ...............................................(4)
+    Proper use of color, multimedia, graphics ...................(5)
+    Slides easy to understand .......................................(3)
+    Q&A well managed ................................................(3)
+    Overall (will you recommend it to others ?) .................(3)
