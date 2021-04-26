@@ -1,0 +1,195 @@
+% --------------------------------------------------------------
+% This is all preamble stuff that you don't have to worry about.
+% Head down to where it says "Start here"
+% --------------------------------------------------------------
+ 
+\documentclass[12pt]{article}
+ 
+\usepackage[margin=0.7in]{geometry} 
+\usepackage{amsmath,amsthm,amssymb}
+
+% times new roman
+%\usepackage{newtxtext,newtxmath}
+
+% baskerville
+\usepackage{Baskervaldx}
+\usepackage[baskervaldx]{newtxmath} 
+ 
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Z}{\mathbb{Z}}
+ 
+\newenvironment{theorem}[2][Theorem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{lemma}[2][Lemma]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{exercise}[2][Exercise]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{problem}[2][Problem]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{question}[2][Question]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newenvironment{corollary}[2][Corollary]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{solution}{\begin{proof}[Solution]}{\end{proof}}
+
+% utf-8
+\usepackage[utf8]{inputenc}
+
+% cite color
+\usepackage[x11names]{xcolor}
+\usepackage{hyperref}
+\hypersetup{colorlinks=true,%
+citecolor=DodgerBlue4,%
+filecolor=blue,%
+linkcolor=blue,%
+urlcolor=blue
+}
+
+% line spacing
+\renewcommand{\baselinestretch}{1.1}
+
+% margin
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ left=20mm,
+ right=20mm,
+ top=20mm,
+ bottom=20mm
+}
+
+% name and student ID in header
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\fancyhead{}
+%\fancyhead[L]{\small Mobile and Ubiquitous Computing}
+\fancyhead[C]{Björn Bebensee (2019-21343)}
+\fancyhead[R]{March 25, 2020}
+\fancypagestyle{plain}{%  the preset of fancyhdr 
+    \fancyfoot[C]{\textbf{\thepage}} % except the center
+    \renewcommand{\headrulewidth}{0pt}
+    \renewcommand{\footrulewidth}{0pt}}
+
+% spacing in itemize environments
+\usepackage{enumitem}
+\setitemize{noitemsep,topsep=2pt,parsep=2pt,partopsep=2pt}
+
+% misc hyphenation
+\hyphenation{page-rank}
+
+% fancyhdr headheight
+\setlength{\headheight}{15pt}
+
+% indented paragraph
+\newenvironment{indentpar}
+    {\vspace{0.25cm}\hfill\begin{minipage}{\dimexpr\textwidth-1cm}}
+    {\end{minipage}\vspace{0.3cm}}
+
+\begin{document}
+ 
+% --------------------------------------------------------------
+%                         Start here
+% --------------------------------------------------------------
+
+% ugly fake title hack
+{\Large\centering
+    \textbf{Activity Recognition from User-Annotated Acceleration Data}
+\par}
+
+\bigskip
+
+\noindent
+\section*{3. Recovering virtual shadows}
+
+\textbf{Problem:} each photodiode needs to separate light rays from many different LEDs in order to recover the shadow map
+
+\paragraph{Time-Based Light Beacon}
+
+\begin{itemize}
+    \setlength\itemsep{1em}
+    \vspace{0.5cm}
+    
+    \item Light beacon frequency is limited by sampling rate of the microcontroller.
+    
+    \item However: More LEDs $\rightarrow$ more different light beacon frequencies $\rightarrow$ smaller interval between adjacent frequencies $\rightarrow$ higher detection error
+    
+    \item \textbf{Solution:} reuse light beacon frequencies over time, reduces number of frequencies required to support a number of $N$ LEDs.
+    
+    \item $F_b$: number of available light beacon frequencies
+    
+    \item Each LED $i$ in the same group transmits with different frequency $f_i \in F_b$, same set of frequencies $F_b$ is reused across all groups
+    
+    \item LED groups transmit in a fixed order of beacon slots
+    
+    \item LEDs that are not transmitting flash at base frequency $f_{\text{base}} \notin F_b$ to avoid two LEDs flashing at the same frequency
+    
+    \item \textbf{Result:} LEDs can be identified uniquely by their beacon light frequency
+    
+    \item Only higher density needs more beacon slots (frequencies), at a given density the system can be scaled to a large area (e.g. entire room)
+    
+    \item Adding time slots, requires synchronization between different LEDs and photodiodes. 
+    
+    \item \textbf{Synchronization between LEDs:} LEDs are controlled by a central microcontroller and assigned their beacon slots
+    
+    \item \textbf{Synchronization between LEDs and photodiodes:} add a \emph{preamble slot} before every set of beacon slots. All LEDs flash at frequency $f_p$ (with $f_p \notin F_b$ and $f_p \neq f_{\text{base}}$). Photodiodes can identify this unique pattern and thus the start of the following beacon slots.
+    
+    \item \textbf{Frequency assignment:} Based on experimental findings. Photodiode better extracts lightrays of lower flashing frequencies. Lower frequencies assigned to LEDs that are further from photodiodes, these LEDs are closer to the FoV and thus less reliable $\rightarrow$ counteracts that
+    
+    \item Specifically: rank LEDs in a descend order based on their average distances to photodiodes that can perceive their light rays, assign frequency from the lowest to the highest
+\end{itemize}
+
+\paragraph{Blockage detection}
+
+\begin{itemize}
+    \setlength\itemsep{1em}
+    \vspace{0.5cm}
+    
+    \item Given the light beacons from the LEDs, the micro-controller connecting to each photodiode performs two tasks: Sampling and processing
+    
+    \item \textbf{Sampling:} it periodically samples the light intensity data
+    
+    \item \textbf{Processing:} it locates the preamble slot and thus the following beacon slots, fetches the light intensity values within each beacon slot, computes the frequency powers at the light beacon frequencies via FFT.
+    
+    \item Interleaving sampling and processing steps to minimize idle time and fully use microcontroller, allows to recover shadow maps at high framerate
+    
+    \item \textbf{Locating Preamble:} Given $D$ data points, locate the preamble. Sliding window method is too slow, requires performing FFT $|D|$ times. Instead divide into subgroups, perform FFT over points of each subset and identify subset $D_{i^*}$ with peak in frequency power at $f_p$. Preamble slot lies in proximity to $i^*$. Find actual value for $i^*$ using binary search.
+    
+    \item Frequency power at given frequency $f_i$ is proportional to the light intensity from LED $i$ 
+    
+    \item \textbf{Adaptive Blockage Detection:} Microcontroller sends extracted frequency powers at light beacon frequencies for all beacon slots to the server. Server associates each with the respective LED based on light beacon frequency and beacon slot. Compute normalized frequency power change $\Delta P_{ij}(t)$. Light is considered blocked iff $\Delta P_{ij}(t) > \delta_{ij}$.
+    
+    \item Threshold $\delta_{ij}$ is adaptive, that is set based on light intensity $I_{ij}$ and maximal light intensity $I_\text{max}$ of all light rays
+    
+    \item Create virtual shadow map as bitmap where bit is set iff $\Delta P_{ij}(t) > \delta_{ij}$, i.e. iff light is blocked
+\end{itemize}
+
+\noindent
+\section*{4. Optimizing sensor placement}
+
+Problem: finding best placement for photodiodes for accurate virtual shadow maps that best facilitate later skeleton reconstruction
+
+\begin{itemize}
+    \setlength\itemsep{1em}
+    \vspace{0.5cm}
+    
+    \item Simple bruteforce method: consider every possible combination of photodiode locations and estimate reconstruction errors $\rightarrow$ exponential search space, not scalable
+    
+    \item Instead define intermediate metric to avoid involving the skeleton reconstruction algorithm
+    
+    \item Simple idea: light arriving at the photodiodes should be diversely spread out, maximizing the likelihood that photodiodes capture light rays intersecting the user body (especially important for user mobility)
+    
+    \item For easier calculation, discretize 3D space into small uniform cubes
+    
+    \item \textbf{Maximization under constraint:} find placement $W^*$ that maximizes number of cubes crossed by light rays, i.e. maximize the coverage in 3D space
+    
+    \item This problem is NP-hard but can be approximated in polynomial time using a greedy solution. In the experiment setup, the greedy algorithm computes optimized photodiode locations within 1 minute.
+\end{itemize}
+
+\begin{thebibliography}{9}
+\bibitem{sensing} 
+Li, Tianxing, Qiang Liu, and Xia Zhou. ``Practical human sensing in the light.'' \emph{Proceedings of the 14th Annual International Conference on Mobile Systems, Applications, and Services}. 2016.
+\end{thebibliography}
+
+\end{document}

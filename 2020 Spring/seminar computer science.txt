@@ -1,0 +1,483 @@
+On Kyoung-Woon:
+
+Human-Level Artificial Intelligence: Video data is a cross-section of everyday life, it helps to model human vision, language, behavior, thinking...
+
+Objective: Structure Learning and Reasoning for Spatiotemporal Data
+
+Video question answering is a proxy of video understanding
+
+-> previous work has few considerations for different levels of understanding
+
+New criteria: memory capacity (frame, shot, scene, sequence, entire video), logical complexity (number of logical reasoning steps)
+
+-> DramaQA: a new framework for human-level video understanding. Uses TV Drama "Another Miss Oh", has different levels of video clips (shot-level, scene-level, visual annotations, multilevel Q&A (4 levels of difficulty), coreference-resolved script
+
+Data structure in video is hard to define. Story-like structure with compositional hierarchy (frames-shots-scenes-video).
+
+Idea: represent a video as a graph, learn the structure of the graph. Use graph-cut procedure for compositional hierarchy, update representations of the learned graph.
+
+Novel method, which learns represenation with inherent structure estimation, gives comparative results in heterogeneous tasks of video domain (theme classification and Q&A)
+
+Next topic:
+
+Spatial Structure Learning. Scene graph is noisy, loss in information. Graph-based neural networks are inherently flat.
+
+Approach: Suggest learning hierarchical graph structure.
+
+----------
+
+Title: Graph Learning Networks: Structure Learning and Reasoning for Multimodal Sequential Data (Ph.D Pre-Screening 1)
+
+Speaker: Kyoung-Woon On (advisor professor : Byung-Tak Zhang)
+
+Place: Zoom (ID: 354-691-6405)
+
+Seminar Date/Time : 2020/04/27, 16:30 ~ 17:00
+
+Submitted Date: 2020/04/27
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+
+Abstract:
+As a cross-section of everyday life, video data helps model human vision, language, behavior and thinking. This talk focuses on video understanding as a proxy measure for human-level AI. By representing video as a learned graph structure and using a graph-cut procedure to update representations (according to compositional hierarchy), we can capture the video's inherent structure. Secondly, the speaker proposes a novel method to learn hierarchical representations of a scene graph which show an interpretable symbolic structure. Finally, a new framework and dataset (DramaQA) for human-level video understanding with different video (shot, scene) and difficulty levels is proposed.
+
+
+Strong Points:
+The speaker introduces interesting and novel methods for video understanding, mostly focused around the video question answering task. The explanations are very good and clear, and it is easy to understand all the methods proposed. He used easily understandable graphics where appropriate and seems to have a very good grasp of the material presented.
+
+
+Weak Points:
+Although the main objective of the talk is stated and all of the novel methods focus around video understanding, there is no clear line connecting the different methods proposed (and the different papers), which can make it a bit hard to follow along at times.
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(online, no video)
+    Correct language ...................................................(4)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(5)
+    Overview of presentation in the beginning ...................(3)
+    Objectives clearly stated .........................................(5)
+    Logically well-organized .........................................(4)
+    The presenter masters the material thoroughly ..............(5)
+    Well prepared slides ...............................................(3)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(4)
+    Q&A well managed ................................................(4)
+    Overall (will you recommend it to others ?) .................(4)
+
+
+---------------
+
+Efficient utiliziation of GPU resources is more important than ever! GPU multitasking can theoretically improve the GPU resource usage by co-launching multiple workloads together. Issues: current multitasking mechanism not transparent, current multitasking prefers _co-execution_ over efficient resource management
+
+Optimizing GPU System for efficient resource utiliziation of general purpose GPU applications in a multitasking environment: customized GPGPU multitasking environment, checkpointing based solution for memory over-subscription, thread-block unit fine-grained task management mechanism for intra-GPU resource under-utilization issues
+
+Background: GPGPU multitasking environment: launching multiple GPGPU workloads on the same GPU simultaneously needs additional techologies (NVIDIA-HyperQ, etc.)
+
+Motivation: MPS + HyperQ is restricted for GPU multitasking, not transparent (preventing further optimization), does not support dynamic parallelism, MPS can block the latter issued kernel which causes a degradation of QoS
+
+Proposed: master thread creates the main CUDA context, reads application source code and compiles it into ptx style, loads kernel functions from ptx file, pushes the main CUDA context as well as kernel function to slave threads.
+
+FlexGPU: a checkpoint based mechanism to solve GPU memory oversubscription issues
+
+Motivation: HPC application usually contains multiple kernels in one application, allocated GPU memory will be occupied during the application's lifetime. GPU memory allocation deadlock: application cannot both allocate or free GPU memory due to their dependency (deadlock).
+
+Solution: FlexGPU allows multiple workloads to use the GPU flexibly without considering OOM error. Application kernels are grouped and wait in queue. Scheduler can issue/wait/checkpoint applications.
+
+Strong Points:
+Useful graphics and images help understanding. Innovative solution 
+
+Weak Points:
+Some parts hard to follow for someone not familiar with the topic (but this may in part be due to the talk being a Ph.D screening presentation).
+
+Evaluation: FlexGPU can efficiently solve the OOM and deadlock problems. It avoids OOM, deadlock, while maintaining low execution time (compared to sequential execution)
+
+Motivation: GPGPU kernels do not need to monopolize the whole GPU resource for the best performance, some GPU kernels can achieve its best or near-best performance when only part of the resource is occupied. Idea: compact the working space of those kernels, thus freeing resources for more current kernels.
+
+Title: Optimizing GPU System for Efficient Resource Utilization of General Purpose GPU Applications in a Multitasking Environment (Ph.D Pre-Screening 1)
+Speaker: CHEN QICHEN (advisor professor: Heon Young Yeom)
+Place: Zoom (ID: 357-020-6209)
+Seminar Date/Time : 2020/04/28, 15:30 ~ 17:00
+Submitted Date: 2020/04/28
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+Efficient utilization of GPU resources is becoming increasingly important. However, current multitasking mechanisms prefer co-execution over efficient resource management and are not transparent and thus hard to optimize. The speaker proposes a novel GPGPU multitasking environment called FlexGPU which allows for checkpointing for memory over-subscription, and thus avoids OOM and deadlocks, while managing to maintain a low execution time and latency. In order to deal wit intra-GPU resource under-utilization issues, they additionally propose a thread-block unit task management mechanism.
+
+Strong Points:
+The speaker proposes an innovative solution. Issues and ideas are illustrated by useful graphics and images to aid understanding. The evaluation is very detailed and comparisons to other methods are useful in understanding drawbacks and advantages of this novel method.
+
+Weak Points:
+Some parts hard to follow for someone not familiar with the topic (but this may in part be due to the talk being a Ph.D screening presentation). The Q&A took up a large amount of time, but the questions are unfortunately hardly audible on ZOOM which made it hard to follow along.
+
+
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(3)
+    Correct language ...................................................(3)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(5)
+    Overview of presentation in the beginning ...................(2)
+    Objectives clearly stated .........................................(3)
+    Logically well-organized .........................................(3)
+    The presenter masters the material thoroughly ..............(4)
+    Well prepared slides ...............................................(4)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(4)
+    Q&A well managed ................................................(3)
+    Overall (will you recommend it to others ?) .................(4)
+
+------------------------------------
+
+Title: Harmony of Business, Data Science, and AI: Business Evolution Process with Case Study of Transforming Logistics into Service Business (Data Science Seminar)
+Speaker: Myung-Hwan Kim
+Place: Zoom (ID: 990072250)
+Seminar Date/Time : 2020/04/28, 17:00 ~ 18:00
+Submitted Date: 2020/04/28
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+With the beginning of the 4th industrial revolution, many industries are being disrupted by novel services such as Uber or VROONG and transformed into service businesses. The speaker explains the role of data Science and AI in this transformation and how they can be used to support the service business. Data science in particular can aid in gaining insights into the user base and business and finding out "what to solve", while AI helps in the "how to solve" (example: supporting user retention through order recommendation). 
+
+Strong Points:
+The speaker explained how businesses in the current era can benefit from data science and AI very well and gave good insights from his industry experience. A case study further helped illustrate the points. Everything was very well explained, the slides were very carefully prepared with many good illustrations and graphs.
+
+Weak Points:
+The presentation went slightly over time with no time reserved for extensive Q&A which means Q&A was conducted outside the time that had originally been allocated for the seminar.
+
+
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(3)
+    Correct language ...................................................(4)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(5)
+    Overview of presentation in the beginning ...................(4)
+    Objectives clearly stated .........................................(4)
+    Logically well-organized .........................................(5)
+    The presenter masters the material thoroughly ..............(4)
+    Well prepared slides ...............................................(5)
+    Proper use of color, multimedia, graphics ...................(5)
+    Slides easy to understand .......................................(4)
+    Q&A well managed ................................................(3)
+    Overall (will you recommend it to others ?) .................(4)
+
+------------------------------------
+
+Title: 아직도 파이썬으로만 머신 러닝 하니? 난 SQL로 바로 쓴다.
+Speaker: 송규호, 정의준
+Place: AWS Summit Online (기술트랙)
+Seminar Date/Time : 2020/05/13, 10:40 ~ 11:10
+Submitted Date: 2020/05/18
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+Data analysis and analytics are very import in today's data-driven companies to gain important business insights. In this talk, the speakers show how Amazon AI/ML services can be used to train a model and do inference on this trained model using only SQL queries. This enables anyone familiar with SQL to utilize machine learning capabilities for data analysis and to gain new insights. The speakers demonstrate this on a sentiment analysis task with an Amazon review dataset in Aurora and SageMaker.
+
+Strong Points:
+Speaker clearly demonstrate how the technique can be used to make inference using a machine learning model possible for anyone who knows SQL such as data analysts. The talk is clear and concise and the speakers give a useful live demonstration.  
+
+Weak Points:
+Not entirely clear if there are any advantages to this approach besides bringing machine learning capabilities to a bigger audience or if there are possible downsides. It is not clear how fast this approach is to do inference on large-scale datasets and big data. 
+
+
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(3)
+    Correct language ...................................................(4)
+    Understandable (rhythm, intonation, accent) ................(4)
+    Spoken loud enough ..............................................(5)
+    Overview of presentation in the beginning ...................(3)
+    Objectives clearly stated .........................................(4)
+    Logically well-organized .........................................(5)
+    The presenter masters the material thoroughly ..............(4)
+    Well prepared slides ...............................................(5)
+    Proper use of color, multimedia, graphics ...................(5)
+    Slides easy to understand .......................................(5)
+    Q&A well managed ................................................(-) no Q&A
+    Overall (will you recommend it to others ?) .................(3)
+
+------------------------------------
+
+Title: 간단한 Python 코드만으로 높은 성능의 기계 학습 모델 만들기
+Speaker: 김무현
+Place: AWS Summit Online (인공지능/기계학습트랙)
+Seminar Date/Time : 2020/05/13, 11:20 ~ 11:55
+Submitted Date: 2020/05/18
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+AutoML is a useful tool for businesses to automate the machine learning pipeline and create deployable models from raw data. In this talk the speaker introduces AutoGluon, which is one such AutoML toolkit and not only allows developers without any ML experience to quickly create models but also allows quick prototyping and better neural architecture search for experienced developers and researchers. He demonstrates how to use AutoGluon to fit a model, how to evaluate and further customize the model, and how to finally deploy it. 
+
+Strong Points:
+The speaker gives a good introduction to the background and explains the motivation well. Throughout the talk useful code examples are given and we see a walkthrough of entire pipeline as well as a live demonstration, which help better visualizing the material.
+
+Weak Points:
+The speaker does not present any evaluation of AutoGluon, but it would be interesting to see how Amazon's automated hyperparameter search and neural architecture search compares to hand-crafted models for the specific task at hand.
+
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(3)
+    Correct language ...................................................(3)
+    Understandable (rhythm, intonation, accent) ................(3)
+    Spoken loud enough ..............................................(5)
+    Overview of presentation in the beginning ...................(2)
+    Objectives clearly stated .........................................(4)
+    Logically well-organized .........................................(5)
+    The presenter masters the material thoroughly ..............(4)
+    Well prepared slides ...............................................(5)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(5)
+    Q&A well managed ................................................(-) no Q&A
+    Overall (will you recommend it to others ?) .................(4)
+
+------------------------------------
+
+Title: 한국어를 위한 AWS 인공지능 서비스 소개 및 활용 방법 
+Speaker: 강정희
+Place: AWS Summit Online (인공지능/기계학습트랙)
+Seminar Date/Time : 2020/05/13, 13:40 ~ 14:20
+Submitted Date: 2020/05/18
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+Ever since the beginnings of AI, natural language processing and understanding has been a recurrent theme. The speaker gives a short introduction to various AI language servies offered by Amazon such as Polly for TTS, Transcribe for speech recognition, Comprehend for natural language understanding and Textract for OCR. Furthermore, the speaker explains how these services can be used together to compliment one another and shows how they can be combined into a single service in the demonstration.
+
+Strong Points:
+The speaker gives a decent overview over various natural language processing services offered by Amazon. The demonstration is useful and shows the power of these services when used in conjunction.
+
+Weak Points:
+Given the title of the talk, it would have been interesting to see more applications specific to Korean language and a demonstration how it can be used for Korean specifically, rather the very general introduction to various services given in this talk.
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(3)
+    Correct language ...................................................(3)
+    Understandable (rhythm, intonation, accent) ................(3)
+    Spoken loud enough ..............................................(4)
+    Overview of presentation in the beginning ...................(3)
+    Objectives clearly stated .........................................(3)
+    Logically well-organized .........................................(4)
+    The presenter masters the material thoroughly ..............(4)
+    Well prepared slides ...............................................(5)
+    Proper use of color, multimedia, graphics ...................(5)
+    Slides easy to understand .......................................(4)
+    Q&A well managed ................................................(-) no Q&A
+    Overall (will you recommend it to others ?) .................(4)
+
+------------------------------------
+
+Title: Amazon SageMaker 신규 기능을 활용한 다양한 ML 모델 실험해보기
+Speaker: 서지혜
+Place: AWS Summit Online (인공지능/기계학습트랙)
+Seminar Date/Time : 2020/05/13, 12:00 ~ 12:30
+Submitted Date: 2020/05/18
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+In this talk, the speaker introduces Amazon SageMaker as well as SageMaker Studio, a cloud machine learning platform which allows data scientists to do fast experimentation with data using Jupyter notebooks. She gives an introduction to the platform and general pipeline, how to use SageMaker Notebooks, SageMaker Experiments, SageMaker Processing and finally shows how to use the platform's debugger SageMaker Debugger. Lastly, she introduces SageMaker Autopilot for automation for the process.
+
+Strong Points:
+The talk gives a comprehensive overview over SageMaker and its capabilities for machine learning and quick experimentation. The presentation is organized along the machine learning pipeline from notebooks, to experiments, to processing and finally debugging which makes it very easy to follow along.
+
+Weak Points:
+The speaker spends a lot of time in the beginning on explaining SSO login and setup which could be shorter and instead there could be a live demonstration or example showing how to use these tools in practice (rather than just the screenshots in the presentation).
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(4)
+    Correct language ...................................................(4)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(4)
+    Overview of presentation in the beginning ...................(4)
+    Objectives clearly stated .........................................(5)
+    Logically well-organized .........................................(5)
+    The presenter masters the material thoroughly ..............(5)
+    Well prepared slides ...............................................(4)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(5)
+    Q&A well managed ................................................(-) no Q&A
+    Overall (will you recommend it to others ?) .................(5)
+
+------------------------------------
+
+Subgraph matching: has bad time complexity 
+Subgraph search: For a query graph Q, find all data graphs that are contained in Q as a subgraph
+extended DAG-Graph DP
+filtering by neighbor safety, DAG ordering
+verification through backtracking (time complexity exponential in the worst case, room for improvement here)
+prune backtracking search tree by use of equivalence sets
+
+propose better subgraph searching algorithm based on dynamic programming in a DAG to reduce time complexity
+results: smaller auxiliary data structure, better performance on synthetic datasets, lower query processing time
+
+building integrated DAGs from data DAGs
+
+Title: Fast Graph Query Processing Algorithms Using Dynamic Programming
+Speaker: Hyun Jun Kim (Advisor: Kunsoo Park)
+Place: Zoom (786-238-3082)
+Seminar Date/Time : 2020/05/22, 15:00 ~ 15:30
+Submitted Date: 2020/05/28
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+In subgraph search, given a query graph Q, we want to find all data graphs that are contained as a subgraph in Q. However, this subgraph matching typically has a bad time complexity and is slow. The speaker introduces a novel subgraph search algorithm based on dynamic programming in extended DAG graphs which has a lower time complexity than existing methods. In particular, we can first filter by neighbor safety and DAG ordering and then verification through backtracking. We can further improve its performance by pruning the search tree by use of equivalence sets.
+
+Strong Points:
+The speaker uses nice visualizations that help illustrate what exactly is happening and make it easier for the listener to follow along. The speaker explained everything very clearly and seems to have a very good understanding of the material.
+
+Weak Points:
+In some places the slides are filled with too much text and it might be better to split up one slide into multiple slides instead. As the talk is very technical there are a lot of definitions and introducing too many definitions on a single slide can be overwhelming for the listener and make it hard to keep up.
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(4)
+    Correct language ...................................................(5)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(5)
+    Overview of presentation in the beginning ...................(4)
+    Objectives clearly stated .........................................(4)
+    Logically well-organized .........................................(4)
+    The presenter masters the material thoroughly ..............(5)
+    Well prepared slides ...............................................(3)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(3)
+    Q&A well managed ................................................(-) no Q&A
+    Overall (will you recommend it to others ?) .................(3)
+
+------------------------------------
+
+TED Report #1
+
+Title: The Genesis of Google
+Speaker: Sergey Brin, Larry Page
+TED Uploaded Date: Uploaded May 2007, talk from February 2004
+TED URL Link: https://www.ted.com/talks/sergey_brin_larry_page_the_genesis_of_google
+Duration: 20min 33sec
+
+Abstract: 
+The Google co-founders Sergey Brin and Larry Page talk about the spread of Google Search around the world, the Google Foundation and as so-called "20% projects" such as the social network Orkut. They explain how these small projects can help the company to keep innovate in the long run while keeping employees happy and passionate about their work. Some other 20% projects that succeeded include Google News and AdSense.
+
+Comments:
+I chose the talk because it gives some insight into the thinking of the Google founders in the earlier days of Google. The speakers explain some of the ways in which Google managed to be successful and how they keep innovating. However, as there isn't any overview of topics, the talk feels a bit unorganized in some places. I felt that although mildly interesting was a bit disappoint, as the contents are also rather general and I had hoped for some deeper or more detailed insights. Instead of focusing on the details of their core business or how their company operates, the speakers mostly focus on keeping the talk entertaining and interesting for a wider general audience. 
+
+TED Report #2
+
+Title: What you need to know about face surveillance
+Speaker: Kade Crockford
+TED Uploaded Date: November 2019
+TED URL Link: https://www.ted.com/talks/kade_crockford_what_you_need_to_know_about_face_surveillance
+Duration: 12min 49sec
+
+Abstract: 
+In this talk the speaker talks about why privacy as a fundamental right is important and how it is threatened by technology and particularly with face surveillance in particular. Using face recognition and surveillance camera networks, face surveillance allows governments to create records of all people's public movements, habits, contacts and association. These records threaten individual privacy and the open society and are at risk of being abused by persons in power. 
+
+Comments:
+Especially with the rise of AI and neural networks that have completely changed computer vision in recent years face surveillance is now realistic and possible. When doing research on these kind of topics, it is important to consider the ethics behind your research topic, how it may be used and how it may even affect society. I chose this talk to hear about some of the dangers of face surveillance and maybe see some concrete examples of how it can affect our society. The speaker gives their point of view on face surveillance technology and how it threatens our privacy. While the speaker makes a lot of good points and even though I agree with them on most, the talk lacks details (possibly due to the time constraint) such as statistics, numbers or anything to quantify and substantiate the points made. As it is, the talk is essentially just the speaker stating their opinion on this issue without any additional background. The talk could also benefit from additional visualizations.
+
+------------------------------------
+
+TED Report #1
+
+Title: How brain science will change computing
+Speaker: Jeff Hawkins
+TED Uploaded Date: Uploaded May 2007, talk from February 2003
+TED URL Link: https://www.ted.com/talks/jeff_hawkins_how_brain_science_will_change_computing
+Duration: 20min 11sec
+
+Abstract: 
+The speaker makes a case for why brain science is important and why it should matter to us. Particularly in the context of computing, understanding brains may help us build intelligent machines and make advancements in artificial intelligence. Furthermore the speaker explains that brain science is held back by its lack of theory and the overwhelming amount of data research has produced but we have trouble structuring and organizing (i.e. there is no framework).
+
+Comments:
+I chose this talk because of my interest in artificial intelligence and its relation to brain and neuroscience. In his talk, the speaker points out the ways in which computer scientists are looking at intelligence in the wrong way: they only focus on the behavior and aim to make machines behave more closely to humans. However, rather than focusing on behavior, we should focus on predictions from sequential patterns. The human brain is constantly making predictions and through these it is producing real intelligence. In hindsight, the speaker has made some very good points and correctly predicted (even 17 years ago!) how we can build better intelligent machines (see recent developments in deep learning). Despite its age, the talk is very interesting and contains many good ideas and points relevant to computer scientists working on AI and machine learning today. I very much enjoyed the talk and can recommend it.
+
+TED Report #2
+
+Title: The danger of AI is weirder than you think
+Speaker: Janelle Shane 
+TED Uploaded Date: April 2019 
+TED URL Link: https://www.ted.com/talks/janelle_shane_the_danger_of_ai_is_weirder_than_you_think 
+Duration: 10min 28sec
+
+Abstract:
+The dangers of artificial intelligence are often portrayed to be superintelligence and it developing a will of its own. Opposite to these hypothetical futuristic fears of AI however, in this talk the speaker gives an overview over some of the problems with artificial intelligence that we face today. The speaker mostly focuses on problems with optimization (i.e. wrong constraints), how hard it can be to specify the correct learning objective, bias in the training data and shows that AI is only as good as the training data you present it.
+
+Comments:
+I chose this talk to hear more about the dangers of AI. AI researchers today need to consider ethical implications as well as consequences of their research. As the talk is meant for a general, non-technical audience it is kept very basic, and only scratching on the surface of many of the topics addressed. Nonetheless, I think the speaker does a good job of conveying these very difficult topics in a simple and easy to understand way. While I had wished for the talk to get more technical, it had some good points and broadly explained some of the problems we face in AI research today as opposed to the type of AI you read about in books or see in movies and its dangers.
+
+------------------------------------
+
+TED Report #1
+
+Title: What AI is — and isn't
+Speaker: Sebastian Thrun, Chris Anderson 
+TED Uploaded Date: April 2017
+TED URL Link: https://www.ted.com/talks/sebastian_thrun_and_chris_anderson_what_ai_is_and_isn_t
+Duration: 24min 13sec
+
+Abstract: 
+In this talk the speaker gives an overview of the workings of AI and its applications. In machine learning, unlike classical rule-based programming, the agent learns and infers rules from data rather than the programmer planning for every contingency. This is useful for a wide variety of fields such as self-driving cars, medical applications, and drafting of legal documents. The speaker makes the point that AI can be used to help us solve many problems we face today. Much like machines in the industrial revolutions, it can help us automate many boring and repetitive tasks.
+
+Comments:
+I chose this talk because of my interest in artificial intelligence and its applications. I was also quite interested in hearing Sebastian Thurn's opinion on the current state as well as the future of artificial intelligence. During this talk, the speaker makes many great points and explains the concepts of machine learning very clearly. While the target audience are clearly people who aren't familiar with the field, the speaker nonetheless makes many great points and explains even advanced concepts with clarity.
+I thought it was interesting to hear the speaker's opinion on artificial general intelligence as and how domain-specific and specialized all of the progress in deep learning in recent years has been as well.
+Although it was very interesting, it would still be nice to be able to listen to a talk by the same speaker on these topics but targeted to a more advanced audience and at a higher level.
+
+TED Report #2
+
+Title: Art that reveals how technology frames reality
+Speaker: Jiabao Li
+TED Uploaded Date: December 2019
+TED URL Link: https://www.ted.com/talks/jiabao_li_art_that_reveals_how_technology_frames_reality
+Duration: 8min 14sec 
+
+Abstract:
+In this talk, the speaker explores the way technology mediates the way we perceive the reality. She explains that technology, much like glasses, changes the way we perceive the world without us noticing the technology itself that is behind it. The speaker thinks about ways to make people aware and pay attention to the technology and how it affects our perception of reality again.
+
+Comments:
+I chose this talk because I am interested in how technology shapes our perception of reality as well. Especially in recent years it has become increasingly clear that technology can have bad effects society as a whole as well and exacerbate many of our problems. I like the analogies the speaker chose for this and she makes the problems with the way technology can affect us quite clear. I also really liked the art projects that highlight these problems which she introduced in her talk. She points out that our view of reality is shaped by the bias that is inherent to these technologies (such as social networks). With her works she hopes that we can overcome these blind spots and learn to retrain our perception of reality and overcome the rifts in society that have been deepened by technology.
+
+------------------------------------
+
+TED Report #1
+
+Title: The wonderful and terrifying implications of computers that can learn
+Speaker: Jeremy Howard
+TED Uploaded Date: December 2014
+TED URL Link: https://www.ted.com/talks/jeremy_howard_the_wonderful_and_terrifying_implications_of_computers_that_can_learn
+Duration: 19min 45sec
+
+Abstract: 
+The speaker gives an overview over machine learning and particularly deep learning as well as a wide variety of its applications today. Specifically, he makes the point that deep learning can help us accomplish tasks that we do not know how to program by hand by instead learning these patterns from data. Examples of this are for instance writing a program that is good at checkers or that can drive a car. By using today's massive amounts of data, even people with no previous background in a field can create useful data analysis systems that have real impact.
+
+Comments:
+This talk covers a variety of interesting topics in deep learning although each of them very superficially and quickly. While interesting and a nice overview, I think it may have been better to focus on a single topic and give a deeper introduction to it. The speaker gives examples of a number of different concrete applications in which deep learning is used today. Today's computers can "see" (image understanding), "read" (language understanding), and "write" (text generation).
+In some parts this talk feels a bit rushed and it could benefit from the speaker slowing down and explaining things more clearly or even just speaking more slowly.
+At the end of the talk the speaker makes the interesting conclusion that computers are improving at these capabilities at rapid speed until it can replace many jobs and that we as a society are not prepared for this. This is a very interesting point, and I think it would have deserved more time than only the last few seconds of the talk. It would be interesting to hear the speaker's thoughts on how we can adjust social and economic structures to adapt to this new reality.
+
+TED Report #2
+
+Title: 3 principles for creating safer AI
+Speaker: Stuart Russell
+TED Uploaded Date: April 2017
+TED URL Link: https://www.ted.com/talks/stuart_russell_3_principles_for_creating_safer_ai
+Duration: 17min 27sec 
+
+Abstract:
+In this talk, the speaker introduces some of the dangers of AI to humans. One significant danger is the value-alignment problem which occurs when the AI's learning objective is not actually aligned with our own objective. Based on these dangers, he aims to redefine AI to achieve "human-compatible AI" which should only benefit humanity. In order to achieve this new definition of AI, he then introduces three main principles that can lead to provably more safe AI and that should guide or design of safe AI systems.
+
+Comments:
+I picked this talk as I am interested both in artificial intelligence as a whole but also in ethical and safe AI systems. Additionally, the speaker is one of the pioneering AI researchers who wrote the major textbook on AI (Artificial Intelligence: A Modern Approach) so it was interesting to hear his perspective on this. The speaker gives a good introduction to the dangers of robots - and not of AI systems as a whole as the title would suggest. He makes some very good points and gives three easy to understand guidelines that can help design safer AI systems. Unfortunately, like many TED talks, the talk only scratched the surface due to the time constraint and the non-technical target audience. I would love to hear a more technical talk on the same topic and specifically hear more about how we can concretely specify uncertain objectives to robots and AI systems for better and safer AI.

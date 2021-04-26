@@ -1,6 +1,12 @@
 ## Ignore slides
 **/Slides*
 
+# Ignore zip files
+*.zip
+
+# Ignore model files
+*.tflite
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

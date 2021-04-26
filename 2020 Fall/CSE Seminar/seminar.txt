@@ -1,4 +1,4 @@
-Title : Persona and Knowledge Based Dialogue Systems
+Title : Persona and Knowledge Based Dialogue Systems (SNU AI Colloqium)
 
 Speaker : 김건희
 
@@ -60,7 +60,7 @@ Presentation skills:
 
 ----------------------------------------------------------------------
 
-Title : 부채널 정보 기반 암호해독 기법 소개 
+Title : 부채널 정보 기반 암호해독 기법 소개 (CSE seminar) 
 
 Speaker : 한동국
 
@@ -114,7 +114,7 @@ Presentation skills:
 
 ----------------------------------------------------------------------
 
-Title : [AI 콜로퀴움] Machine Musicianship: When AI meets music
+Title : [서울대 AI 콜로퀴움] Machine Musicianship: When AI meets music
 
 Speaker : Kyogu Lee
 
@@ -165,3 +165,346 @@ Presentation skills:
     Slides easy to understand .......................................(3)
     Q&A well managed ................................................(3)
     Overall (will you recommend it to others ?) .................(3)
+
+----------------------------------------------------------------------
+
+Title : Deep Unsupervised Learning of Language Structure (SNU Data Science Seminar)
+
+Speaker : Yoon Kim
+
+Place: Zoom (https://snu-ac-kr.zoom.us/j/88348364954)
+
+Seminar Date/Time : 2020/10/14, 9:00 ~ 10:08
+
+Submitted Date: 2020/10/14 
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+Abstract:
+The speaker presents recent work on deep unsupervised learning of language structure. In particularly human language understanding models can often benefit from a deeper understanding of syntactic structure. This is important because syntactic understanding of sentences influences meaning. While human learners can easily learn structure and manage to generalize to new words, this is not the case for deep learning models. The focus of the talk lies on grammar induction and formal grammars for unsupervised parsing. The speaker introduces a model from his own research, specifically a neural model which learns to predict PCFG (probabilistic context-free grammar) structure.
+
+# less than 100 words
+    - Human language understanding can benefit from a deeper understanding of syntactic structure
+    - Human learners can easily learn structure in language without explicit supervision and manage to generalize to new words
+    - Focus of the talk on grammar induction, that is, the unsupervised learning of syntax
+    - Syntactic understanding of sentences influences meaning
+    - Formal grammars for unsupervised parsing, learn to predict these grammars accurately to improve understanding
+    - Introduces neural model that learns to predict PCFG (probabilistic context-free grammar) structure
+
+Strong Points:
+The speaker makes some great points and gives very in-detail explanations and insights of his research topic. It is easy to tell that the speaker is very knowledgeable in this area and he manages to explain his research in an in-depth but very understandable way. For the topics discussed the speaker gives a good intuition of the "why". The talk has a good mix of high-level explanations of the research works and details of how everything actually works. The slides include nice visualizations of syntactic trees etc.
+
+    # less than 100 words
+    - Great in-detail explanations and insights
+    - Speaker gives a good intuition of the "why"
+    - Good mix of high-level explanations of the works and details of how everything is done
+    - Very good visualizations of syntactic trees etc. that aid understanding of the material
+    
+
+Weak Points:
+The speaker could have possibly included some more in-depth outlook on the future for this research field and in particularly to practical applications of this research. It would be nice to hear some insight on how these models may be further developed or incorporated into real-world systems. Some of this was adressed during QA however. Overall it was a great, solid talk that did not have a lot of weak points.
+
+# less than 100 words
+    - Could have possibly included some more in-depth future outlook in the talk on how these models may be further developed/incorporated/deployed, but some of this was addressed during QA
+    - Connection issues (speaker isn't really to blame), but well managed
+    - Great talk, overall solid and not a lot of weak points!
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(4)
+    Correct language ...................................................(5)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(3)
+    Overview of presentation in the beginning ...................(3)
+    Objectives clearly stated .........................................(5)
+    Logically well-organized .........................................(4)
+    The presenter masters the material thoroughly ..............(5)
+    Well prepared slides ...............................................(5)
+    Proper use of color, multimedia, graphics ...................(5)
+    Slides easy to understand .......................................(5)
+    Q&A well managed ................................................(4)
+    Overall (will you recommend it to others ?) .................(5)
+
+----------------------------------------------------------------------
+
+Title : AI for All: Enabling Participatory and Procedurally-Fair AI (SNU Data Science Seminar)
+
+Speaker : Min Kyung Lee
+
+Place: Zoom (https://snu-ac-kr.zoom.us/j/89048786837)
+
+Seminar Date/Time : 2020/10/21, 9:00 ~ 10:02
+
+Submitted Date: 2020/10/26 
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+The speaker gives an introduction to AI fairness with a focus on the perception of the AI and how we can improve that perception and design more fair AI systems. As AI is integrated into society and used to make more important decisions in daily life, AI should be people centered. However, there is a lack of research surrounding the psychological and societal impact of AI. The speaker introduces two lines of research they have been working on: 1) What makes AI unfair and untrustworthy to people? 2) How can we design fair and trustworthy AI systems?
+
+    # less than 100 words
+    - As AI is integrated into society and used to make more important decisions, AI should be people centered
+    - Lack of research surrounding the psychological and societal impact of AI
+    - Difficult to align AI with the values of society
+    - 2 lines of research: What makes AI unfair and untrustworthy? How to make AI fair and trustworthy?
+    - People have to understand and participate in the building of algorithms and models to trust them!
+    - WeBuildAI: Collective participatory framework
+
+Strong Points:
+The research topics presented are interesting and introduced in an easily understandable manner. The speaker gives a good overview over the topics and the general structure of the talk made it very easy to follow along even with no prior knowledge in these fields. Explanations of research results were communicated in a very clear manner. The speaker also gave good responses to questions during the QA session. Overall, it was a very interesting and strong talk that can be recommended to anyone who wants an introduction to the design of fair AI systems. 
+
+    # less than 100 words
+    - Interesting research topic
+    - Good overview and general structure made it very easy to follow along
+    - Very clear explanations of research results
+    - Good responses to questions during QA 
+
+Weak Points:
+The talk could have possibly included more of an outlook on future work as well as what we was researchers and engineers can actively do to build more trustworthy AI systems right now. Overwall however, it was a strong talk and there were no real weak points.
+
+    # less than 100 words
+    - Maybe more of a outlook on future work, what we as researchers/engineers can actively do to build more trustworthy AI systems right now
+    - Very strong presentation, no apparent weak points
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(5)
+    Correct language ...................................................(5)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(4)
+    Overview of presentation in the beginning ...................(5)
+    Objectives clearly stated .........................................(5)
+    Logically well-organized .........................................(5)
+    The presenter masters the material thoroughly ..............(5)
+    Well prepared slides ...............................................(5)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(5)
+    Q&A well managed ................................................(5)
+    Overall (will you recommend it to others ?) .................(5)
+
+----------------------------------------------------------------------
+
+Title : NC AI R&D 현황
+
+Speaker : 정세희 (NC 소프트)
+
+Place: Zoom (https://snu-ac-kr.zoom.us/j/3349805948)
+
+Seminar Date/Time : 2020/10/26, 16:55 ~ 18:12
+
+Submitted Date: 2020/10/26
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+
+    # less than 100 words
+    - Introducing the steps taken towards AI R&D and its role at NCSOFT
+    - Broad research on AI with applications in game, speech, vision, language and knowledge base AI
+    - AI systems that support the production of games: design and planning of games, creation of game art, programming of games
+    - AI systems that can play games and compete with players 
+    - Engineering of AI systems for e.g. voice commands, personalized speech synthesis, computer vision add-ons to support streamers on video game streaming platforms etc.
+    - Examples of deployments and experiences made with it
+
+
+Strong Points:
+
+    # less than 100 words
+    - Many examples for applications of AI systems
+    - A few useful points on experience with deploying AI systems
+    - Good use of multimedia with example videos where appropriate
+
+Weak Points:
+
+    # less than 100 words
+    - Talk felt more like an advertisement for an NCSOFT and their PAIGE baseball app than it was informative
+    - Presentation style felt a bit monotonous
+    - While many examples of applications were given it would have been nice to have some case study of single examples that are examined closer, i.e. rather than listing all areas where AI has been used, it would be nice to hear more about this was done, how the experience was, what challenges were encountered
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(3)
+    Correct language ...................................................(4)
+    Understandable (rhythm, intonation, accent) ................(3)
+    Spoken loud enough ..............................................(4)
+    Overview of presentation in the beginning ...................(2)
+    Objectives clearly stated .........................................(3)
+    Logically well-organized .........................................(2)
+    The presenter masters the material thoroughly ..............(4)
+    Well prepared slides ...............................................(3)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(4)
+    Q&A well managed ................................................(3)
+    Overall (will you recommend it to others ?) .................(2)
+
+----------------------------------------------------------------------
+
+Title : A Unified Architecture for Simple and Fast Deep Learning
+
+Speaker : Eunji Jeong (advisor professor : Byung Gon Jeon)
+
+Place: Zoom (https://snu-ac-kr.zoom.us/j/83470489890)
+
+Seminar Date/Time : 2020/11/05, 14:00 ~ 14:40
+
+Submitted Date: 2020/11/05
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+There are two main paradigms in deep learning with major frameworks for each of them: symbolic and imperative deep learning frameworks. While imperative frameworks allow for more intuitive programming and debugging, symbolic frameworks are more straightforward to optimize and allow parallel execution of operations. In this PhD thesis presentation, the speaker introduces a framework unifying these two paradigms and allowing intuitive imperative programming with nearly the same speed as symbolic frameworks provide by using speculative graph generation and optimization.
+    # less than 100 words
+
+Strong Points:
+The speaker presents a novel and very interesting approach. Explanations of this approach and the ideas behind it are very intuitive and the clear slides aid understanding and make it very easy to follow along. The slides are very clean and graphics help where needed as well. The speaker speaks very clearly. Overall, the talk is strong and gives a great overview over this line of research.
+    # less than 100 words
+
+Weak Points:
+The talk is split into three main sections that correspond to research papers published and these papers are presented more or less independently of one another instead of connecting the ideas and thoughts behind this line of research more thoroughly. A clear overview over what we will see in this talk in the beginning is missing and would have been helpful for following along. 
+    # less than 100 words
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(4)
+    Correct language ...................................................(5)
+    Understandable (rhythm, intonation, accent) ................(4)
+    Spoken loud enough ..............................................(4)
+    Overview of presentation in the beginning ...................(2)
+    Objectives clearly stated .........................................(2)
+    Logically well-organized .........................................(2)
+    The presenter masters the material thoroughly ..............(4)
+    Well prepared slides ...............................................(5)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(5)
+    Q&A well managed ................................................(-, QA not public for PhD thesis screening)
+    Overall (will you recommend it to others ?) .................(4)
+
+----------------------------------------------------------------------
+
+Title : A Flexible Architecture for Optimizing Distributed Data Processing
+
+Speaker : Youngseok Yang (advisor professor : Byung Gon Jeon)
+
+Place: Zoom (https://snu-ac-kr.zoom.us/j/84806483257)
+
+Seminar Date/Time : 2020/11/06, 13:00 ~ 14:00
+
+Submitted Date: 2020/11/06
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+The speaker introduces a novel architecture for distributed data processing that is more efficient and flexible than existing architectures. In particular the proposed architecture supports flexible optimizations for different use cases. The speaker compares their Apache Nemo architecture to existing works in the field and shows how limitations are overcome. Furthermore, several example use cases as well as a detailed evaluation of this approach is given. 
+    # less than 100 words
+
+Strong Points:
+The talk is structured very well and the structure makes it easier to follow along. Especially the overview over existing works and what limitations are being tackled specifically made it easy to understand the benefits of the proposed approach. The explanations given were good and clear. The speaker spoke very clearly throughout the talk.
+    # less than 100 words
+
+Weak Points:
+The slides could be more clear; most slides do not include any text and only figures which makes it harder to follow along, especially since slides are "layered", that is, annotations "pop up" on top of the figures thus occluding what was underneath.
+    # less than 100 words
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(4)
+    Correct language ...................................................(4)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(5)
+    Overview of presentation in the beginning ...................(4)
+    Objectives clearly stated .........................................(3)
+    Logically well-organized .........................................(5)
+    The presenter masters the material thoroughly ..............(4)
+    Well prepared slides ...............................................(2)
+    Proper use of color, multimedia, graphics ...................(2)
+    Slides easy to understand .......................................(2)
+    Q&A well managed ................................................(-, QA not public for PhD thesis screening)
+    Overall (will you recommend it to others ?) .................(3)
+
+----------------------------------------------------------------------
+
+Title : Exploiting Semi-Structured Data for In-Database Query Processing and Machine Learning
+
+Speaker : Wolfgang Lehner
+
+Place: Zoom (https://snu-ac-kr.zoom.us/j/6232699248)
+
+Seminar Date/Time : 2020/11/10, 17:00 ~ 18:00
+
+Submitted Date: 2020/11/16
+
+Submitter: BEBENSEE BJOERN / 2019-21343 / bebensee@snu.ac.kr
+
+Abstract:
+Although text data and semi-structured data are widely available and their use has been on the rise in recent years (especially with breakthroughs in NLP) relational data still dominates the market and remains most relevant. The speaker gives an introduction to his research on incorporating this semi-structured text data to relational databases. One example out of the works presented in this talk is their FREDDY framework, incorporating word embeddings to database systems and allowing grouping data by their semantic relationships, i.e. through a kNN-join over the embedded texts.
+    # less than 100 words
+    - text data and semi-structured data on the rise
+    - however: relational data still the most relevant, still dominates the market
+    - idea: combine relational database with text data and a word embedding 
+    - FREDDY: Fast Word Embeddings in Database Systems
+    - allows grouping of data by semantic relationships in databases, i.e. kNN-join
+    - word embeddings can't capture context-specific semantics!
+    - retrofitting
+    - evaluation
+
+Strong Points:
+The speaker introduces an interesting topic and gives an overview over their recent research. It is clear that the speaker is very knowledgeable and he gives valuable insights. Throughout the talk the speaker gives helpful annotations and highlights using a pen directly on the slides. The talk is logically well-organized. Overall, I think the talk is good for people seeking an introduction to this area of research as the speaker gives a relatively broad overview.
+    # less than 100 words
+    - very interesting topic
+    - helpful annotations and highlights with pen on the slides during talk
+    - large overview over research area
+
+Weak Points:
+Although the speaker is clearly very knowledgeable (or maybe because of this) explanations in some places are lacking and details are glossed over. In generall the slides are somewhat disconnected from the talk and the speaker talks about things not seen on the slides and does not mention many things that are shown on the slides which makes it harder to follow along.
+    # less than 100 words
+    - poor explanations in some places
+    - slides somewhat disconnected from the talk, speaker talks about things not seen on the slides and does not mention everything seen on the slides, harder to follow along
+
+Presentation skills:
+
+    # 1-insufficient, 2-limited, 3-good, 4-very good, 5-excellent
+    Body language and eye contact ...............................(3, no camera for the first half of the talk)
+    Correct language ...................................................(4)
+    Understandable (rhythm, intonation, accent) ................(5)
+    Spoken loud enough ..............................................(5)
+    Overview of presentation in the beginning ...................(3)
+    Objectives clearly stated .........................................(3)
+    Logically well-organized .........................................(5)
+    The presenter masters the material thoroughly ..............(5)
+    Well prepared slides ...............................................(3)
+    Proper use of color, multimedia, graphics ...................(4)
+    Slides easy to understand .......................................(2)
+    Q&A well managed ................................................(4)
+    Overall (will you recommend it to others ?) .................(3)
+
+----------------------------------------------------------------------
+
+TED Report #1
+
+Title:
+
+Speaker:
+
+TED Uploaded Date: YYYY/MM/DD
+
+TED URL Link: https://www.ted.com/talks/------------
+
+Duration: 00min 00sec
+
+Abstract:
+
+    // what was it about?
+
+    // less than 100 words
+
+Comments:
+
+    // why did you choose this talk?
+
+    // what did you like/dislike about this talk?
+
+    // less than 200 words
